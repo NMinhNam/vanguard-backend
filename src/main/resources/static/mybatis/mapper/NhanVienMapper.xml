@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.NhanVienMapper">
+
+    <resultMap id="NhanVienResultMap" type="NhanVien">
+        <id property="id" column="id"/>
+        <result property="hoVaTen" column="ho_va_ten"/>
+        <result property="viTri" column="vi_tri"/>
+        <result property="luong" column="luong"/>
+        <result property="ngayThamGia" column="ngay_tham_gia"/>
+    </resultMap>
+
+    <sql id="ColumnListNhanVien">
+        id
+        , ho_va_ten
+        , vi_tri
+        , luong
+        , ngay_tham_gia
+    </sql>
+
+    <select id="findAll" resultType="NhanVien" resultMap="NhanVienResultMap">
+        SELECT
+        <include refid="ColumnListNhanVien"/>
+        FROM nhan_vien
+    </select>
+</mapper>

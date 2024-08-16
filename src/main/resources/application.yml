@@ -1,0 +1,21 @@
+server:
+  port: 1688
+
+spring:
+  application:
+    name: vanguard
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: root123
+
+mybatis:
+  config-location: classpath:/static/mybatis/mybatis-config.xml
+  mapper-locations: classpath:/static/mybatis/mapper/*.xml
+
+logging:
+  level:
+    org.springframework.boot: DEBUG
+    sample.springboot.mybatis: DEBUG

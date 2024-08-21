@@ -1,4 +1,4 @@
-package com.fpt.vanguard.enums;
+package com.fpt.vanguard.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,10 @@ public enum ErrorCode {
     HTTP_STATUS_400(400, "request error"),
     HTTP_STATUS_401(401, "no authentication"),
     HTTP_STATUS_403(403, "no authorities"),
-    HTTP_STATUS_500(500, "server error");
+    HTTP_STATUS_500(500, "server error"),
+    UNCAUGHT_EXCEPTION(999, "uncaught exception"),
+    NHAN_VIEN_NOT_EXIST(500, "nhan vien khong ton tai"),
+    LIST_NHAN_VIEN_EMPTY(888, "list nhan vien rong");
 
     private final int status;
     private final String message;

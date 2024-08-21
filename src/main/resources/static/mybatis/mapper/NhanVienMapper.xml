@@ -18,9 +18,20 @@
         , ngay_tham_gia
     </sql>
 
-    <select id="findAll" resultType="NhanVien" resultMap="NhanVienResultMap">
+    <select id="findAll" resultMap="NhanVienResultMap">
         SELECT
         <include refid="ColumnListNhanVien"/>
         FROM nhan_vien
+    </select>
+
+    <select id="findById" parameterType="Integer" resultMap="NhanVienResultMap">
+        SELECT
+        <include refid="ColumnListNhanVien"/>
+        FROM nhan_vien
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
     </select>
 </mapper>

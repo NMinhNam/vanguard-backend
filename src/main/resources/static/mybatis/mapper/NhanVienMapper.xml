@@ -1,36 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fpt.vanguard.mapper.NhanVienMapper">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.NhanVienMybatisMapper">
 
     <resultMap id="NhanVienResultMap" type="NhanVien">
-        <id property="id" column="id"/>
-        <result property="hoVaTen" column="ho_va_ten"/>
-        <result property="viTri" column="vi_tri"/>
-        <result property="luong" column="luong"/>
-        <result property="ngayThamGia" column="ngay_tham_gia"/>
+        <id property="maNhanVien" column="ma_nhan_vien"/>
+        <result property="hoTen" column="ho_ten"/>
+        <result property="gioiTinh" column="gioi_tinh"/>
+        <result property="ngaySinh" column="ngay_sinh"/>
+        <result property="dienThoai" column="dien_thoai"/>
+        <result property="cccd" column="cccd"/>
+        <result property="diaChi" column="dia_chi"/>
+        <result property="hinhAnh" column="hinh_anh"/>
+        <result property="maPhongBan" column="ma_phong_ban"/>
+        <result property="maBoPhan" column="ma_bo_phan"/>
+        <result property="maChucVu" column="ma_chuc_vu"/>
+        <result property="maTrinhDo" column="ma_trinh_do"/>
     </resultMap>
 
-    <sql id="ColumnListNhanVien">
-        id
-        , ho_va_ten
-        , vi_tri
-        , luong
-        , ngay_tham_gia
+    <sql id="NhanVienColumnList">
+        ma_nhan_vien
+        , ho_ten
+        , gioi_tinh
+        , ngay_sinh
+        , dien_thoai
+        , cccd
+        , dia_chi
+        , hinh_anh
+        , ma_phong_ban
+        , ma_bo_phan
+        , ma_chuc_vu
+        , ma_trinh_do
     </sql>
+
+    <sql id="NhanVienWhereClause">
+
+    </sql>
+
+    <insert id="insertNhanVien" parameterType="com.fpt.vanguard.dto.request.NhanVienDtoRequest">
+        INSERT INTO nhan_vien (ma_nhan_vien,
+                               ho_ten,
+                               gioi_tinh,
+                               ngay_sinh,
+                               dien_thoai,
+                               cccd,
+                               dia_chi,
+                               hinh_anh,
+                               ma_phong_ban,
+                               ma_bo_phan,
+                               ma_chuc_vu,
+                               ma_trinh_do)
+        VALUES (#{nhanVien.maNhanVien},
+                #{nhanVien.hoTen},
+                #{nhanVien.gioiTinh},
+                #{nhanVien.ngaySinh},
+                #{nhanVien.dienThoai},
+                #{nhanVien.cccd},
+                #{nhanVien.diaChi},
+                #{nhanVien.hinhAnh},
+                #{nhanVien.maPhongBan},
+                #{nhanVien.maBoPhan},
+                #{nhanVien.maChucVu},
+                #{nhanVien.maTrinhDo})
+    </insert>
+
+
+    <update id="updateNhanVien" parameterType="com.fpt.vanguard.dto.request.NhanVienDtoRequest">
+        UPDATE nhan_vien
+        <set>
+            <if test="nhanVien.hoTen != null">ho_ten = #{nhanVien.hoTen},</if>
+            <if test="nhanVien.gioiTinh != null">gioi_tinh = #{nhanVien.gioiTinh},</if>
+            <if test="nhanVien.ngaySinh != null">ngay_sinh = #{nhanVien.ngaySinh},</if>
+            <if test="nhanVien.dienThoai != null">dien_thoai = #{nhanVien.dienThoai},</if>
+            <if test="nhanVien.cccd != null">cccd = #{nhanVien.cccd},</if>
+            <if test="nhanVien.diaChi != null">dia_chi = #{nhanVien.diaChi},</if>
+            <if test="nhanVien.hinhAnh != null">hinh_anh = #{nhanVien.hinhAnh},</if>
+            <if test="nhanVien.maPhongBan != null">ma_phong_ban = #{nhanVien.maPhongBan},</if>
+            <if test="nhanVien.maBoPhan != null">ma_bo_phan = #{nhanVien.maBoPhan},</if>
+            <if test="nhanVien.maChucVu != null">ma_chuc_vu = #{nhanVien.maChucVu},</if>
+            <if test="nhanVien.maTrinhDo != null">ma_trinh_do = #{nhanVien.maTrinhDo}</if>
+        </set>
+        WHERE ma_nhan_vien = #{nhanVien.maNhanVien}
+    </update>
+
 
     <select id="findAll" resultMap="NhanVienResultMap">
         SELECT
-        <include refid="ColumnListNhanVien"/>
-        FROM nhan_vien
+        <include refid="NhanVienColumnList"/>
+        FROM nhan_vien nv
+        ORDER BY nv.ma_nhan_vien
     </select>
 
-    <select id="findById" parameterType="Integer" resultMap="NhanVienResultMap">
+    <select id="findById" parameterType="String" resultMap="NhanVienResultMap">
         SELECT
-        <include refid="ColumnListNhanVien"/>
+        <include refid="NhanVienColumnList"/>
         FROM nhan_vien
         <where>
             <if test="id != null">
-                id = #{id}
+                ma_nhan_vien = #{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="existsById" parameterType="String" resultType="Boolean">
+        SELECT
+        COUNT(*) > 0
+        FROM nhan_vien
+        <where>
+            ma_nhan_vien = #{id}
+        </where>
+    </select>
+
+    <select id="findNhanVien"
+            resultMap="NhanVienResultMap">
+        SELECT
+        <include refid="NhanVienColumnList"/>
+        FROM nhan_vien
+        <where>
+            1 = 1
+            <if test="nhanVien.maNhanVien != null and nhanVien.maNhanVien != ''">
+                AND ma_nhan_vien = #{nhanVien.maNhanVien}
+            </if>
+            <if test="nhanVien.hoTen != null and nhanVien.hoTen != ''">
+                AND ho_ten = #{nhanVien.hoTen}
+            </if>
+            <if test="nhanVien.gioiTinh != null and nhanVien.gioiTinh != ''">
+                AND gioi_tinh = #{nhanVien.gioiTinh}
+            </if>
+            <if test="nhanVien.ngaySinh != null">
+                AND ngay_sinh = #{nhanVien.ngaySinh}
+            </if>
+            <if test="nhanVien.dienThoai != null and nhanVien.dienThoai != ''">
+                AND dien_thoai = #{nhanVien.dienThoai}
+            </if>
+            <if test="nhanVien.cccd != null and nhanVien.cccd != ''">
+                AND cccd = #{nhanVien.cccd}
+            </if>
+            <if test="nhanVien.diaChi != null and nhanVien.diaChi != ''">
+                AND dia_chi = #{nhanVien.diaChi}
+            </if>
+            <if test="nhanVien.maPhongBan != null and nhanVien.maPhongBan != ''">
+                AND ma_phong_ban = #{nhanVien.maPhongBan}
+            </if>
+            <if test="nhanVien.maBoPhan != null and nhanVien.maBoPhan != ''">
+                AND ma_bo_phan = #{nhanVien.maBoPhan}
+            </if>
+            <if test="nhanVien.maChucVu != null and nhanVien.maChucVu != ''">
+                AND ma_chuc_vu = #{nhanVien.maChucVu}
+            </if>
+            <if test="nhanVien.maTrinhDo != null and nhanVien.maTrinhDo != ''">
+                AND ma_trinh_do = #{nhanVien.maTrinhDo}
             </if>
         </where>
     </select>

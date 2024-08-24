@@ -1,12 +1,16 @@
 package com.fpt.vanguard.service;
 
-import com.fpt.vanguard.entity.NhanVien;
+import com.fpt.vanguard.dto.request.NhanVienDtoRequest;
+import com.fpt.vanguard.dto.response.NhanVienDtoResponse;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface NhanVienService {
-    List<NhanVien> getAllNhanVien();
+    List<NhanVienDtoResponse> getAllNhanVien();
 
-    Optional<NhanVien> getNhanVienById(Integer id);
+    NhanVienDtoResponse getNhanVienById(String id);
+
+    NhanVienDtoResponse getNhanVien(NhanVienDtoRequest nhanVienDtoRequest);
+
+    NhanVienDtoResponse saveNhanVien(NhanVienDtoRequest nhanVienDtoRequest);
 }

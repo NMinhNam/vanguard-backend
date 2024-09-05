@@ -17,6 +17,8 @@ public enum ErrorCode {
     NHAN_VIEN_NOT_EXIST(500, "nhan vien khong ton tai"),
     NHAN_VIEN_EXISTED(500, "nhan vien da ton tai"),
     LIST_NHAN_VIEN_EMPTY(888, "list nhan vien rong"),
+    LIST_BO_PHAN_EMPTY(666, "list bo phan rong"),
+    BO_PHAN_NOT_EXIST(600, "bo phan khong ton tai"),
     BAD_SQL(500, "bad sql");
 
     private final int status;

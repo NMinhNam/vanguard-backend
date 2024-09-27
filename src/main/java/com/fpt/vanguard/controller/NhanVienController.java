@@ -42,4 +42,13 @@ public class NhanVienController {
         apiResponse.setData(nhanVienService.getNhanVien(nhanVienDtoRequest));
         return apiResponse;
     }
+
+    @PostMapping("/saveNhanVien")
+    public ApiResponse<Integer> saveNhanVien(@RequestBody NhanVienDtoRequest nhanVienDtoRequest) {
+        ApiResponse<Integer> apiResponse = new ApiResponse<>();
+        apiResponse.setStatus(ErrorCode.HTTP_STATUS_200.getStatus());
+        apiResponse.setSuccess(true);
+        apiResponse.setData(nhanVienService.saveNhanVien(nhanVienDtoRequest));
+        return apiResponse;
+    }
 }

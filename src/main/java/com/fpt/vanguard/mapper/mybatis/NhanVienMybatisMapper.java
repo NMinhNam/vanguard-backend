@@ -13,11 +13,11 @@ public interface NhanVienMybatisMapper {
 
     NhanVien findById(String id);
 
-    NhanVien findNhanVien(@Param("nhanVien") NhanVienDtoRequest nhanVienDtoRequest);
+    NhanVien findNhanVien(@Param("nhanVien") NhanVien nhanVien);
 
-    NhanVien insertNhanVien(@Param("nhanVien") NhanVienDtoRequest nhanVienDtoRequest);
+    int insertNhanVien(@Param("nhanVien") NhanVien nhanVien);
 
-    NhanVien updateNhanVien(@Param("nhanVien") NhanVienDtoRequest nhanVienDtoRequest);
+    int updateNhanVien(@Param("nhanVien") NhanVien nhanVien);
 
-    Boolean existsById(String id);
+    boolean existsById(String id);
 }

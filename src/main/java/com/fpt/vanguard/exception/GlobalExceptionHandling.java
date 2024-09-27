@@ -7,6 +7,8 @@ import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.time.format.DateTimeParseException;
+
 @ControllerAdvice
 public class GlobalExceptionHandling {
     @ExceptionHandler(value = AppException.class)
@@ -19,7 +21,7 @@ public class GlobalExceptionHandling {
     }
 
     @ExceptionHandler(value = Exception.class)
-    ResponseEntity<ApiResponse> handleException(RuntimeException e) {
+    ResponseEntity<ApiResponse> handleException(Exception e) {
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.setStatus(ErrorCode.UNCAUGHT_EXCEPTION.getStatus());
         apiResponse.setMessage(ErrorCode.UNCAUGHT_EXCEPTION.getMessage());
@@ -32,6 +34,15 @@ public class GlobalExceptionHandling {
                 ApiResponse.builder()
                         .status(ErrorCode.BAD_SQL.getStatus())
                         .message(ErrorCode.BAD_SQL.getMessage())
+                        .build());
+    }
+
+    @ExceptionHandler(value = DateTimeParseException.class)
+    ResponseEntity<ApiResponse> handleDateTimeParseException(DateTimeParseException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                ApiResponse.builder()
+                        .status(ErrorCode.DATE_EXCEPTION.getStatus())
+                        .message(ErrorCode.DATE_EXCEPTION.getMessage())
                         .build());
     }
 }

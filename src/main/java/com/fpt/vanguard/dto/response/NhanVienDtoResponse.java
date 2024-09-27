@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.Builder;
 
-import java.util.Date;
-
 @Getter
 @Setter
 @Builder
@@ -13,7 +11,7 @@ public class NhanVienDtoResponse {
     private String maNhanVien;
     private String hoTen;
     private Boolean gioiTinh;
-    private Date ngaySinh;
+    private String ngaySinh;
     private String dienThoai;
     private String cccd;
     private String diaChi;
@@ -22,6 +20,4 @@ public class NhanVienDtoResponse {
     private String maBoPhan;
     private String maChucVu;
     private String maTrinhDo;
-
-
 }

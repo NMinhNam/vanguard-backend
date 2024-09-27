@@ -12,5 +12,5 @@ public interface NhanVienService {
 
     NhanVienDtoResponse getNhanVien(NhanVienDtoRequest nhanVienDtoRequest);
 
-    NhanVienDtoResponse saveNhanVien(NhanVienDtoRequest nhanVienDtoRequest);
+    Integer saveNhanVien(NhanVienDtoRequest nhanVienDtoRequest);
 }

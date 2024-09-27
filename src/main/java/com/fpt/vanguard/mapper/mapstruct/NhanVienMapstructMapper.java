@@ -4,6 +4,7 @@ import com.fpt.vanguard.dto.request.NhanVienDtoRequest;
 import com.fpt.vanguard.dto.response.NhanVienDtoResponse;
 import com.fpt.vanguard.entity.NhanVien;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface NhanVienMapstructMapper {

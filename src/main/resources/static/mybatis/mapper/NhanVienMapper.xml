@@ -36,7 +36,7 @@
 
     </sql>
 
-    <insert id="insertNhanVien" parameterType="com.fpt.vanguard.dto.request.NhanVienDtoRequest">
+    <insert id="insertNhanVien" parameterType="NhanVien">
         INSERT INTO nhan_vien (ma_nhan_vien,
                                ho_ten,
                                gioi_tinh,
@@ -64,7 +64,7 @@
     </insert>
 
 
-    <update id="updateNhanVien" parameterType="com.fpt.vanguard.dto.request.NhanVienDtoRequest">
+    <update id="updateNhanVien" parameterType="NhanVien">
         UPDATE nhan_vien
         <set>
             <if test="nhanVien.hoTen != null">ho_ten = #{nhanVien.hoTen},</if>
@@ -81,7 +81,6 @@
         </set>
         WHERE ma_nhan_vien = #{nhanVien.maNhanVien}
     </update>
-
 
     <select id="findAll" resultMap="NhanVienResultMap">
         SELECT
@@ -101,13 +100,11 @@
         </where>
     </select>
 
-    <select id="existsById" parameterType="String" resultType="Boolean">
+    <select id="existsById" parameterType="String" resultType="boolean">
         SELECT
         COUNT(*) > 0
         FROM nhan_vien
-        <where>
-            ma_nhan_vien = #{id}
-        </where>
+        WHERE ma_nhan_vien = #{maNhanVien}
     </select>
 
     <select id="findNhanVien"
@@ -127,7 +124,7 @@
                 AND gioi_tinh = #{nhanVien.gioiTinh}
             </if>
             <if test="nhanVien.ngaySinh != null">
-                AND ngay_sinh = #{nhanVien.ngaySinh}
+                AND ngay_sinh = #{nhanVien.ngaySinh, jdbcType=DATE}
             </if>
             <if test="nhanVien.dienThoai != null and nhanVien.dienThoai != ''">
                 AND dien_thoai = #{nhanVien.dienThoai}

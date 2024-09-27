@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface NhanVienMybatisMapper {
+public interface NhanVienMapper {
     List<NhanVien> findAll();
 
     NhanVien findById(String id);

@@ -8,4 +8,5 @@ import lombok.Setter;
 public class BoPhan {
     private String maBoPhan;
     private String tenBoPhan;
+
 }

@@ -5,8 +5,8 @@ import com.fpt.vanguard.dto.response.NhanVienDtoResponse;
 import com.fpt.vanguard.entity.NhanVien;
 import com.fpt.vanguard.exception.AppException;
 import com.fpt.vanguard.exception.ErrorCode;
-import com.fpt.vanguard.mapper.mapstruct.NhanVienMapstructMapper;
-import com.fpt.vanguard.mapper.mybatis.NhanVienMybatisMapper;
+import com.fpt.vanguard.mapper.mapstruct.NhanVienMapstruct;
+import com.fpt.vanguard.mapper.mybatis.NhanVienMapper;
 import com.fpt.vanguard.service.NhanVienService;
 import com.fpt.vanguard.util.FormatDate;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +18,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class NhanVienServiceImpl implements NhanVienService {
-    private final NhanVienMybatisMapper nhanVienMybatisMapper;
-    private final NhanVienMapstructMapper nhanVienMapstructMapper;
+    private final NhanVienMapper nhanVienMybatisMapper;
+    private final NhanVienMapstruct nhanVienMapstructMapper;
 
     @Override
     public List<NhanVienDtoResponse> getAllNhanVien() {

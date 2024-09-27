@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.BoPhanMybatisMapper">
+
+    <resultMap id="BoPhanResultMap" type="com.fpt.vanguard.entity.BoPhan">
+        <id column="ma_bo_phan" property="maBoPhan"></id>
+        <result column="ten_bo_phan" property="tenBoPhan"></result>
+    </resultMap>
+
+    <select id="getAllBoPhan" resultMap="BoPhanResultMap">
+        SELECT  ma_bo_phan
+                ,ten_bo_phan
+        FROM bo_phan
+        ORDER BY ma_bo_phan
+    </select>
+
+    <select id="findById" resultMap="BoPhanResultMap" parameterType="String">
+        SELECT  ma_bo_phan
+             ,ten_bo_phan
+        FROM bo_phan
+            <if test="id != null and id != ''">
+                WHERE ma_bo_phan = #{id}
+            </if>
+    </select>
+
+    <select id="isExist" parameterType="String" resultType="Boolean">
+        SELECT COUNT(ma_bo_phan) > 0
+        FROM bo_phan
+        WHERE ma_bo_phan = #{id}
+    </select>
+
+    <insert id="insertBoPhan" parameterType="com.fpt.vanguard.dto.request.BoPhanDtoRequest">
+        INSERT INTO bo_phan (ma_bo_phan, ten_bo_phan)
+        VALUES (
+            #{BoPhan.boPhan}
+            ,#{BoPhan.tenBoPhan}
+        );
+    </insert>
+
+    <update id="updateBoPhan" parameterType="com.fpt.vanguard.dto.request.BoPhanDtoRequest">
+        UPDATE bo_phan
+        SET ten_bo_phan = #{BoPhan.tenBoPhan}
+        WHERE ma_bo_phan = #{BoPhan.boPhan};
+    </update>
+
+    <delete id="deleteBoPhan">
+        DELETE FROM bo_phan
+        WHERE ma_bo_phan = #{id}
+    </delete>
+</mapper>

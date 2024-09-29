@@ -7,9 +7,9 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://dpg-cqvooglds78s739o47qg-a.singapore-postgres.render.com:5432/vanguard
-    username: root
-    password: lWbo7awsnpTCnjZU40O0pGhshte8J519
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: root123
 
 mybatis:
   config-location: classpath:/static/mybatis/mybatis-config.xml

@@ -1,5 +1,6 @@
 package com.fpt.vanguard.exception;
 
+import com.fpt.vanguard.enums.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

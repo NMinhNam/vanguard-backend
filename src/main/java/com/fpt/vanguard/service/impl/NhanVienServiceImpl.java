@@ -4,7 +4,7 @@ import com.fpt.vanguard.dto.request.NhanVienDtoRequest;
 import com.fpt.vanguard.dto.response.NhanVienDtoResponse;
 import com.fpt.vanguard.entity.NhanVien;
 import com.fpt.vanguard.exception.AppException;
-import com.fpt.vanguard.exception.ErrorCode;
+import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.mapper.mapstruct.NhanVienMapstruct;
 import com.fpt.vanguard.mapper.mybatis.NhanVienMapper;
 import com.fpt.vanguard.service.NhanVienService;
@@ -18,38 +18,37 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class NhanVienServiceImpl implements NhanVienService {
-    private final NhanVienMapper nhanVienMybatisMapper;
-    private final NhanVienMapstruct nhanVienMapstructMapper;
+    private final NhanVienMapper nhanVienMapper;
+    private final NhanVienMapstruct nhanVienMapstruct;
 
     @Override
     public List<NhanVienDtoResponse> getAllNhanVien() {
-        List<NhanVienDtoResponse> listResultEntity = nhanVienMybatisMapper.findAll()
-                .stream()
-                .map(nhanVienMapstructMapper::toNhanVienDtoResponse)
-                .toList();
+        var listEntity = nhanVienMapper.findAll();
+        List<NhanVienDtoResponse> listResultEntity =
+                nhanVienMapstruct.toNhanVienDtoResponseList(listEntity);
         if (listResultEntity.isEmpty()) throw new AppException(ErrorCode.LIST_NHAN_VIEN_EMPTY);
         return listResultEntity;
     }
 
     @Override
     public NhanVienDtoResponse getNhanVienById(String id) {
-        return nhanVienMapstructMapper.toNhanVienDtoResponse(Optional.ofNullable(nhanVienMybatisMapper.findById(id)).orElseThrow(() -> new AppException(ErrorCode.NHAN_VIEN_NOT_EXIST)));
+        return nhanVienMapstruct.toNhanVienDtoResponse(Optional.ofNullable(nhanVienMapper.findById(id)).orElseThrow(() -> new AppException(ErrorCode.NHAN_VIEN_NOT_EXIST)));
     }
     
     @Override
     public NhanVienDtoResponse getNhanVien(NhanVienDtoRequest nhanVienDtoRequest) {
         String ngaySinhFormatted = FormatDate.formatDateStringToStringFormat(nhanVienDtoRequest.getNgaySinh(), "dd/MM/yyyy", "yyyy-MM-dd");
         nhanVienDtoRequest.setNgaySinh(ngaySinhFormatted);
-        NhanVien nhanVien = nhanVienMybatisMapper.findNhanVien(nhanVienMapstructMapper.toNhanVien(nhanVienDtoRequest));
-        return nhanVienMapstructMapper.toNhanVienDtoResponse(nhanVien);
+        NhanVien nhanVien = nhanVienMapper.findNhanVien(nhanVienMapstruct.toNhanVien(nhanVienDtoRequest));
+        return nhanVienMapstruct.toNhanVienDtoResponse(nhanVien);
     }
 
     @Override
     public Integer saveNhanVien(NhanVienDtoRequest nhanVienDtoRequest) {
-        if (nhanVienMybatisMapper.existsById(nhanVienDtoRequest.getMaNhanVien())) {
-            return nhanVienMybatisMapper.updateNhanVien(nhanVienMapstructMapper.toNhanVien(nhanVienDtoRequest));
+        if (nhanVienMapper.existsById(nhanVienDtoRequest.getMaNhanVien())) {
+            return nhanVienMapper.updateNhanVien(nhanVienMapstruct.toNhanVien(nhanVienDtoRequest));
         } else {
-            return nhanVienMybatisMapper.insertNhanVien(nhanVienMapstructMapper.toNhanVien(nhanVienDtoRequest));
+            return nhanVienMapper.insertNhanVien(nhanVienMapstruct.toNhanVien(nhanVienDtoRequest));
         }
     }
 }

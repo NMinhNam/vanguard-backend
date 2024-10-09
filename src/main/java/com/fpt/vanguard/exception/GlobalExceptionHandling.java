@@ -1,6 +1,8 @@
 package com.fpt.vanguard.exception;
 
-import com.fpt.vanguard.dto.response.ApiResponse;
+import com.fpt.vanguard.common.ApiResponse;
+import com.fpt.vanguard.enums.ErrorCode;
+import com.nimbusds.jose.JOSEException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -43,6 +45,15 @@ public class GlobalExceptionHandling {
                 ApiResponse.builder()
                         .status(ErrorCode.DATE_EXCEPTION.getStatus())
                         .message(ErrorCode.DATE_EXCEPTION.getMessage())
+                        .build());
+    }
+
+    @ExceptionHandler(value = JOSEException.class)
+    ResponseEntity<ApiResponse> handleJOSEException(JOSEException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                ApiResponse.builder()
+                        .status(ErrorCode.JOSE_EXCEPTION.getStatus())
+                        .message(ErrorCode.JOSE_EXCEPTION.getMessage())
                         .build());
     }
 }

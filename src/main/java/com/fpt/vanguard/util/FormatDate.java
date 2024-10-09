@@ -1,7 +1,7 @@
 package com.fpt.vanguard.util;
 
 import com.fpt.vanguard.exception.AppException;
-import com.fpt.vanguard.exception.ErrorCode;
+import com.fpt.vanguard.enums.ErrorCode;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

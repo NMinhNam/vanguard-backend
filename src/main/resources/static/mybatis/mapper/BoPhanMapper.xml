@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fpt.vanguard.mapper.mybatis.BoPhanMybatisMapper">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.BoPhanMapper">
 
     <resultMap id="BoPhanResultMap" type="com.fpt.vanguard.entity.BoPhan">
-        <id column="ma_bo_phan" property="maBoPhan"></id>
-        <result column="ten_bo_phan" property="tenBoPhan"></result>
+        <id column="ma_bo_phan" property="maBoPhan"/>
+        <result column="ten_bo_phan" property="tenBoPhan"/>
     </resultMap>
 
     <select id="getAllBoPhan" resultMap="BoPhanResultMap">

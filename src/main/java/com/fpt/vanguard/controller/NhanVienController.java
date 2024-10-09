@@ -1,11 +1,11 @@
 package com.fpt.vanguard.controller;
 
 import com.fpt.vanguard.dto.request.NhanVienDtoRequest;
-import com.fpt.vanguard.dto.response.ApiResponse;
+import com.fpt.vanguard.common.ApiResponse;
 import com.fpt.vanguard.dto.response.NhanVienDtoResponse;
-import com.fpt.vanguard.exception.ErrorCode;
 import com.fpt.vanguard.service.NhanVienService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class NhanVienController {
     @GetMapping("/getAllNhanVien")
     public ApiResponse<List<NhanVienDtoResponse>> getAllNhanVien() {
         ApiResponse<List<NhanVienDtoResponse>> apiResponse = new ApiResponse<>();
-        apiResponse.setStatus(ErrorCode.HTTP_STATUS_200.getStatus());
+        apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);
         apiResponse.setData(nhanVienService.getAllNhanVien());
         return apiResponse;
@@ -28,7 +28,7 @@ public class NhanVienController {
     @GetMapping("/getNhanVienById")
     public ApiResponse<NhanVienDtoResponse> getNhanVienById(@RequestParam(name = "id") String id) {
         ApiResponse<NhanVienDtoResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setStatus(ErrorCode.HTTP_STATUS_200.getStatus());
+        apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);
         apiResponse.setData(nhanVienService.getNhanVienById(id));
         return apiResponse;
@@ -37,7 +37,7 @@ public class NhanVienController {
     @GetMapping("/getNhanVien")
     public ApiResponse<NhanVienDtoResponse> getNhanVien(NhanVienDtoRequest nhanVienDtoRequest) {
         ApiResponse<NhanVienDtoResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setStatus(ErrorCode.HTTP_STATUS_200.getStatus());
+        apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);
         apiResponse.setData(nhanVienService.getNhanVien(nhanVienDtoRequest));
         return apiResponse;
@@ -46,7 +46,7 @@ public class NhanVienController {
     @PostMapping("/saveNhanVien")
     public ApiResponse<Integer> saveNhanVien(@RequestBody NhanVienDtoRequest nhanVienDtoRequest) {
         ApiResponse<Integer> apiResponse = new ApiResponse<>();
-        apiResponse.setStatus(ErrorCode.HTTP_STATUS_200.getStatus());
+        apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);
         apiResponse.setData(nhanVienService.saveNhanVien(nhanVienDtoRequest));
         return apiResponse;

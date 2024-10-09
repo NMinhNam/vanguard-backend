@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fpt.vanguard.mapper.mybatis.NhanVienMybatisMapper">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.NhanVienMapper">
 
     <resultMap id="NhanVienResultMap" type="NhanVien">
         <id property="maNhanVien" column="ma_nhan_vien"/>
@@ -32,10 +32,6 @@
         , ma_trinh_do
     </sql>
 
-    <sql id="NhanVienWhereClause">
-
-    </sql>
-
     <insert id="insertNhanVien" parameterType="NhanVien">
         INSERT INTO nhan_vien (ma_nhan_vien,
                                ho_ten,
@@ -63,7 +59,6 @@
                 #{nhanVien.maTrinhDo})
     </insert>
 
-
     <update id="updateNhanVien" parameterType="NhanVien">
         UPDATE nhan_vien
         <set>
@@ -84,7 +79,7 @@
 
     <select id="findAll" resultMap="NhanVienResultMap">
         SELECT
-        <include refid="NhanVienColumnList"/>
+            <include refid="NhanVienColumnList"/>
         FROM nhan_vien nv
         ORDER BY nv.ma_nhan_vien
     </select>

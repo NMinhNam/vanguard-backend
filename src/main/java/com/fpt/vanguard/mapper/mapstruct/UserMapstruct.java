@@ -10,6 +10,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface UserMapstruct {
+    UserDtoResponse toUserDtoResponse(User user);
     List<UserDtoResponse> toUserDtoResponseList(List<User> userList);
     RoleDtoResponse toRoleDtoResponse(Role role);
 }

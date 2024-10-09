@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface UserService {
     List<UserDtoResponse> getAllUser();
+    UserDtoResponse getUserByUserName(String userName);
+    UserDtoResponse getUserInfo();
 }

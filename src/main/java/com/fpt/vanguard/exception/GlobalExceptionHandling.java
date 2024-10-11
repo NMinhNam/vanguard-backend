@@ -6,6 +6,8 @@ import com.nimbusds.jose.JOSEException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -54,6 +56,24 @@ public class GlobalExceptionHandling {
                 ApiResponse.builder()
                         .status(ErrorCode.JOSE_EXCEPTION.getStatus())
                         .message(ErrorCode.JOSE_EXCEPTION.getMessage())
+                        .build());
+    }
+
+    @ExceptionHandler(value = AuthorizationDeniedException.class)
+    ResponseEntity<ApiResponse> handleAuthorizationDeniedException(AuthorizationDeniedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
+                ApiResponse.builder()
+                        .status(ErrorCode.ACCESS_DENIED.getStatus())
+                        .message(ErrorCode.ACCESS_DENIED.getMessage())
+                        .build());
+    }
+
+    @ExceptionHandler(value = AuthenticationServiceException.class)
+    ResponseEntity<ApiResponse> handleAuthenticationServiceException(AuthenticationServiceException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
+                ApiResponse.builder()
+                        .status(ErrorCode.INVALID_TOKEN.getStatus())
+                        .message(ErrorCode.INVALID_TOKEN.getMessage())
                         .build());
     }
 }

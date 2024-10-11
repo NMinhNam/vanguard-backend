@@ -17,7 +17,10 @@ public enum ErrorCode {
     PASSWORD_INCORRECT(9999, "password incorrect"),
     JOSE_EXCEPTION(999, "Cannot sign JWT"),
     BAD_SQL(500, "bad sql"),
-    LIST_USER_EMPTY(1002, "List user empty")
+    LIST_USER_EMPTY(1002, "List user empty"),
+    ACCESS_DENIED(1003, "Access denied"),
+    UNAUTHENTICATED(1003, "unauthenticated"),
+    INVALID_TOKEN(1003, "invalid token"),
     ;
 
     private final int status;

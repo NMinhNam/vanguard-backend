@@ -3,6 +3,7 @@ package com.fpt.vanguard.util;
 import com.fpt.vanguard.exception.AppException;
 import com.fpt.vanguard.enums.ErrorCode;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,5 +32,12 @@ public class FormatDate {
         } catch (ParseException e) {
             throw new AppException(ErrorCode.DATE_EXCEPTION);
         }
+    }
+
+    public static Timestamp convertDateToTimestamp(Date date) {
+        if (date == null) {
+            return null;
+        }
+        return Timestamp.from(date.toInstant());
     }
 }

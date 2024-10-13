@@ -8,25 +8,26 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/nhan-vien")
+@RequestMapping("api/v1/employees")
 @RequiredArgsConstructor
 public class NhanVienController {
     private final NhanVienService nhanVienService;
 
-    @GetMapping("/getAllNhanVien")
+    @GetMapping
     public ApiResponse<List<NhanVienDtoResponse>> getAllNhanVien() {
-        ApiResponse<List<NhanVienDtoResponse>> apiResponse = new ApiResponse<>();
-        apiResponse.setStatus(HttpStatus.OK.value());
-        apiResponse.setSuccess(true);
-        apiResponse.setData(nhanVienService.getAllNhanVien());
-        return apiResponse;
+        return ApiResponse.<List<NhanVienDtoResponse>>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(nhanVienService.getAllNhanVien())
+                .build();
     }
 
-    @GetMapping("/getNhanVienById")
-    public ApiResponse<NhanVienDtoResponse> getNhanVienById(@RequestParam(name = "id") String id) {
+    @GetMapping("/{id}")
+    public ApiResponse<NhanVienDtoResponse> getNhanVienById(@PathVariable("id") String id) {
         ApiResponse<NhanVienDtoResponse> apiResponse = new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);
@@ -34,8 +35,8 @@ public class NhanVienController {
         return apiResponse;
     }
 
-    @GetMapping("/getNhanVien")
-    public ApiResponse<NhanVienDtoResponse> getNhanVien(NhanVienDtoRequest nhanVienDtoRequest) {
+    @PostMapping("/search")
+    public ApiResponse<NhanVienDtoResponse> getNhanVien(@RequestBody NhanVienDtoRequest nhanVienDtoRequest) throws ParseException {
         ApiResponse<NhanVienDtoResponse> apiResponse = new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);
@@ -43,12 +44,21 @@ public class NhanVienController {
         return apiResponse;
     }
 
-    @PostMapping("/saveNhanVien")
+    @PostMapping
     public ApiResponse<Integer> saveNhanVien(@RequestBody NhanVienDtoRequest nhanVienDtoRequest) {
         ApiResponse<Integer> apiResponse = new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);
         apiResponse.setData(nhanVienService.saveNhanVien(nhanVienDtoRequest));
+        return apiResponse;
+    }
+
+    @DeleteMapping("/{id}")
+    public ApiResponse<Integer> deleteNhanVien(@PathVariable("id") String id) {
+        ApiResponse<Integer> apiResponse = new ApiResponse<>();
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setSuccess(true);
+        apiResponse.setData(nhanVienService.deleteNhanVien(id));
         return apiResponse;
     }
 }

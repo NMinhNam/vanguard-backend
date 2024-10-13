@@ -1,5 +1,6 @@
 package com.fpt.vanguard.service.impl;
 
+import com.fpt.vanguard.dto.request.UserDtoRequest;
 import com.fpt.vanguard.dto.response.UserDtoResponse;
 import com.fpt.vanguard.entity.User;
 import com.fpt.vanguard.enums.ErrorCode;
@@ -44,5 +45,15 @@ public class UserServiceImpl implements UserService {
         User entity = userMapper.findByUsername(username)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXIST));
         return userMapstruct.toUserDtoResponse(entity);
+    }
+
+    @Override
+    public Integer saveUser(UserDtoRequest request) {
+        return 0;
+    }
+
+    @Override
+    public Integer deleteUser(String username) {
+        return 0;
     }
 }

@@ -1,6 +1,5 @@
 package com.fpt.vanguard.config;
 
-import com.fpt.vanguard.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,10 +8,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
-import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -21,10 +16,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final CustomJwtDecoder jwtDecoder;
+    private final CustomJwtAuthenticationConverter customJwtAuthenticationConverter;
     private final String[] PUBLIC_ENDPOINTS = {
             "/api/v1/auth/login",
             "/api/v1/auth/logout",
             "/api/v1/auth/introspect",
+            "/api/v1/auth/refresh"
     };
 
     @Bean
@@ -39,23 +36,9 @@ public class SecurityConfig {
                 .oauth2ResourceServer(oauth2Configurer -> oauth2Configurer
                         .jwt(jwtConfigurer -> jwtConfigurer
                                 .decoder(jwtDecoder)
-                                .jwtAuthenticationConverter(converter())
+                                .jwtAuthenticationConverter(customJwtAuthenticationConverter.converter())
                         )
         );
         return httpSecurity.build();
-    }
-
-    @Bean
-    JwtAuthenticationConverter converter() {
-        JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
-        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
-        return jwtAuthenticationConverter;
-    }
-
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(10);
     }
 }

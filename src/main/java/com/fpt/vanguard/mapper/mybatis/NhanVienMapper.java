@@ -19,4 +19,6 @@ public interface NhanVienMapper {
     int updateNhanVien(@Param("nhanVien") NhanVien nhanVien);
 
     boolean existsById(String id);
+
+    int deleteNhanVien(@Param("nhanVien") NhanVien nhanVien);
 }

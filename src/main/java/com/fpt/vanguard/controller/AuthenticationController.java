@@ -4,6 +4,7 @@ import com.fpt.vanguard.common.ApiResponse;
 import com.fpt.vanguard.dto.request.AuthenticationDtoRequest;
 import com.fpt.vanguard.dto.request.IntrospectDtoRequest;
 import com.fpt.vanguard.dto.request.LogoutDtoRequest;
+import com.fpt.vanguard.dto.request.RefreshDtoRequest;
 import com.fpt.vanguard.dto.response.AuthenticationDtoResponse;
 import com.fpt.vanguard.dto.response.IntrospectDtoResponse;
 import com.fpt.vanguard.service.AuthenticationService;
@@ -47,6 +48,15 @@ public class AuthenticationController {
                 .status(HttpStatus.OK.value())
                 .success(true)
                 .data(authenticationService.introspect(request))
+                .build();
+    }
+
+    @PostMapping("/refresh")
+    public ApiResponse<AuthenticationDtoResponse> refresh(@RequestBody RefreshDtoRequest request) throws ParseException, JOSEException {
+        return ApiResponse.<AuthenticationDtoResponse>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(authenticationService.refresh(request))
                 .build();
     }
 }

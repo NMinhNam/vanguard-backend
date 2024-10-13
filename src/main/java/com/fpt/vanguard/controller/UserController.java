@@ -1,16 +1,12 @@
 package com.fpt.vanguard.controller;
 
 import com.fpt.vanguard.common.ApiResponse;
+import com.fpt.vanguard.dto.request.UserDtoRequest;
 import com.fpt.vanguard.dto.response.UserDtoResponse;
 import com.fpt.vanguard.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,7 +16,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/getAll")
+    @GetMapping
     public ApiResponse<List<UserDtoResponse>> getAll() {
         return ApiResponse.<List<UserDtoResponse>>builder()
                 .status(HttpStatus.OK.value())
@@ -29,7 +25,7 @@ public class UserController {
                 .build();
     }
 
-    @GetMapping("/getUser")
+    @GetMapping("/search")
     public ApiResponse<UserDtoResponse> getUser(@RequestParam("username") String username) {
         return ApiResponse.<UserDtoResponse>builder()
                 .status(HttpStatus.OK.value())
@@ -38,12 +34,30 @@ public class UserController {
                 .build();
     }
 
-    @GetMapping("/info")
+    @GetMapping("/me")
     public ApiResponse<UserDtoResponse> getUserInfo() {
         return ApiResponse.<UserDtoResponse>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
                 .data(userService.getUserInfo())
+                .build();
+    }
+
+    @PostMapping
+    public ApiResponse<Integer> createUser(@RequestBody UserDtoRequest request) {
+        return ApiResponse.<Integer>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(userService.saveUser(request))
+                .build();
+    }
+
+    @DeleteMapping("/{username}")
+    public ApiResponse<Integer> deleteUser(@PathVariable("username") String username) {
+        return ApiResponse.<Integer>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(userService.deleteUser(username))
                 .build();
     }
 }

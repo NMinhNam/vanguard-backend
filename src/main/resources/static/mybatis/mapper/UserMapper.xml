@@ -35,6 +35,12 @@
         , r.role_name
         , r.role_description
     </sql>
+    <insert id="insert">
+    </insert>
+    <update id="update">
+    </update>
+    <delete id="delete">
+    </delete>
 
     <select id="findByUsername" resultMap="UserResultMap">
         SELECT
@@ -64,5 +70,7 @@
         <where>
             role_id = #{roleId}
         </where>
+    </select>
+    <select id="isExist">
     </select>
 </mapper>

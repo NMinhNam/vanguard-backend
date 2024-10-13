@@ -12,4 +12,8 @@ public interface UserMapper {
     Optional<User> findByUsername(@Param("userName") String username);
     List<User> findAll();
     Optional<User> findByRoleId(@Param("roleId") String roleId);
+    int insert(@Param("user") User user);
+    int update(@Param("user") User user);
+    boolean isExist(@Param("username") String username);
+    int delete(@Param("user") User user);
 }

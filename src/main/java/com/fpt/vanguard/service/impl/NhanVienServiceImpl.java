@@ -8,7 +8,6 @@ import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.mapper.mapstruct.NhanVienMapstruct;
 import com.fpt.vanguard.mapper.mybatis.NhanVienMapper;
 import com.fpt.vanguard.service.NhanVienService;
-import com.fpt.vanguard.util.FormatDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,23 +31,36 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public NhanVienDtoResponse getNhanVienById(String id) {
-        return nhanVienMapstruct.toNhanVienDtoResponse(Optional.ofNullable(nhanVienMapper.findById(id)).orElseThrow(() -> new AppException(ErrorCode.NHAN_VIEN_NOT_EXIST)));
+        return nhanVienMapstruct.toNhanVienDtoResponse(
+                Optional.ofNullable(nhanVienMapper.findById(id))
+                        .orElseThrow(() -> new AppException(ErrorCode.NHAN_VIEN_NOT_EXIST)
+                        )
+        );
     }
     
     @Override
     public NhanVienDtoResponse getNhanVien(NhanVienDtoRequest nhanVienDtoRequest) {
-        String ngaySinhFormatted = FormatDate.formatDateStringToStringFormat(nhanVienDtoRequest.getNgaySinh(), "dd/MM/yyyy", "yyyy-MM-dd");
-        nhanVienDtoRequest.setNgaySinh(ngaySinhFormatted);
-        NhanVien nhanVien = nhanVienMapper.findNhanVien(nhanVienMapstruct.toNhanVien(nhanVienDtoRequest));
+        NhanVien nhanVien = nhanVienMapper.findNhanVien(
+                nhanVienMapstruct.toNhanVien(nhanVienDtoRequest)
+        );
         return nhanVienMapstruct.toNhanVienDtoResponse(nhanVien);
     }
 
     @Override
     public Integer saveNhanVien(NhanVienDtoRequest nhanVienDtoRequest) {
         if (nhanVienMapper.existsById(nhanVienDtoRequest.getMaNhanVien())) {
-            return nhanVienMapper.updateNhanVien(nhanVienMapstruct.toNhanVien(nhanVienDtoRequest));
+            return nhanVienMapper.updateNhanVien(
+                    nhanVienMapstruct.toNhanVien(nhanVienDtoRequest)
+            );
         } else {
-            return nhanVienMapper.insertNhanVien(nhanVienMapstruct.toNhanVien(nhanVienDtoRequest));
+            return nhanVienMapper.insertNhanVien(
+                    nhanVienMapstruct.toNhanVien(nhanVienDtoRequest)
+            );
         }
+    }
+
+    @Override
+    public Integer deleteNhanVien(String id) {
+        return 0;
     }
 }

@@ -3,6 +3,7 @@ package com.fpt.vanguard.service.impl;
 import com.fpt.vanguard.dto.request.AuthenticationDtoRequest;
 import com.fpt.vanguard.dto.request.IntrospectDtoRequest;
 import com.fpt.vanguard.dto.request.LogoutDtoRequest;
+import com.fpt.vanguard.dto.request.RefreshDtoRequest;
 import com.fpt.vanguard.dto.response.AuthenticationDtoResponse;
 import com.fpt.vanguard.dto.response.IntrospectDtoResponse;
 import com.fpt.vanguard.entity.InvalidatedToken;
@@ -24,7 +25,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -47,14 +47,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXIST));
         boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
         if (!authenticated) throw new AppException(ErrorCode.PASSWORD_INCORRECT);
-        var token = generateToken(user);
+        var accessToken = generateToken(user);
         return AuthenticationDtoResponse.builder()
-                .token(token)
+                .token(accessToken)
                 .build();
     }
 
-    @Override
-    public String generateToken(User user) throws JOSEException {
+    private String generateToken(User user) throws JOSEException {
         var roleName = user.getRole().getRoleName();
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS256);
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
@@ -76,8 +75,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public Void logout(LogoutDtoRequest request) throws ParseException, JOSEException {
         var signedJWT = verifyToken(request.getToken());
         String jwtId = signedJWT.getJWTClaimsSet().getJWTID();
-        Date expirationTime = signedJWT.getJWTClaimsSet().getExpirationTime();
-        var expTime = FormatDate.convertDateToTimestamp(expirationTime);
+        Date expirationTimeNonFormat = signedJWT.getJWTClaimsSet().getExpirationTime();
+        var expTime = FormatDate.convertDateToTimestamp(expirationTimeNonFormat);
         InvalidatedToken invalidatedToken = InvalidatedToken.builder()
                 .id(jwtId)
                 .expTime(expTime)
@@ -92,6 +91,25 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         verifyToken(token);
         return IntrospectDtoResponse.builder()
                 .valid(true)
+                .build();
+    }
+
+    @Override
+    public AuthenticationDtoResponse refresh(RefreshDtoRequest request) throws ParseException, JOSEException {
+        SignedJWT signedJWT = verifyToken(request.getToken());
+        String jwtId = signedJWT.getJWTClaimsSet().getJWTID();
+        Date expTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+        InvalidatedToken invalidatedToken = InvalidatedToken.builder()
+                .id(jwtId)
+                .expTime(expTime)
+                .build();
+        tokenMapper.insertInvalidatedToken(invalidatedToken);
+        String username = signedJWT.getJWTClaimsSet().getSubject();
+        var user = userMapper.findByUsername(username)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXIST));
+        var refreshToken = generateToken(user);
+        return AuthenticationDtoResponse.builder()
+                .token(refreshToken)
                 .build();
     }
 

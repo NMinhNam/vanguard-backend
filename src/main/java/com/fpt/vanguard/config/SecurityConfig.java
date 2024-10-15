@@ -30,6 +30,7 @@ public class SecurityConfig {
         httpSecurity
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
+                        .requestMatchers("/api/v1/*/*").permitAll()
                         .anyRequest().authenticated()
                 )
 

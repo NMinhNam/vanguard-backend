@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @PostAuthorize("returnObject.userName == authentication.name")
+    @PreAuthorize("#userName == authentication.name")
     public UserDtoResponse getUserByUserName(String userName) {
         var entity = userMapper.findByUsername(userName)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXIST));

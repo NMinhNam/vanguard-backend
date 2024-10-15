@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/bo_phan")
+@RequestMapping("api/v1/bo-phan")
 @RequiredArgsConstructor
 @CrossOrigin
 public class BoPhanController {
     private final BoPhanService boPhanService;
 
-    @GetMapping("/getAllBoPhan")
+    @GetMapping
     public ApiResponse<List<BoPhanDtoResponse>> getAllBoPhan() {
         ApiResponse<List<BoPhanDtoResponse>> apiResponse = new ApiResponse<>();
         apiResponse.setData(boPhanService.getAllBoPhan());
@@ -26,7 +26,7 @@ public class BoPhanController {
         return apiResponse;
     }
 
-    @GetMapping("/getBoPhanByMaBoPhan")
+    @GetMapping("/search")
     public ApiResponse<BoPhanDtoResponse> getBoPhanByMaBoPhan(@RequestParam("maBoPhan") String maBoPhan) {
         ApiResponse<BoPhanDtoResponse> apiResponse = new ApiResponse<>();
         apiResponse.setData(boPhanService.findBoPhanByMaBoPhan(maBoPhan));
@@ -35,7 +35,7 @@ public class BoPhanController {
         return apiResponse;
     }
 
-    @PostMapping("/saveBoPhan")
+    @PostMapping
     public ApiResponse<Integer> saveBoPhan(@RequestBody BoPhanDtoRequest boPhan){
         ApiResponse<Integer> apiResponse = new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());
@@ -44,8 +44,8 @@ public class BoPhanController {
         return apiResponse;
     }
 
-    @DeleteMapping("/deleteBoPhan")
-    public ApiResponse<Integer> deleteBoPhan(@RequestParam("maBoPhan") String maBoPhan){
+    @DeleteMapping("/{maBoPhan}")
+    public ApiResponse<Integer> deleteBoPhan(@PathVariable("maBoPhan") String maBoPhan){
         ApiResponse<Integer> apiResponse =new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);

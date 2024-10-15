@@ -105,7 +105,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Void logout(LogoutDtoRequest request) throws ParseException, JOSEException {
-        var signedJWT = verifyToken(request.getToken());
+        var signedJWT = verifyToken(request.getToken(), false);
         String jwtId = signedJWT.getJWTClaimsSet().getJWTID();
         Date expirationTime = signedJWT.getJWTClaimsSet().getExpirationTime();
         var expTime = DateUtil.convertDateToTimestamp(expirationTime);
@@ -121,7 +121,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public IntrospectDtoResponse introspect(IntrospectDtoRequest request) throws JOSEException, ParseException {
-        verifyToken(request.getToken());
+        verifyToken(request.getToken(), false);
         return IntrospectDtoResponse.builder()
                 .valid(true)
                 .build();
@@ -129,7 +129,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationDtoResponse refresh(RefreshDtoRequest request) throws ParseException, JOSEException {
-        SignedJWT signedJWT = verifyToken(request.getRefreshToken());
+        SignedJWT signedJWT = verifyToken(request.getRefreshToken(), true);
 
         var tokenType = signedJWT.getJWTClaimsSet().getClaim("token_type");
         String username = signedJWT.getJWTClaimsSet().getSubject();
@@ -159,9 +159,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
     }
 
-    private SignedJWT verifyToken(String token) throws JOSEException, ParseException {
+    private SignedJWT verifyToken(String token, Boolean isRefresh) throws JOSEException, ParseException {
         SignedJWT signedJWT = SignedJWT.parse(token);
         JWSVerifier verifier = new MACVerifier(SECRET_KEY.getBytes());
+
+        var tokenType = signedJWT.getJWTClaimsSet().getClaim("token_type");
+        if (isRefresh && !"refresh".equals(tokenType)) {
+            throw new AppException(ErrorCode.INVALID_TOKEN);
+        } else if (!isRefresh && !"access".equals(tokenType)) {
+            throw new AppException(ErrorCode.INVALID_TOKEN);
+        }
 
         Date expiration = signedJWT.getJWTClaimsSet().getExpirationTime();
         boolean isExpired = expiration.after(new Date());

@@ -2,8 +2,8 @@ package com.fpt.vanguard.service.impl;
 
 import com.fpt.vanguard.dto.request.UngLuongDtoRequest;
 import com.fpt.vanguard.dto.response.UngLuongDtoResponse;
+import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.exception.AppException;
-import com.fpt.vanguard.exception.ErrorCode;
 import com.fpt.vanguard.mapper.mapstruct.UngLuongMapstructMapper;
 import com.fpt.vanguard.mapper.mybatis.UngLuongMybatisMapper;
 import com.fpt.vanguard.service.UngLuongService;

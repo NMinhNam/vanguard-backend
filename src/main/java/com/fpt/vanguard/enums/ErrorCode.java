@@ -12,6 +12,8 @@ public enum ErrorCode {
     LIST_NHAN_VIEN_EMPTY(1002, "list nhan vien rong"),
     LIST_BO_PHAN_EMPTY(1002, "list bo phan rong"),
     BO_PHAN_NOT_EXIST(1000, "bo phan khong ton tai"),
+    LIST_UNG_LUONG_EMPTY(1002, "list ung luon rong"),
+    UNG_LUONG_NOT_EXIST(1000, "ung luon khong ton tai"),
     DATE_EXCEPTION(999, "date exception"),
     USER_NOT_EXIST(1000, "user not exist"),
     PASSWORD_INCORRECT(9999, "password incorrect"),

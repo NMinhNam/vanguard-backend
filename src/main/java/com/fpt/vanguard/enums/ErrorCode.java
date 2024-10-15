@@ -21,6 +21,7 @@ public enum ErrorCode {
     ACCESS_DENIED(1003, "Access denied"),
     UNAUTHENTICATED(1003, "unauthenticated"),
     INVALID_TOKEN(1003, "invalid token"),
+    RESOURCE_NOT_FOUND(1004, "resource not found! Endpoints fail"),
     ;
 
     private final int status;

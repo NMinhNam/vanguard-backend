@@ -1,5 +1,5 @@
 server:
-  port: 1688
+  port: 1687
 
 spring:
   application:
@@ -17,3 +17,4 @@ mybatis:
 
 jwt:
   signer-key: "gXNsKvdcP2xd0tfC9IxZjr8lbcqUIBhhdgyD5kD1cyXbiZUD4yu6BOZOWlAKss/Z"
+

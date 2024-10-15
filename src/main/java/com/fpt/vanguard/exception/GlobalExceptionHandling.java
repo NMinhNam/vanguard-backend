@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.format.DateTimeParseException;
 
@@ -74,6 +75,15 @@ public class GlobalExceptionHandling {
                 ApiResponse.builder()
                         .status(ErrorCode.INVALID_TOKEN.getStatus())
                         .message(ErrorCode.INVALID_TOKEN.getMessage())
+                        .build());
+    }
+
+    @ExceptionHandler(value = NoResourceFoundException.class)
+    ResponseEntity<ApiResponse> handleNoResourceFoundException(NoResourceFoundException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                ApiResponse.builder()
+                        .status(ErrorCode.RESOURCE_NOT_FOUND.getStatus())
+                        .message(ErrorCode.RESOURCE_NOT_FOUND.getMessage())
                         .build());
     }
 }

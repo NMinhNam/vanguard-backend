@@ -24,6 +24,10 @@ spring:
             enable: true
             required: true
 
+  thymeleaf:
+    prefix: classpath:/templates/mail-templates/
+    suffix: .html
+
 mybatis:
   config-location: classpath:/static/mybatis/mybatis-config.xml
   mapper-locations: classpath:/static/mybatis/mapper/*.xml

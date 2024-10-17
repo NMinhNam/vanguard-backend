@@ -1,4 +1,4 @@
-package com.fpt.vanguard.dto.response;
+package com.fpt.vanguard.common;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

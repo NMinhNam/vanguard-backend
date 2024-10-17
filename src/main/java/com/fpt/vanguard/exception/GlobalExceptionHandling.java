@@ -1,6 +1,6 @@
 package com.fpt.vanguard.exception;
 
-import com.fpt.vanguard.dto.response.ApiResponse;
+import com.fpt.vanguard.common.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.BadSqlGrammarException;

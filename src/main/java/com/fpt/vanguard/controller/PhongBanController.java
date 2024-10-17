@@ -1,7 +1,7 @@
 package com.fpt.vanguard.controller;
 
 import com.fpt.vanguard.dto.request.PhongBanDtoRequest;
-import com.fpt.vanguard.dto.response.ApiResponse;
+import com.fpt.vanguard.common.ApiResponse;
 import com.fpt.vanguard.dto.response.PhongBanDtoResponse;
 import com.fpt.vanguard.exception.ErrorCode;
 import com.fpt.vanguard.service.PhongBanService;

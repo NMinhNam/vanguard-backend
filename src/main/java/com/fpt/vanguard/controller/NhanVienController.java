@@ -1,7 +1,7 @@
 package com.fpt.vanguard.controller;
 
 import com.fpt.vanguard.dto.request.NhanVienDtoRequest;
-import com.fpt.vanguard.dto.response.ApiResponse;
+import com.fpt.vanguard.common.ApiResponse;
 import com.fpt.vanguard.dto.response.NhanVienDtoResponse;
 import com.fpt.vanguard.exception.ErrorCode;
 import com.fpt.vanguard.service.NhanVienService;

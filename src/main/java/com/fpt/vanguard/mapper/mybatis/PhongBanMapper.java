@@ -8,8 +8,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface PhongBanMybatisMapper {
-    List<PhongBan> getAllPhongBan();
+public interface PhongBanMapper {
+    List<PhongBan> findAll();
 
     PhongBan findById(String id);
 

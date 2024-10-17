@@ -6,7 +6,7 @@ import com.fpt.vanguard.entity.UngLuong;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface UngLuongMapstructMapper {
+public interface UngLuongMapstruct {
     UngLuong toUngLuong(UngLuongDtoRequest ungLuong);
 
     UngLuongDtoResponse toUngLuongDtoResponse(UngLuong ungLuong);

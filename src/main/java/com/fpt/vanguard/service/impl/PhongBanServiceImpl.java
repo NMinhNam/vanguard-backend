@@ -4,8 +4,8 @@ import com.fpt.vanguard.dto.request.PhongBanDtoRequest;
 import com.fpt.vanguard.dto.response.PhongBanDtoResponse;
 import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.exception.AppException;
-import com.fpt.vanguard.mapper.mapstruct.PhongBanMapstructMapper;
-import com.fpt.vanguard.mapper.mybatis.PhongBanMybatisMapper;
+import com.fpt.vanguard.mapper.mapstruct.PhongBanMapstruct;
+import com.fpt.vanguard.mapper.mybatis.PhongBanMapper;
 import com.fpt.vanguard.service.PhongBanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,23 +16,22 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class PhongBanServiceImpl implements PhongBanService {
-    private final PhongBanMapstructMapper phongBanMapstructMapper;
-    private final PhongBanMybatisMapper phongBanMybatisMapper;
+    private final PhongBanMapstruct phongBanMapstruct;
+    private final PhongBanMapper phongBanMapper;
 
     @Override
     public List<PhongBanDtoResponse> getAllPhongBan() {
-        List<PhongBanDtoResponse> listResultEntity = phongBanMybatisMapper.getAllPhongBan()
-                .stream()
-                .map(phongBanMapstructMapper::toPhongBanDtoResponse)
-                .toList();
+        var listEntity = phongBanMapper.findAll();
+        List<PhongBanDtoResponse> listResultEntity =
+                phongBanMapstruct.toPhongBanDtoResponseList(listEntity);
         if(listResultEntity.isEmpty()) throw new AppException(ErrorCode.LIST_PHONG_BAN_EMPTY);
         return listResultEntity;
     }
 
     @Override
     public PhongBanDtoResponse findPhongBanByMaPhongBan(String maPhongBan) {
-        PhongBanDtoResponse resultEntity = phongBanMapstructMapper.toPhongBanDtoResponse(
-                phongBanMybatisMapper.findById(maPhongBan)
+        PhongBanDtoResponse resultEntity = phongBanMapstruct.toPhongBanDtoResponse(
+                phongBanMapper.findById(maPhongBan)
         );
         if(!Objects.nonNull(resultEntity)) throw new AppException(ErrorCode.PHONG_BAN_NOT_EXIST);
         return resultEntity;
@@ -40,16 +39,17 @@ public class PhongBanServiceImpl implements PhongBanService {
 
     @Override
     public int savePhongBan(PhongBanDtoRequest phongBan) {
-        if(phongBanMybatisMapper.isExist(phongBan.getMaPhongBan())){
-            return phongBanMybatisMapper.updatePhongBan(phongBan);
+        if(phongBanMapper.isExist(phongBan.getMaPhongBan())){
+            return phongBanMapper.updatePhongBan(phongBan);
         }else {
-            return phongBanMybatisMapper.insertPhongBan(phongBan);
+            return phongBanMapper.insertPhongBan(phongBan);
         }
     }
 
     @Override
     public int deletePhongBan(String maPhongBan) {
-        if (!phongBanMybatisMapper.isExist(maPhongBan)) throw new AppException(ErrorCode.PHONG_BAN_NOT_EXIST);
-        return phongBanMybatisMapper.deletePhongBan(maPhongBan);
+        if (!phongBanMapper.isExist(maPhongBan))
+            throw new AppException(ErrorCode.PHONG_BAN_NOT_EXIST);
+        return phongBanMapper.deletePhongBan(maPhongBan);
     }
 }

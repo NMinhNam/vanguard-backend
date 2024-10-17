@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fpt.vanguard.mapper.mybatis.PhongBanMybatisMapper">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.PhongBanMapper">
 
     <resultMap id="PhongBanResultMap" type="PhongBan">
         <id column="ma_phong_ban" property="maPhongBan"/>
         <result column="ten_phong_ban" property="tenPhongBan"/>
         <result column="truong_phong" property="truongPhong"/>
+        <result column="so_luong_nhan_vien" property="soLuongNhanVien"/>
     </resultMap>
 
-    <select id="getAllPhongBan" resultMap="PhongBanResultMap">
-        SELECT  ma_phong_ban
-                ,ten_phong_ban
-                ,truong_phong
-        FROM phong_ban
-        ORDER BY ma_phong_ban
+    <select id="findAll" resultMap="PhongBanResultMap">
+        SELECT p.ma_phong_ban,
+               p.ten_phong_ban,
+               n.ho_ten AS truong_phong,
+               COUNT(nv.ma_nhan_vien) AS so_luong_nhan_vien
+        FROM phong_ban p
+                 LEFT JOIN nhan_vien n
+                           ON p.truong_phong = n.ma_nhan_vien
+                 LEFT JOIN nhan_vien nv
+                           ON nv.ma_phong_ban = p.ma_phong_ban
+        GROUP BY p.ma_phong_ban,
+                 p.ten_phong_ban,
+                 n.ho_ten;
     </select>
 
     <select id="findById" resultMap="PhongBanResultMap" parameterType="String">

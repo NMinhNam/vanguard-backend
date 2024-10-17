@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface UngLuongMybatisMapper {
+public interface UngLuongMapper {
     List<UngLuong> findAll();
 
     UngLuong findById(String id);

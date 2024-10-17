@@ -11,4 +11,7 @@ public class PhongBanDtoResponse {
     private String maPhongBan;
     private String tenPhongBan;
     private String truongPhong;
+
+    // Số lượng nhân viên trong phòng ban, được tính từ kết quả truy vấn SQL.
+    private Integer soLuongNhanVien;
 }

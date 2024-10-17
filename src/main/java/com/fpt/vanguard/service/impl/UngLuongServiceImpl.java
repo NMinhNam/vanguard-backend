@@ -4,8 +4,8 @@ import com.fpt.vanguard.dto.request.UngLuongDtoRequest;
 import com.fpt.vanguard.dto.response.UngLuongDtoResponse;
 import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.exception.AppException;
-import com.fpt.vanguard.mapper.mapstruct.UngLuongMapstructMapper;
-import com.fpt.vanguard.mapper.mybatis.UngLuongMybatisMapper;
+import com.fpt.vanguard.mapper.mapstruct.UngLuongMapstruct;
+import com.fpt.vanguard.mapper.mybatis.UngLuongMapper;
 import com.fpt.vanguard.service.UngLuongService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,14 +16,14 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UngLuongServiceImpl implements UngLuongService {
-    private final UngLuongMybatisMapper ungLuongMybatisMapper;
-    private final UngLuongMapstructMapper ungLuongMapstructMapper;
+    private final UngLuongMapper ungLuongMapper;
+    private final UngLuongMapstruct ungLuongMapstruct;
 
     @Override
     public List<UngLuongDtoResponse> getAllUngLuong() {
-        List<UngLuongDtoResponse> listResultEntity = ungLuongMybatisMapper.findAll()
+        List<UngLuongDtoResponse> listResultEntity = ungLuongMapper.findAll()
                 .stream()
-                .map(ungLuongMapstructMapper::toUngLuongDtoResponse)
+                .map(ungLuongMapstruct::toUngLuongDtoResponse)
                 .toList();
         if (listResultEntity.isEmpty()) throw new AppException(ErrorCode.LIST_UNG_LUONG_EMPTY);
         return listResultEntity;
@@ -31,8 +31,8 @@ public class UngLuongServiceImpl implements UngLuongService {
 
     @Override
     public UngLuongDtoResponse getUngLuongById(String id) {
-        return ungLuongMapstructMapper.toUngLuongDtoResponse(
-                Optional.ofNullable(ungLuongMybatisMapper.findById(id))
+        return ungLuongMapstruct.toUngLuongDtoResponse(
+                Optional.ofNullable(ungLuongMapper.findById(id))
                         .orElseThrow(() -> new AppException(ErrorCode.UNG_LUONG_NOT_EXIST))
         );
     }
@@ -46,23 +46,23 @@ public class UngLuongServiceImpl implements UngLuongService {
         System.out.println(ungLuongDtoRequest.getSoTien());
         System.out.println(ungLuongDtoRequest.getTrangThai());
         System.out.println(ungLuongDtoRequest.getMaNhanVien());
-        return ungLuongMapstructMapper.toUngLuongDtoResponse(
-                ungLuongMybatisMapper.findUngLuong(ungLuongDtoRequest)
+        return ungLuongMapstruct.toUngLuongDtoResponse(
+                ungLuongMapper.findUngLuong(ungLuongDtoRequest)
         );
     }
 
     @Override
     public int saveUngLuong(UngLuongDtoRequest ungLuongDtoRequest) {
-        if(ungLuongMybatisMapper.existsById(ungLuongDtoRequest.getMaUngLuong())){
-            return ungLuongMybatisMapper.updateUngLuong(ungLuongDtoRequest);
+        if(ungLuongMapper.existsById(ungLuongDtoRequest.getMaUngLuong())){
+            return ungLuongMapper.updateUngLuong(ungLuongDtoRequest);
         }else {
-            return ungLuongMybatisMapper.insertUngLuong(ungLuongDtoRequest);
+            return ungLuongMapper.insertUngLuong(ungLuongDtoRequest);
         }
     }
 
     @Override
     public int deleteUngLuong(String maUngLuong) {
-        if (!ungLuongMybatisMapper.existsById(maUngLuong)) throw new AppException(ErrorCode.UNG_LUONG_NOT_EXIST);
-        return ungLuongMybatisMapper.deleteUngLuong(maUngLuong);
+        if (!ungLuongMapper.existsById(maUngLuong)) throw new AppException(ErrorCode.UNG_LUONG_NOT_EXIST);
+        return ungLuongMapper.deleteUngLuong(maUngLuong);
     }
 }

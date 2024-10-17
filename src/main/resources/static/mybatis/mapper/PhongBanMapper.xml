@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.PhongBanMybatisMapper">
+
+    <resultMap id="PhongBanResultMap" type="PhongBan">
+        <id column="ma_phong_ban" property="maPhongBan"/>
+        <result column="ten_phong_ban" property="tenPhongBan"/>
+        <result column="truong_phong" property="truongPhong"/>
+    </resultMap>
+
+    <select id="getAllPhongBan" resultMap="PhongBanResultMap">
+        SELECT  ma_phong_ban
+                ,ten_phong_ban
+                ,truong_phong
+        FROM phong_ban
+        ORDER BY ma_phong_ban
+    </select>
+
+    <select id="findById" resultMap="PhongBanResultMap" parameterType="String">
+        SELECT  ma_phong_ban
+             ,ten_phong_ban
+             ,truong_phong
+        FROM phong_ban
+            <if test="id != null and id != ''">
+                WHERE ma_phong_ban = #{id}
+            </if>
+    </select>
+
+    <select id="isExist" parameterType="String" resultType="Boolean">
+        SELECT COUNT(ma_phong_ban) > 0
+        FROM phong_ban
+        WHERE ma_phong_ban = #{id}
+    </select>
+
+    <insert id="insertPhongBan" parameterType="com.fpt.vanguard.dto.request.PhongBanDtoRequest">
+        INSERT INTO phong_ban (ma_phong_ban, ten_phong_ban, truong_phong)
+        VALUES (
+            #{PhongBan.maPhongBan}
+            ,#{PhongBan.tenPhongBan}
+            ,#{PhongBan.truongPhong}
+        )
+    </insert>
+
+    <update id="updatePhongBan" parameterType="com.fpt.vanguard.dto.request.PhongBanDtoRequest">
+        UPDATE phong_ban
+        SET ten_phong_ban = #{PhongBan.tenPhongBan},
+            truong_phong = #{PhongBan.truongPhong},
+        WHERE ma_phong_ban = #{PhongBan.maPhongBan};
+    </update>
+
+    <delete id="deletePhongBan">
+        DELETE FROM phong_ban
+        WHERE ma_phong_ban = #{id}
+    </delete>
+</mapper>

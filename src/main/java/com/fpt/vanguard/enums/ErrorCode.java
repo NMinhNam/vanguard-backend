@@ -11,6 +11,8 @@ public enum ErrorCode {
     NHAN_VIEN_EXISTED(1001, "nhan vien da ton tai"),
     LIST_NHAN_VIEN_EMPTY(1002, "list nhan vien rong"),
     LIST_BO_PHAN_EMPTY(1002, "list bo phan rong"),
+    LIST_PHONG_BAN_EMPTY(1002, "list phong ban rong"),
+    PHONG_BAN_NOT_EXIST(1000, "phong ban khong ton tai"),
     BO_PHAN_NOT_EXIST(1000, "bo phan khong ton tai"),
     LIST_UNG_LUONG_EMPTY(1002, "list ung luon rong"),
     UNG_LUONG_NOT_EXIST(1000, "ung luon khong ton tai"),

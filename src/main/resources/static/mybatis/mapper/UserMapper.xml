@@ -35,11 +35,29 @@
         , r.role_name
         , r.role_description
     </sql>
-    <insert id="insert">
+
+    <insert id="insert" parameterType="User">
+        INSERT INTO "user" (
+            user_name,
+            password,
+            email,
+            role_id
+        )
+        VALUES (
+           #{user.userName},
+           #{user.password},
+           #{user.email},
+           #{user.role.roleId}
+               )
     </insert>
+
     <update id="update">
     </update>
+
     <delete id="delete">
+        UPDATE "user"
+        SET enabled = false
+        WHERE user_name = #{username};
     </delete>
 
     <select id="findByUsername" resultMap="UserResultMap">

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.UngLuongMapper">
+
+    <resultMap id="UngLuongResultMap" type="UngLuong">
+        <id property="maUngLuong" column="ma_ung_luong"/>
+        <result property="nam" column="nam"/>
+        <result property="thang" column="thang"/>
+        <result property="ngay" column="ngay"/>
+        <result property="soTien" column="so_tien"/>
+        <result property="trangThai" column="trang_thai"/>
+        <result property="maNhanVien" column="ma_nhan_vien"/>
+    </resultMap>
+
+    <sql id="UngLuongColumnList">
+        ma_ung_luong
+        , nam
+        , thang
+        , ngay
+        , so_tien
+        , trang_thai
+        , ma_nhan_vien
+    </sql>
+
+    <sql id="UngLuongWhereClause">
+
+    </sql>
+
+    <insert id="insertUngLuong" parameterType="com.fpt.vanguard.dto.request.UngLuongDtoRequest">
+        INSERT INTO ung_luong (ma_ung_luong,
+                               nam,
+                               thang,
+                               ngay,
+                               so_tien,
+                               trang_thai,
+                               ma_nhan_vien)
+        VALUES (#{ungLuong.maUngLuong},
+                #{ungLuong.nam},
+                #{ungLuong.thang},
+                #{ungLuong.ngay},
+                #{ungLuong.soTien},
+                #{ungLuong.trangThai},
+                #{ungLuong.maNhanVien})
+    </insert>
+
+
+    <update id="updateUngLuong" parameterType="com.fpt.vanguard.dto.request.UngLuongDtoRequest">
+        UPDATE ung_luong
+        <set>
+            <if test="ungLuong.nam != null">nam = #{ungLuong.nam},</if>
+            <if test="ungLuong.thang != null">thang = #{ungLuong.thang},</if>
+            <if test="ungLuong.ngay != null">ngay = #{ungLuong.ngay},</if>
+            <if test="ungLuong.soTien != null">so_tien = #{ungLuong.soTien},</if>
+            <if test="ungLuong.trangThai != null">trang_thai = #{ungLuong.trangThai},</if>
+            <if test="ungLuong.maNhanVien != null">ma_nhan_vien = #{ungLuong.maNhanVien},</if>
+        </set>
+        WHERE ma_ung_luong = #{ungLuong.maUngLuong}
+    </update>
+
+    <delete id="deleteUngLuong">
+         DELETE FROM ung_luong
+         WHERE ma_ung_luong = #{id}
+    </delete>
+
+    <select id="findAll" resultMap="UngLuongResultMap">
+        SELECT
+        <include refid="UngLuongColumnList"/>
+        FROM ung_luong ul
+        ORDER BY ul.ma_ung_luong
+    </select>
+
+    <select id="findById" parameterType="String" resultMap="UngLuongResultMap">
+        SELECT
+        <include refid="UngLuongColumnList"/>
+        FROM ung_luong
+        <where>
+            <if test="id != null">
+                ma_ung_luong = #{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="existsById" parameterType="String" resultType="Boolean">
+        SELECT
+        COUNT(*) > 0
+        FROM ung_luong
+        <where>
+            ma_ung_luong = #{id}
+        </where>
+    </select>
+
+    <select id="findUngLuong"
+            resultMap="UngLuongResultMap">
+        SELECT
+        <include refid="UngLuongColumnList"/>
+        FROM ung_luong
+        <where>
+            1 = 1
+            <if test="ungLuong.maUngLuong != null and ungLuong.maUngLuong != ''">
+                AND ma_ung_luong = #{ungLuong.maUngLuong}
+            </if>
+            <if test="ungLuong.nam != null and ungLuong.nam != ''">
+                AND nam = #{ungLuong.nam}
+            </if>
+            <if test="ungLuong.thang != null and ungLuong.thang != ''">
+                AND thang = #{ungLuong.thang}
+            </if>
+            <if test="ungLuong.ngay != null and ungLuong.ngay != ''">
+                AND ngay = #{ungLuong.ngay}
+            </if>
+            <if test="ungLuong.soTien != null and ungLuong.soTien != ''">
+                AND so_tien = #{ungLuong.soTien}
+            </if>
+            <if test="ungLuong.trangThai != null and ungLuong.trangThai != ''">
+                AND trang_thai = #{ungLuong.trangThai}
+            </if>
+            <if test="ungLuong.maNhanVien != null and ungLuong.maNhanVien != ''">
+                AND ma_nhan_vien = #{ungLuong.maNhanVien}
+            </if>
+        </where>
+    </select>
+</mapper>

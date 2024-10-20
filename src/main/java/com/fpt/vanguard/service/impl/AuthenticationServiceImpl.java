@@ -45,7 +45,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public AuthenticationDtoResponse authenticate(AuthenticationDtoRequest request) throws JOSEException {
         var user = userMapper.findByUsername(request.getUsername())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXIST));
-
+        if (user.getEnabled().equals(false)) throw new AppException(ErrorCode.ACCOUNT_HAS_BEEN_DISABLE);
         boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
         if (!authenticated) throw new AppException(ErrorCode.PASSWORD_INCORRECT);
         String jwtId = generateUUID();
@@ -68,7 +68,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .issueTime(new Date())
                 .expirationTime(Date.from(
                         Instant.now()
-                                .plus(1, ChronoUnit.HOURS)
+                                .plus(1, ChronoUnit.MINUTES)
                         )
                 )
                 .claim("token_type", "access")

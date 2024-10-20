@@ -14,6 +14,7 @@ public enum ErrorCode {
     BO_PHAN_NOT_EXIST(1000, "bo phan khong ton tai"),
     DATE_EXCEPTION(999, "date exception"),
     USER_NOT_EXIST(1000, "user not exist"),
+    USER_EXISTED(1001, "user da ton tai"),
     PASSWORD_INCORRECT(9999, "password incorrect"),
     JOSE_EXCEPTION(999, "Cannot sign JWT"),
     BAD_SQL(500, "bad sql"),
@@ -22,6 +23,7 @@ public enum ErrorCode {
     UNAUTHENTICATED(1003, "unauthenticated"),
     INVALID_TOKEN(1003, "invalid token"),
     RESOURCE_NOT_FOUND(1004, "resource not found! Endpoints fail"),
+    ACCOUNT_HAS_BEEN_DISABLE(1003, "Tai khoan da bi vo hieu hoa"),
     ;
 
     private final int status;

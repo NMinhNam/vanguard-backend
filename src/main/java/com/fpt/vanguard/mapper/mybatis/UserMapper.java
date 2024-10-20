@@ -15,5 +15,5 @@ public interface UserMapper {
     int insert(@Param("user") User user);
     int update(@Param("user") User user);
     boolean isExist(@Param("username") String username);
-    int delete(@Param("user") User user);
+    int delete(@Param("username") String username);
 }

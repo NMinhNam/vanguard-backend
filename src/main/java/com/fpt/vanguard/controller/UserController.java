@@ -44,7 +44,7 @@ public class UserController {
                 .build();
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ApiResponse<Integer> createUser(@RequestBody UserDtoRequest request) {
         return ApiResponse.<Integer>builder()
                 .status(HttpStatus.OK.value())

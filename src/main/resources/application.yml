@@ -11,6 +11,23 @@ spring:
     username: postgres
     password: root123
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: minhnam1810@gmail.com
+    password: badl gfvc rbcz zavi
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+  thymeleaf:
+    prefix: classpath:/templates/mail-templates/
+    suffix: .html
+
 mybatis:
   config-location: classpath:/static/mybatis/mybatis-config.xml
   mapper-locations: classpath:/static/mybatis/mapper/*.xml

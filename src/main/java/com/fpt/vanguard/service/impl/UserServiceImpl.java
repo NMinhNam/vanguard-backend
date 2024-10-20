@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer deleteUser(String username) {
-        if (userMapper.isExist(username)) throw new AppException(ErrorCode.USER_NOT_EXIST);
+        if (!userMapper.isExist(username)) throw new AppException(ErrorCode.USER_NOT_EXIST);
 
         return userMapper.delete(username);
     }

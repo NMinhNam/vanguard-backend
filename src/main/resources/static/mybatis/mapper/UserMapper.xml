@@ -20,6 +20,8 @@
         <id property="userId" column="id"/>
         <result property="userName" column="username"/>
         <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="enabled" column="enabled"/>
     </resultMap>
 
     <sql id="ColumnUser">
@@ -54,11 +56,11 @@
     <update id="update">
     </update>
 
-    <delete id="delete">
+    <update id="delete">
         UPDATE "user"
         SET enabled = false
-        WHERE user_name = #{username};
-    </delete>
+        WHERE user_name = #{username}
+    </update>
 
     <select id="findByUsername" resultMap="UserResultMap">
         SELECT
@@ -89,6 +91,10 @@
             role_id = #{roleId}
         </where>
     </select>
+
     <select id="isExist">
+        SELECT COUNT(1) > 0
+        FROM "user"
+        WHERE user_name = #{username}
     </select>
 </mapper>

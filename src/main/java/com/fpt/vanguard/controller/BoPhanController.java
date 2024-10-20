@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/bo-phan")
+@RequestMapping("api/v1/bo_phan")
 @RequiredArgsConstructor
 @CrossOrigin
 public class BoPhanController {

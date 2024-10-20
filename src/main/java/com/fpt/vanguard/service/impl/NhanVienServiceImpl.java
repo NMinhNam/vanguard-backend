@@ -7,6 +7,7 @@ import com.fpt.vanguard.exception.AppException;
 import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.mapper.mapstruct.NhanVienMapstruct;
 import com.fpt.vanguard.mapper.mybatis.NhanVienMapper;
+import com.fpt.vanguard.service.MailService;
 import com.fpt.vanguard.service.NhanVienService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class NhanVienServiceImpl implements NhanVienService {
     private final NhanVienMapper nhanVienMapper;
     private final NhanVienMapstruct nhanVienMapstruct;
+    private final MailService mailService;
 
     @Override
     public List<NhanVienDtoResponse> getAllNhanVien() {

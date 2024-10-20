@@ -7,6 +7,7 @@ import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.exception.AppException;
 import com.fpt.vanguard.mapper.mapstruct.UserMapstruct;
 import com.fpt.vanguard.mapper.mybatis.UserMapper;
+import com.fpt.vanguard.service.MailService;
 import com.fpt.vanguard.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +22,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserMapstruct userMapstruct;
+    private final MailService mailService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -60,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer deleteUser(String username) {
-        if (userMapper.isExist(username)) throw new AppException(ErrorCode.USER_NOT_EXIST);
+        if (!userMapper.isExist(username)) throw new AppException(ErrorCode.USER_NOT_EXIST);
 
         return userMapper.delete(username);
     }

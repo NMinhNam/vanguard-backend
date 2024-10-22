@@ -20,4 +20,6 @@ public class NhanVien {
     private String maChucVu;
     private String maTrinhDo;
     private Integer userId;
+
+    private String tenTruongPhong;
 }

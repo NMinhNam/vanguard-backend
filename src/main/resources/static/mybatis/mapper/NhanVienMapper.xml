@@ -17,6 +17,7 @@
         <result property="maChucVu" column="ma_chuc_vu"/>
         <result property="maTrinhDo" column="ma_trinh_do"/>
         <result property="userId" column="user_id"/>
+        <result property="tenTruongPhong" column="ten_truong_phong"/>
     </resultMap>
 
     <sql id="NhanVienColumnList">
@@ -29,11 +30,17 @@
         , dia_chi
         , hinh_anh
         , email
-        , ma_phong_ban
+        , nv.ma_phong_ban
         , ma_bo_phan
         , ma_chuc_vu
         , ma_trinh_do
         , user_id
+    </sql>
+
+    <sql id="subQueryTruongPhong">
+        (select ho_ten
+         from nhan_vien
+         where ma_nhan_vien = truong_phong) as ten_truong_phong
     </sql>
 
     <insert id="insertNhanVien" parameterType="NhanVien">
@@ -91,9 +98,11 @@
 
     <select id="findAll" resultMap="NhanVienResultMap">
         SELECT
-            <include refid="NhanVienColumnList"/>
+            <include refid="NhanVienColumnList"/>,
+            <include refid="subQueryTruongPhong"/>
         FROM nhan_vien nv
-        ORDER BY nv.ma_nhan_vien
+        LEFT JOIN phong_ban pb
+        ON nv.ma_phong_ban = pb.ma_phong_ban
     </select>
 
     <select id="findById" parameterType="String" resultMap="NhanVienResultMap">

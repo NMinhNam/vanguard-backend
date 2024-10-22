@@ -21,4 +21,6 @@ public interface NhanVienMapper {
     boolean existsById(String id);
 
     int deleteNhanVien(@Param("nhanVien") NhanVien nhanVien);
+
+    boolean existsByEmail(String email);
 }

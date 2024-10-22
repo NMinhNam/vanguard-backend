@@ -7,10 +7,8 @@ import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.exception.AppException;
 import com.fpt.vanguard.mapper.mapstruct.UserMapstruct;
 import com.fpt.vanguard.mapper.mybatis.UserMapper;
-import com.fpt.vanguard.service.MailService;
 import com.fpt.vanguard.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,11 +20,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserMapstruct userMapstruct;
-    private final MailService mailService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    @PreAuthorize("hasRole('MANAGER')")
     public List<UserDtoResponse> getAllUser() {
         var listEntity = userMapper.findAll();
         if (listEntity.isEmpty()) throw new AppException(ErrorCode.LIST_USER_EMPTY);
@@ -34,7 +30,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @PreAuthorize("#userName == authentication.name")
     public UserDtoResponse getUserByUserName(String userName) {
         var entity = userMapper.findByUsername(userName)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXIST));
@@ -51,7 +46,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer saveUser(UserDtoRequest request) {
+    public Integer createUser(UserDtoRequest request) {
         String username = request.getUsername();
         if (userMapper.isExist(username)) throw new AppException(ErrorCode.USER_EXISTED);
         var passwordEncoded = passwordEncoder.encode(request.getPassword());

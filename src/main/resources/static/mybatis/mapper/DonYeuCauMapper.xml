@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.DonYeuCauMapper">
+    <resultMap id="resultMapDonYeuCau" type="DonYeuCau">
+        <id property="maDon" column="ma_don"/>
+        <result property="maNhanVien" column="ma_nhan_vien"/>
+        <result property="loaiDon" column="loai_don"/>
+        <result property="liDo" column="ly_do"/>
+        <result property="trangThai" column="trang_thai"/>
+    </resultMap>
+
+    <sql id="columnDonYeuCau">
+        ma_don
+        , ma_nhan_vien
+        , loai_don
+        , ly_do
+        , trang_thai
+    </sql>
+
+    <insert id="insertDonYeuCau">
+    </insert>
+
+    <delete id="deleteDonYeuCau">
+    </delete>
+
+    <select id="findByMaNhanVien" resultMap="resultMapDonYeuCau">
+        SELECT
+            <include refid="columnDonYeuCau"/>
+        FROM don_yeu_cau
+        <where>
+            ma_nhan_vien = #{maNhanVien}
+        </where>
+    </select>
+</mapper>

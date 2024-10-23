@@ -8,5 +8,6 @@
         <typeAlias type="com.fpt.vanguard.entity.UngLuong" alias="UngLuong"/>
         <typeAlias type="com.fpt.vanguard.entity.PhongBan" alias="PhongBan"/>
         <typeAlias type="com.fpt.vanguard.entity.LichSuCongViec" alias="LichSuCongViec"/>
+        <typeAlias type="com.fpt.vanguard.entity.DonYeuCau" alias="DonYeuCau"/>
     </typeAliases>
 </configuration>

@@ -20,7 +20,6 @@
         <id property="userId" column="id"/>
         <result property="userName" column="username"/>
         <result property="password" column="password"/>
-        <result property="email" column="email"/>
         <result property="enabled" column="enabled"/>
     </resultMap>
 
@@ -28,7 +27,6 @@
         u.user_id
         , u.user_name
         , u.password
-        , u.email
         , u.enabled
     </sql>
 
@@ -42,13 +40,11 @@
         INSERT INTO "user" (
             user_name,
             password,
-            email,
             role_id
         )
         VALUES (
            #{user.userName},
            #{user.password},
-           #{user.email},
            #{user.role.roleId}
                )
     </insert>

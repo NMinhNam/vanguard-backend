@@ -3,6 +3,7 @@ package com.fpt.vanguard.exception;
 import com.fpt.vanguard.common.ApiResponse;
 import com.fpt.vanguard.enums.ErrorCode;
 import com.nimbusds.jose.JOSEException;
+import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -84,6 +85,15 @@ public class GlobalExceptionHandling {
                 ApiResponse.builder()
                         .status(ErrorCode.RESOURCE_NOT_FOUND.getStatus())
                         .message(ErrorCode.RESOURCE_NOT_FOUND.getMessage())
+                        .build());
+    }
+
+    @ExceptionHandler(value = MessagingException.class)
+    ResponseEntity<ApiResponse> handleMessagingException(MessagingException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                ApiResponse.builder()
+                        .status(ErrorCode.MAIL_EXCEPTION.getStatus())
+                        .message(ErrorCode.MAIL_EXCEPTION.getMessage())
                         .build());
     }
 }

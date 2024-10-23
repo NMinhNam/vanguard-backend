@@ -4,6 +4,7 @@ import com.fpt.vanguard.dto.request.NhanVienDtoRequest;
 import com.fpt.vanguard.common.ApiResponse;
 import com.fpt.vanguard.dto.response.NhanVienDtoResponse;
 import com.fpt.vanguard.service.NhanVienService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -46,11 +47,11 @@ public class NhanVienController {
     }
 
     @PostMapping
-    public ApiResponse<Integer> saveNhanVien(@RequestBody NhanVienDtoRequest nhanVienDtoRequest) {
+    public ApiResponse<Integer> saveNhanVien(@RequestBody NhanVienDtoRequest nhanVienDtoRequest) throws MessagingException, ParseException {
         ApiResponse<Integer> apiResponse = new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);
-        apiResponse.setData(nhanVienService.saveNhanVien(nhanVienDtoRequest));
+        apiResponse.setData(nhanVienService.createNhanVien(nhanVienDtoRequest));
         return apiResponse;
     }
 

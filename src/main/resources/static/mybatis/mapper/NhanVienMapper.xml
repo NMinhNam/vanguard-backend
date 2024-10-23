@@ -11,10 +11,13 @@
         <result property="cccd" column="cccd"/>
         <result property="diaChi" column="dia_chi"/>
         <result property="hinhAnh" column="hinh_anh"/>
+        <result property="email" column="email"/>
         <result property="maPhongBan" column="ma_phong_ban"/>
         <result property="maBoPhan" column="ma_bo_phan"/>
         <result property="maChucVu" column="ma_chuc_vu"/>
         <result property="maTrinhDo" column="ma_trinh_do"/>
+        <result property="userId" column="user_id"/>
+        <result property="tenTruongPhong" column="ten_truong_phong"/>
     </resultMap>
 
     <sql id="NhanVienColumnList">
@@ -26,10 +29,18 @@
         , cccd
         , dia_chi
         , hinh_anh
-        , ma_phong_ban
+        , email
+        , nv.ma_phong_ban
         , ma_bo_phan
         , ma_chuc_vu
         , ma_trinh_do
+        , user_id
+    </sql>
+
+    <sql id="subQueryTruongPhong">
+        (select ho_ten
+         from nhan_vien
+         where ma_nhan_vien = truong_phong) as ten_truong_phong
     </sql>
 
     <insert id="insertNhanVien" parameterType="NhanVien">
@@ -41,22 +52,27 @@
                                cccd,
                                dia_chi,
                                hinh_anh,
+                               email,
                                ma_phong_ban,
                                ma_bo_phan,
                                ma_chuc_vu,
-                               ma_trinh_do)
+                               ma_trinh_do,
+                               user_id)
         VALUES (#{nhanVien.maNhanVien},
                 #{nhanVien.hoTen},
                 #{nhanVien.gioiTinh},
-                #{nhanVien.ngaySinh},
+                #{nhanVien.ngaySinh}::DATE,
                 #{nhanVien.dienThoai},
                 #{nhanVien.cccd},
                 #{nhanVien.diaChi},
                 #{nhanVien.hinhAnh},
+                #{nhanVien.email},
                 #{nhanVien.maPhongBan},
                 #{nhanVien.maBoPhan},
                 #{nhanVien.maChucVu},
-                #{nhanVien.maTrinhDo})
+                #{nhanVien.maTrinhDo},
+                #{nhanVien.userId}
+               )
     </insert>
 
     <update id="updateNhanVien" parameterType="NhanVien">
@@ -76,14 +92,17 @@
         </set>
         WHERE ma_nhan_vien = #{nhanVien.maNhanVien}
     </update>
+
     <delete id="deleteNhanVien">
     </delete>
 
     <select id="findAll" resultMap="NhanVienResultMap">
         SELECT
-            <include refid="NhanVienColumnList"/>
+            <include refid="NhanVienColumnList"/>,
+            <include refid="subQueryTruongPhong"/>
         FROM nhan_vien nv
-        ORDER BY nv.ma_nhan_vien
+        LEFT JOIN phong_ban pb
+        ON nv.ma_phong_ban = pb.ma_phong_ban
     </select>
 
     <select id="findById" parameterType="String" resultMap="NhanVienResultMap">
@@ -104,8 +123,7 @@
         WHERE ma_nhan_vien = #{maNhanVien}
     </select>
 
-    <select id="findNhanVien"
-            resultMap="NhanVienResultMap">
+    <select id="findNhanVien" resultMap="NhanVienResultMap">
         SELECT
         <include refid="NhanVienColumnList"/>
         FROM nhan_vien
@@ -146,4 +164,12 @@
             </if>
         </where>
     </select>
+
+    <select id="existsByEmail">
+        SELECT
+            COUNT(*) > 0
+        FROM nhan_vien
+        WHERE email = #{email}
+    </select>
+
 </mapper>

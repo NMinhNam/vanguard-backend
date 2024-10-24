@@ -10,5 +10,6 @@ public class DonYeuCau {
     private String maNhanVien;
     private String loaiDon;
     private String liDo;
-    private String trangThai;
+    private Integer trangThai;
+    private String ngayTao;
 }

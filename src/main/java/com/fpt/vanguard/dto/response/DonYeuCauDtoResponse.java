@@ -5,9 +5,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DonYeuCauDtoResponse {
-    private Integer maDon;
+    private String maDon;
     private String maNhanVien;
     private String loaiDon;
     private String liDo;
-    private String trangThai;
+    private Integer trangThai;
+    private String ngayTao;
 }

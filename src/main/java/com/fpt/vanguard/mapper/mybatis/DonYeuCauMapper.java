@@ -11,4 +11,6 @@ public interface DonYeuCauMapper {
     List<DonYeuCau> findByMaNhanVien(@Param("maNhanVien") String maNhanVien);
     Integer insertDonYeuCau(@Param("donYeuCau") DonYeuCau donYeuCau);
     Integer deleteDonYeuCau(@Param("maDon") String maDon);
+    Boolean isExistDonYeuCau(@Param("maDon") String maDon);
+    List<DonYeuCau> findAll();
 }

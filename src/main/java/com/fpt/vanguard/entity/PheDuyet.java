@@ -7,8 +7,9 @@ import lombok.Setter;
 @Setter
 public class PheDuyet {
     private Integer maPheDuyet;
-    private Integer maDon;
+    private String maDon;
     private String maNhanVien;
-    private String trangThai;
+    private Integer trangThai;
     private String ghiChu;
+    private String ngayPheDuyet;
 }

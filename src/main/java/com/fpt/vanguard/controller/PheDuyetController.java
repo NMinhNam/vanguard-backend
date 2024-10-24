@@ -4,6 +4,7 @@ import com.fpt.vanguard.common.ApiResponse;
 import com.fpt.vanguard.dto.request.PheDuyetDtoRequest;
 import com.fpt.vanguard.dto.response.PheDuyetDtoResponse;
 import com.fpt.vanguard.service.PheDuyetService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class PheDuyetController {
     }
 
     @PostMapping
-    public ApiResponse<Integer> createPheDuyet(@RequestBody PheDuyetDtoRequest pheDuyetDtoRequest) {
+    public ApiResponse<Integer> createPheDuyet(@RequestBody PheDuyetDtoRequest pheDuyetDtoRequest) throws MessagingException {
         return ApiResponse.<Integer>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)

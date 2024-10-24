@@ -1,5 +1,6 @@
 package com.fpt.vanguard.mapper.mybatis;
 
+import com.fpt.vanguard.dto.response.ApprovalDetailsDtoResponse;
 import com.fpt.vanguard.entity.PheDuyet;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,4 +13,5 @@ public interface PheDuyetMapper {
     Integer insertPheDuyet(@Param("pheDuyet") PheDuyet pheDuyet);
     Integer updatePheDuyet(@Param("pheDuyet") PheDuyet pheDuyet);
     Integer deletePheDuyet(@Param("maDon") String maDon);
+    ApprovalDetailsDtoResponse getApprovalDetails(@Param("maNhanVien") String maNhanVien);
 }

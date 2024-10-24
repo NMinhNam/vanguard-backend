@@ -63,4 +63,35 @@
         </where>
     </select>
 
+    <resultMap id="resultMapApprovalDetails" type="ApprovalDetails">
+        <result property="emailNguoiPheDuyet" column="email_nguoi_phe_duyet"/>
+        <result property="hoTenNguoiPheDuyet" column="ho_ten_nguoi_phe_duyet"/>
+        <result property="hoTenNguoiTao" column="ho_ten_nguoi_tao"/>
+        <result property="loaiDon" column="loai_don"/>
+        <result property="ngayTao" column="ngay_tao"/>
+        <result property="lyDo" column="ly_do"/>
+    </resultMap>
+
+    <sql id="columnApprovalDetails">
+        nguoi_phe_duyet.email AS email_nguoi_phe_duyet,
+        nguoi_phe_duyet.ho_ten AS ho_ten_nguoi_phe_duyet,
+        nguoi_tao.ho_ten AS ho_ten_nguoi_tao,
+        don_yeu_cau.loai_don,
+        don_yeu_cau.ngay_tao,
+        don_yeu_cau.ly_do
+    </sql>
+
+    <select id="getApprovalDetails" resultMap="resultMapApprovalDetails">
+        SELECT
+            <include refid="columnApprovalDetails"/>
+        FROM phe_duyet
+             JOIN don_yeu_cau ON phe_duyet.ma_don = don_yeu_cau.ma_don
+             JOIN nhan_vien nguoi_phe_duyet ON phe_duyet.ma_nhan_vien = nguoi_phe_duyet.ma_nhan_vien
+             JOIN nhan_vien nguoi_tao ON don_yeu_cau.ma_nhan_vien = nguoi_tao.ma_nhan_vien
+        <where>
+            nguoi_phe_duyet.ma_nhan_vien = #{maNhanVien}
+        </where>
+        LIMIT 1
+    </select>
+
 </mapper>

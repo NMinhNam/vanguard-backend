@@ -67,7 +67,7 @@
              , d.loai_don
              , d.ly_do
              , p.trang_thai
-             , n.ten_nhan_vien
+             , n.ho_ten
              , d.ngay_tao
         FROM don_yeu_cau d
             JOIN phe_duyet p ON d.ma_don = p.ma_don

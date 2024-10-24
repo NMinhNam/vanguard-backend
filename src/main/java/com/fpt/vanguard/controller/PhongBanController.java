@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/phong_ban")
 @RequiredArgsConstructor
+@CrossOrigin
 public class PhongBanController {
     private final PhongBanService phongBanService;
 

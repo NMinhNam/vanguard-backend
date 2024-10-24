@@ -9,4 +9,6 @@ public class PheDuyetDtoResponse {
     private String maDon;
     private String maNhanVien;
     private Integer trangThai;
+    private String ghiChu;
+    private String ngayPheDuyet;
 }

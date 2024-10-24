@@ -56,7 +56,9 @@
 
     <select id="isExistDonYeuCau">
         SELECT EXISTS(
-
+            SELECT ma_don
+            FROM don_yeu_cau
+            WHERE ma_don = #{maDon}
         )
     </select>
 

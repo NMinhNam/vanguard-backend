@@ -11,4 +11,6 @@ public class PheDuyetDtoRequest {
     private String maDon;
     private String maNhanVien;
     private Integer trangThai;
+    private String ghiChu;
+    private String ngayPheDuyet;
 }

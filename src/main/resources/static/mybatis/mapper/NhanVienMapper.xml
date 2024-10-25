@@ -33,7 +33,6 @@
         , nv.ma_phong_ban
         , ma_bo_phan
         , ma_chuc_vu
-        , ma_trinh_do
         , user_id
     </sql>
 

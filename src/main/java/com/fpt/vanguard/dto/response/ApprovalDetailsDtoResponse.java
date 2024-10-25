@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class ApprovalDetailsDtoResponse {
     private String emailNguoiPheDuyet;
+    private String emailNguoiTao;
     private String hoTenNguoiPheDuyet;
     private String hoTenNguoiTao;
     private String loaiDon;

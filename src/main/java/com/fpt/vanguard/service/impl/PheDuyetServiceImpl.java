@@ -65,10 +65,34 @@ public class PheDuyetServiceImpl implements PheDuyetService {
     }
 
     @Override
-    public Integer updatePheDuyet(PheDuyetDtoRequest request) {
+    public Integer updatePheDuyet(PheDuyetDtoRequest request) throws MessagingException {
+
+        String maNguoiTao = request.getMaNhanVien();
+        sendApprovalStatusUpdateEmail(
+                pheDuyetMapper.getApprovalDetails(maNguoiTao)
+        );
+
         return pheDuyetMapper.updatePheDuyet(
                 pheDuyetMapstruct.toPheDuyet(request)
         );
+    }
+
+    public void sendApprovalStatusUpdateEmail(ApprovalDetailsDtoResponse approvalDetails) throws MessagingException {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("hoTenNguoiPheDuyet", approvalDetails.getHoTenNguoiPheDuyet());
+        variables.put("hoTenNguoiTao", approvalDetails.getHoTenNguoiTao());
+        variables.put("loaiDon", approvalDetails.getLoaiDon());
+        variables.put("ngayTao", approvalDetails.getNgayTao());
+        variables.put("lyDo", approvalDetails.getLyDo());
+
+        MailDtoRequest mailDtoRequest = MailDtoRequest.builder()
+                .to(approvalDetails.getEmailNguoiTao())
+                .subject("Update on Your Approval Request")
+                .templateName("approval-status-update.html")
+                .variables(variables)
+                .build();
+
+        mailService.sendMail(mailDtoRequest);
     }
 
     @Override

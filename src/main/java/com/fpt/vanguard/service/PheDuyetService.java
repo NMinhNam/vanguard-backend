@@ -10,6 +10,6 @@ import java.util.List;
 public interface PheDuyetService {
     List<PheDuyetDtoResponse> getPheDuyets(String maNhanVien);
     Integer createPheDuyet(PheDuyetDtoRequest request) throws MessagingException;
-    Integer updatePheDuyet(PheDuyetDtoRequest request);
+    Integer updatePheDuyet(PheDuyetDtoRequest request) throws MessagingException;
     Integer deletePheDuyet(String maDon);
 }

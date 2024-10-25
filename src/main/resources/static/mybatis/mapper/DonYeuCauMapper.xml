@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.DonYeuCauMapper">
+    <resultMap id="resultMapDonYeuCau" type="DonYeuCau">
+        <id property="maDon" column="ma_don"/>
+        <result property="maNhanVien" column="ma_nhan_vien"/>
+        <result property="loaiDon" column="loai_don"/>
+        <result property="liDo" column="ly_do"/>
+        <result property="trangThai" column="trang_thai"/>
+        <result property="ngayTao" column="ngay_tao"/>
+    </resultMap>
+
+    <sql id="columnDonYeuCau">
+        ma_don
+        , ma_nhan_vien
+        , loai_don
+        , ly_do
+        , trang_thai
+        , ngay_tao
+    </sql>
+
+    <insert id="insertDonYeuCau">
+        INSERT INTO don_yeu_cau(
+                 ma_don
+               , ma_nhan_vien
+               , loai_don
+               , ly_do
+               , trang_thai
+               , ngay_tao
+        )
+        VALUES (
+                #{donYeuCau.maDon}
+               ,#{donYeuCau.maNhanVien}
+               ,#{donYeuCau.loaiDon}
+               ,#{donYeuCau.liDo}
+               ,#{donYeuCau.trangThai}
+               ,now()
+        )
+    </insert>
+
+    <delete id="deleteDonYeuCau">
+        DELETE FROM don_yeu_cau
+        <where>
+            ma_don = #{maDon}
+        </where>
+    </delete>
+
+    <select id="findByMaNhanVien" resultMap="resultMapDonYeuCau">
+        SELECT
+            <include refid="columnDonYeuCau"/>
+        FROM don_yeu_cau
+        <where>
+            ma_nhan_vien = #{maNhanVien}
+        </where>
+    </select>
+
+    <select id="isExistDonYeuCau">
+        SELECT EXISTS(
+            SELECT ma_don
+            FROM don_yeu_cau
+            WHERE ma_don = #{maDon}
+        )
+    </select>
+
+    <select id="findAll" resultMap="resultMapDonYeuCau">
+        SELECT d.ma_don
+             , d.loai_don
+             , d.ly_do
+             , p.trang_thai
+             , n.ho_ten
+             , d.ngay_tao
+        FROM don_yeu_cau d
+            JOIN phe_duyet p ON d.ma_don = p.ma_don
+            JOIN nhan_vien n ON d.ma_nhan_vien = n.ma_nhan_vien
+    </select>
+</mapper>

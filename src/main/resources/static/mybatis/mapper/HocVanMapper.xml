@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.HocVanMapper">
+
+    <resultMap id="resultMapHocVan" type="HocVan">
+        <id property="maHocVan" column="ma_hoc_van"/>
+        <result property="maNhanVien" column="ma_nhan_vien"/>
+        <result property="tenTrinhDo" column="ten_trinh_do"/>
+        <result property="chuyenNganh" column="chuyen_nganh"/>
+        <result property="namTotNghiep" column="nam_tot_nghiep"/>
+        <result property="coSoGiaoDuc" column="co_so_giao_duc"/>
+    </resultMap>
+
+    <sql id="columnHocVan">
+        ma_hoc_van
+        , ma_nhan_vien
+        , ten_trinh_do
+        , chuyen_nganh
+        , nam_tot_nghiep
+        , co_so_giao_duc
+    </sql>
+
+    <insert id="insertHocVan">
+    </insert>
+
+    <update id="updateHocVan">
+    </update>
+
+    <select id="findAll" resultType="HocVan">
+        select
+            <include refid="columnHocVan"/>
+        from hoc_van
+    </select>
+
+    <select id="findByMaNhanVien" resultMap="resultMapHocVan">
+        select
+        <include refid="columnHocVan"/>
+        from hoc_van
+        <where>
+            ma_nhan_vien = #{maNhanVien}
+        </where>
+    </select>
+</mapper>

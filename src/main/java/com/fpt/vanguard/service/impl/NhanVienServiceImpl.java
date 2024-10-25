@@ -114,16 +114,18 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public Integer updateNhanVien(NhanVienDtoRequest nhanVienDtoRequest) {
-        if (nhanVienMapper.existsById(nhanVienDtoRequest.getMaNhanVien())) {
-            return nhanVienMapper.updateNhanVien(
-                    nhanVienMapstruct.toNhanVien(nhanVienDtoRequest)
-            );
-        }
-        return null;
+        String maNhanVien = nhanVienDtoRequest.getMaNhanVien();
+        boolean isExistNhanVien = nhanVienMapper.existsById(maNhanVien);
+        if (!isExistNhanVien) throw new AppException(ErrorCode.NHAN_VIEN_NOT_EXIST);
+        return nhanVienMapper.updateNhanVien(
+                nhanVienMapstruct.toNhanVien(nhanVienDtoRequest)
+        );
     }
 
     @Override
     public Integer deleteNhanVien(String id) {
-        return 0;
+        boolean isExistNhanVien = nhanVienMapper.existsById(id);
+        if (!isExistNhanVien) throw new AppException(ErrorCode.NHAN_VIEN_NOT_EXIST);
+        return nhanVienMapper.deleteNhanVien(id);
     }
 }

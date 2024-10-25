@@ -63,4 +63,13 @@ public class NhanVienController {
         apiResponse.setData(nhanVienService.deleteNhanVien(id));
         return apiResponse;
     }
+
+    @PutMapping
+    public ApiResponse<Integer> updateNhanVien(@RequestBody NhanVienDtoRequest nhanVienDtoRequest) throws MessagingException, ParseException {
+        ApiResponse<Integer> apiResponse = new ApiResponse<>();
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setSuccess(true);
+        apiResponse.setData(nhanVienService.updateNhanVien(nhanVienDtoRequest));
+        return apiResponse;
+    }
 }

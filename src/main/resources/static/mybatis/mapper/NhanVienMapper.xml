@@ -59,7 +59,8 @@
                                email,
                                ma_phong_ban,
                                ma_bo_phan,
-                               ma_chuc_vu)
+                               ma_chuc_vu,
+                               user_id)
         VALUES (generate_ma_nhan_vien(),
                 #{nhanVien.hoTen},
                 #{nhanVien.gioiTinh},
@@ -71,25 +72,25 @@
                 #{nhanVien.email},
                 #{nhanVien.maPhongBan},
                 #{nhanVien.maBoPhan},
-                #{nhanVien.maChucVu}
+                #{nhanVien.maChucVu},
+                #{nhanVien.userId}
                )
     </insert>
 
     <update id="updateNhanVien" parameterType="NhanVien">
         UPDATE nhan_vien
-        <set>
-            <if test="nhanVien.hoTen != null">ho_ten = #{nhanVien.hoTen},</if>
-            <if test="nhanVien.gioiTinh != null">gioi_tinh = #{nhanVien.gioiTinh},</if>
-            <if test="nhanVien.ngaySinh != null">ngay_sinh = #{nhanVien.ngaySinh},</if>
-            <if test="nhanVien.dienThoai != null">dien_thoai = #{nhanVien.dienThoai},</if>
-            <if test="nhanVien.cccd != null">cccd = #{nhanVien.cccd},</if>
-            <if test="nhanVien.diaChi != null">dia_chi = #{nhanVien.diaChi},</if>
-            <if test="nhanVien.hinhAnh != null">hinh_anh = #{nhanVien.hinhAnh},</if>
-            <if test="nhanVien.maPhongBan != null">ma_phong_ban = #{nhanVien.maPhongBan},</if>
-            <if test="nhanVien.maBoPhan != null">ma_bo_phan = #{nhanVien.maBoPhan},</if>
-            <if test="nhanVien.maChucVu != null">ma_chuc_vu = #{nhanVien.maChucVu},</if>
-            <if test="nhanVien.maTrinhDo != null">ma_trinh_do = #{nhanVien.maTrinhDo}</if>
-        </set>
+        SET
+            ho_ten = #{nhanVien.hoTen},
+            gioi_tinh = #{nhanVien.gioiTinh},
+            ngay_sinh = #{nhanVien.ngaySinh}::DATE,
+            dien_thoai = #{nhanVien.dienThoai},
+            cccd = #{nhanVien.cccd},
+            dia_chi = #{nhanVien.diaChi},
+            hinh_anh = #{nhanVien.hinhAnh},
+            ma_phong_ban = #{nhanVien.maPhongBan},
+            ma_bo_phan = #{nhanVien.maBoPhan},
+            ma_chuc_vu = #{nhanVien.maChucVu},
+            email = #{nhanVien.email}
         WHERE ma_nhan_vien = #{nhanVien.maNhanVien}
     </update>
 
@@ -111,8 +112,13 @@
 
     <select id="findById" parameterType="String" resultMap="NhanVienResultMap">
         SELECT
-        <include refid="NhanVienColumnList"/>
-        FROM nhan_vien
+        <include refid="NhanVienColumnList"/>,
+        <include refid="subQueryTruongPhong"/>
+        FROM nhan_vien nv
+        LEFT JOIN phong_ban pb
+        ON nv.ma_phong_ban = pb.ma_phong_ban
+        left join bo_phan bp on nv.ma_bo_phan = bp.ma_bo_phan
+        left join chuc_vu cv on nv.ma_chuc_vu = cv.ma_chuc_vu
         <where>
             <if test="id != null">
                 ma_nhan_vien = #{id}

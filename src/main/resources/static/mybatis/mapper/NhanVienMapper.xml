@@ -59,10 +59,8 @@
                                email,
                                ma_phong_ban,
                                ma_bo_phan,
-                               ma_chuc_vu,
-                               ma_trinh_do,
-                               user_id)
-        VALUES (#{nhanVien.maNhanVien},
+                               ma_chuc_vu)
+        VALUES (generate_ma_nhan_vien(),
                 #{nhanVien.hoTen},
                 #{nhanVien.gioiTinh},
                 #{nhanVien.ngaySinh}::DATE,
@@ -73,9 +71,7 @@
                 #{nhanVien.email},
                 #{nhanVien.maPhongBan},
                 #{nhanVien.maBoPhan},
-                #{nhanVien.maChucVu},
-                #{nhanVien.maTrinhDo},
-                #{nhanVien.userId}
+                #{nhanVien.maChucVu}
                )
     </insert>
 
@@ -98,6 +94,8 @@
     </update>
 
     <delete id="deleteNhanVien">
+        delete from nhan_vien
+        where ma_nhan_vien = #{maNhanVien}
     </delete>
 
     <select id="findAll" resultMap="NhanVienResultMap">
@@ -123,10 +121,11 @@
     </select>
 
     <select id="existsById" parameterType="String" resultType="boolean">
-        SELECT
-        COUNT(*) > 0
-        FROM nhan_vien
-        WHERE ma_nhan_vien = #{maNhanVien}
+        SELECT EXISTS (
+            SELECT 1
+            FROM nhan_vien
+            WHERE ma_nhan_vien = #{maNhanVien}
+        )
     </select>
 
     <select id="findNhanVien" resultMap="NhanVienResultMap">
@@ -172,10 +171,11 @@
     </select>
 
     <select id="existsByEmail">
-        SELECT
-            COUNT(*) > 0
-        FROM nhan_vien
-        WHERE email = #{email}
+        SELECT EXISTS (
+            SELECT 1
+            FROM nhan_vien
+            WHERE email = #{email}
+        )
     </select>
 
 </mapper>

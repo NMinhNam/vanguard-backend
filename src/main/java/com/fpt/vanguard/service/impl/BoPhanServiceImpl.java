@@ -21,10 +21,9 @@ public class BoPhanServiceImpl implements BoPhanService {
 
     @Override
     public List<BoPhanDtoResponse> getAllBoPhan() {
-        List<BoPhanDtoResponse> listResultEntity = boPhanMybatisMapper.getAllBoPhan()
-                .stream()
-                .map(boPhanMapstructMapper::toBoPhanDtoResponse)
-                .toList();
+        List<BoPhanDtoResponse> listResultEntity = boPhanMapstructMapper.toBoPhanDtoResponseList(
+                boPhanMybatisMapper.getAllBoPhan()
+        );
         if(listResultEntity.isEmpty()) throw new AppException(ErrorCode.LIST_BO_PHAN_EMPTY);
         return listResultEntity;
     }
@@ -40,7 +39,7 @@ public class BoPhanServiceImpl implements BoPhanService {
 
     @Override
     public int saveBoPhan(BoPhanDtoRequest boPhan) {
-        if(boPhanMybatisMapper.isExist(boPhan.getBoPhan())){
+        if(boPhanMybatisMapper.isExist(boPhan.getMaBoPhan())){
             return boPhanMybatisMapper.updateBoPhan(boPhan);
         }else {
             return boPhanMybatisMapper.insertBoPhan(boPhan);

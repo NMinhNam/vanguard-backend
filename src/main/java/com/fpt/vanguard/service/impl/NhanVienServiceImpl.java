@@ -128,4 +128,11 @@ public class NhanVienServiceImpl implements NhanVienService {
         if (!isExistNhanVien) throw new AppException(ErrorCode.NHAN_VIEN_NOT_EXIST);
         return nhanVienMapper.deleteNhanVien(id);
     }
+
+    @Override
+    public NhanVienDtoResponse getNhanVienByUserName(String username) {
+        return nhanVienMapstruct.toNhanVienDtoResponse(
+                nhanVienMapper.findNhanVienByUserName(username)
+        );
+    }
 }

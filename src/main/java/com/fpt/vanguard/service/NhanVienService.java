@@ -19,4 +19,6 @@ public interface NhanVienService {
     Integer updateNhanVien(NhanVienDtoRequest nhanVienDtoRequest);
 
     Integer deleteNhanVien(String id);
+
+    NhanVienDtoResponse getNhanVienByUserName(String username);
 }

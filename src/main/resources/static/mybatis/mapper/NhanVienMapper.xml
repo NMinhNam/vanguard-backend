@@ -184,4 +184,15 @@
         )
     </select>
 
+    <select id="findNhanVienByUserName" resultMap="NhanVienResultMap">
+        select nv.ma_nhan_vien
+             , nv.ho_ten
+             , nv.dien_thoai
+             , nv.cccd
+             , nv.email
+        from nhan_vien nv
+                 left join "user" us on nv.user_id = us.user_id
+        where us.user_name = #{username}
+    </select>
+
 </mapper>

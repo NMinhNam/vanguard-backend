@@ -15,9 +15,11 @@
         <result property="maPhongBan" column="ma_phong_ban"/>
         <result property="maBoPhan" column="ma_bo_phan"/>
         <result property="maChucVu" column="ma_chuc_vu"/>
-        <result property="maTrinhDo" column="ma_trinh_do"/>
         <result property="userId" column="user_id"/>
         <result property="tenTruongPhong" column="ten_truong_phong"/>
+        <result property="tenPhongBan" column="ten_phong_ban"/>
+        <result property="tenBoPhan" column="ten_bo_phan"/>
+        <result property="tenChucVu" column="ten_chuc_vu"/>
     </resultMap>
 
     <sql id="NhanVienColumnList">
@@ -31,8 +33,11 @@
         , hinh_anh
         , email
         , nv.ma_phong_ban
-        , ma_bo_phan
-        , ma_chuc_vu
+        , ten_phong_ban
+        , nv.ma_bo_phan
+        , ten_bo_phan
+        , nv.ma_chuc_vu
+        , ten_chuc_vu
         , user_id
     </sql>
 
@@ -102,6 +107,8 @@
         FROM nhan_vien nv
         LEFT JOIN phong_ban pb
         ON nv.ma_phong_ban = pb.ma_phong_ban
+        left join bo_phan bp on nv.ma_bo_phan = bp.ma_bo_phan
+        left join chuc_vu cv on nv.ma_chuc_vu = cv.ma_chuc_vu
     </select>
 
     <select id="findById" parameterType="String" resultMap="NhanVienResultMap">

@@ -31,4 +31,13 @@
             <include refid="columnHocVan"/>
         from hoc_van
     </select>
+
+    <select id="findByMaNhanVien" resultMap="resultMapHocVan">
+        select
+        <include refid="columnHocVan"/>
+        from hoc_van
+        <where>
+            ma_nhan_vien = #{maNhanVien}
+        </where>
+    </select>
 </mapper>

@@ -21,4 +21,11 @@ public class HocVanServiceImpl implements HocVanService {
                 hocVanMapper.findAll()
         );
     }
+
+    @Override
+    public List<HocVanDtoResponse> getHocVan(String maNhanVien) {
+        return hocVanMapstruct.toHocVanDtoResponseList(
+                hocVanMapper.findByMaNhanVien(maNhanVien)
+        );
+    }
 }

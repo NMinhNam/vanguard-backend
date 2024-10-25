@@ -5,10 +5,7 @@ import com.fpt.vanguard.dto.response.HocVanDtoResponse;
 import com.fpt.vanguard.service.HocVanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +22,15 @@ public class HocVanController {
                 .status(HttpStatus.OK.value())
                 .success(true)
                 .data(hocVanService.getAllHocVan())
+                .build();
+    }
+
+    @GetMapping("/{maNhanVien}")
+    public ApiResponse<List<HocVanDtoResponse>> getHocVan(@PathVariable("maNhanVien") String maNhanVien) {
+        return ApiResponse.<List<HocVanDtoResponse>>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(hocVanService.getHocVan(maNhanVien))
                 .build();
     }
 }

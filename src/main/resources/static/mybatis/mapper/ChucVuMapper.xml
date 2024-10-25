@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.ChucVuMapper">
+
+    <resultMap id="BoPhanResultMap" type="com.fpt.vanguard.entity.ChucVu">
+        <id column="ma_chuc_vu" property="maChucVu"/>
+        <result column="ten_chuc_vu" property="tenChucVu"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="BoPhanResultMap">
+        select ma_chuc_vu
+             , ten_chuc_vu
+        from chuc_vu
+        ORDER BY ma_chuc_vu
+    </select>
+</mapper>

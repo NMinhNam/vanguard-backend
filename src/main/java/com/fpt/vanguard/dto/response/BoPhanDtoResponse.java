@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @Builder
 public class BoPhanDtoResponse {
-    private String boPhan;
+    private String maBoPhan;
     private String tenBoPhan;
 }

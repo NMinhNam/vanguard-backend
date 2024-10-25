@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Approval Status Update</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            max-width: 600px;
+            background-color: #f9f9f9;
+        }
+        h2 {
+            color: #4CAF50;
+        }
+        p {
+            margin: 10px 0;
+        }
+        .status {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .details {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .details li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Approval Status Update</h2>
+    <p>Dear <span th:text="${hoTenNguoiTao}"></span>,</p>
+    <p>Your request of type <span th:text="${loaiDon}"></span> has been processed.</p>
+
+    <div class="details">
+        <h3>Request Details:</h3>
+        <ul>
+            <li><strong>Created By:</strong> <span th:text="${hoTenNguoiTao}"></span></li>
+            <li><strong>Approved By:</strong> <span th:text="${hoTenNguoiPheDuyet}"></span></li>
+            <li><strong>Request Type:</strong> <span th:text="${loaiDon}"></span></li>
+            <li><strong>Request Date:</strong> <span th:text="${ngayTao}"></span></li>
+            <li><strong>Reason:</strong> <span th:text="${lyDo}"></span></li>
+            <li><strong>Status:</strong> <span th:text="${trangThai}"></span></li>
+        </ul>
+    </div>
+
+    <p>Your request is currently being processed. If you have any questions or concerns, please feel free to reach out.</p>
+    <p>Thank you for your patience.</p>
+    <p>Best regards,</p>
+    <p><strong>Your HR System</strong></p>
+</div>
+</body>
+</html>

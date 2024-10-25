@@ -46,8 +46,19 @@ public class NhanVienController {
         return apiResponse;
     }
 
+    @GetMapping("/me")
+    public ApiResponse<NhanVienDtoResponse> getInfoNhanVien
+            (@RequestParam("username") String username) {
+        return ApiResponse.<NhanVienDtoResponse>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(nhanVienService.getNhanVienByUserName(username))
+                .build();
+    }
+
     @PostMapping
-    public ApiResponse<Integer> saveNhanVien(@RequestBody NhanVienDtoRequest nhanVienDtoRequest) throws MessagingException, ParseException {
+    public ApiResponse<Integer> saveNhanVien(@RequestBody NhanVienDtoRequest nhanVienDtoRequest)
+            throws MessagingException, ParseException {
         ApiResponse<Integer> apiResponse = new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);
@@ -61,6 +72,15 @@ public class NhanVienController {
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);
         apiResponse.setData(nhanVienService.deleteNhanVien(id));
+        return apiResponse;
+    }
+
+    @PutMapping
+    public ApiResponse<Integer> updateNhanVien(@RequestBody NhanVienDtoRequest nhanVienDtoRequest) throws MessagingException, ParseException {
+        ApiResponse<Integer> apiResponse = new ApiResponse<>();
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setSuccess(true);
+        apiResponse.setData(nhanVienService.updateNhanVien(nhanVienDtoRequest));
         return apiResponse;
     }
 }

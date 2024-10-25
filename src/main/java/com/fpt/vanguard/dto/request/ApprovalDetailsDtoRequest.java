@@ -1,11 +1,11 @@
-package com.fpt.vanguard.dto.response;
+package com.fpt.vanguard.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ApprovalDetailsDtoResponse {
+public class ApprovalDetailsDtoRequest {
     private String emailNguoiPheDuyet;
     private String emailNguoiTao;
     private String hoTenNguoiPheDuyet;

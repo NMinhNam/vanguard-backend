@@ -23,4 +23,7 @@ public class NhanVienDtoResponse {
     private Integer userId;
 
     private String tenTruongPhong;
+    private String tenPhongBan;
+    private String tenBoPhan;
+    private String tenChucVu;
 }

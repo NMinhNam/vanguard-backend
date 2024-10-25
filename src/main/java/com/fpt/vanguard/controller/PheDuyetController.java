@@ -38,7 +38,7 @@ public class PheDuyetController {
     }
 
     @PutMapping
-    public ApiResponse<Integer> updatePheDuyet(@RequestBody PheDuyetDtoRequest pheDuyetDtoRequest) {
+    public ApiResponse<Integer> updatePheDuyet(@RequestBody PheDuyetDtoRequest pheDuyetDtoRequest) throws MessagingException {
         return ApiResponse.<Integer>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)

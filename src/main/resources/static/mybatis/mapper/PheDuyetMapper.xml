@@ -66,10 +66,12 @@
     <resultMap id="resultMapApprovalDetails" type="ApprovalDetails">
         <result property="emailNguoiPheDuyet" column="email_nguoi_phe_duyet"/>
         <result property="hoTenNguoiPheDuyet" column="ho_ten_nguoi_phe_duyet"/>
+        <result property="emailNguoiTao" column="email_nguoi_tao"/>
         <result property="hoTenNguoiTao" column="ho_ten_nguoi_tao"/>
         <result property="loaiDon" column="loai_don"/>
         <result property="ngayTao" column="ngay_tao"/>
         <result property="lyDo" column="ly_do"/>
+        <result property="trangThai" column="trang_thai"/>
     </resultMap>
 
     <sql id="columnApprovalDetails">
@@ -92,6 +94,29 @@
             nguoi_phe_duyet.ma_nhan_vien = #{maNhanVien}
         </where>
         LIMIT 1
+    </select>
+
+    <sql id="columnInfoReqApproval">
+        nguoi_phe_duyet.email  AS email_nguoi_phe_duyet
+        , nguoi_tao.email        AS email_nguoi_tao
+        , nguoi_phe_duyet.ho_ten AS ho_ten_nguoi_phe_duyet
+        , nguoi_tao.ho_ten       AS ho_ten_nguoi_tao
+        , loai_don
+        , ly_do
+        , phe_duyet.trang_thai as trang_thai
+        , ngay_tao
+    </sql>
+
+    <select id="getInfoFromRequestApproval" resultMap="resultMapApprovalDetails">
+        SELECT
+            <include refid="columnInfoReqApproval"/>
+        FROM don_yeu_cau
+        JOIN nhan_vien nguoi_tao ON don_yeu_cau.ma_nhan_vien = nguoi_tao.ma_nhan_vien
+        JOIN phe_duyet ON don_yeu_cau.ma_don = phe_duyet.ma_don
+        JOIN nhan_vien nguoi_phe_duyet ON phe_duyet.ma_nhan_vien = nguoi_phe_duyet.ma_nhan_vien
+        <where>
+            nguoi_phe_duyet.ma_nhan_vien = #{maNhanVien}
+        </where>
     </select>
 
 </mapper>

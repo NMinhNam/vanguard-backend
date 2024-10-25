@@ -20,6 +20,5 @@ public class NhanVienDtoRequest {
     private String maPhongBan;
     private String maBoPhan;
     private String maChucVu;
-    private String maTrinhDo;
     private Integer userId;
 }

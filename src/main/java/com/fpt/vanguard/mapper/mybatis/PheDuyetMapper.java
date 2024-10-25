@@ -14,4 +14,5 @@ public interface PheDuyetMapper {
     Integer updatePheDuyet(@Param("pheDuyet") PheDuyet pheDuyet);
     Integer deletePheDuyet(@Param("maDon") String maDon);
     ApprovalDetailsDtoResponse getApprovalDetails(@Param("maNhanVien") String maNhanVien);
+    ApprovalDetailsDtoResponse getInfoFromRequestApproval(@Param("maNhanVien") String maNhanVien);
 }

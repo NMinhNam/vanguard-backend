@@ -74,7 +74,7 @@ public class PheDuyetServiceImpl implements PheDuyetService {
         String maNguoiPheDuyet = request.getMaNhanVien();
         sendApprovalStatusUpdateEmail(
                 approvalMapstruct.toApprovalDetailsDtoRequest(
-                        pheDuyetMapper.getApprovalDetails(maNguoiPheDuyet)
+                        pheDuyetMapper.getInfoFromRequestApproval(maNguoiPheDuyet)
                 )
         );
 
@@ -89,7 +89,15 @@ public class PheDuyetServiceImpl implements PheDuyetService {
         variables.put("ngayTao", approvalDetails.getNgayTao());
         variables.put("lyDo", approvalDetails.getLyDo());
 
-        MailDtoRequest mailDtoRequest = MailDtoRequest.builder().to(approvalDetails.getEmailNguoiTao()).subject("Update on Your Approval Request").templateName("approval-status-update.html").variables(variables).build();
+        Integer trangThai = approvalDetails.getTrangThai();
+        String tenTrangThai = TrangThaiPheDuyet.getTenTrangThai(trangThai);
+        variables.put("trangThai", tenTrangThai);
+
+        MailDtoRequest mailDtoRequest = MailDtoRequest.builder()
+                .to(approvalDetails.getEmailNguoiTao())
+                .subject("Update on Your Approval Request")
+                .templateName("approval-status-update.html")
+                .variables(variables).build();
 
         mailService.sendMail(mailDtoRequest);
     }

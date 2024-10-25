@@ -38,17 +38,18 @@
 <body>
 <div class="container">
     <h2>Approval Status Update</h2>
-    <p>Dear <span th:text="${hoTenNguoiTao}">Employee</span>,</p>
-    <p>Your request of type <span th:text="${loaiDon}">Leave Request</span> has been processed.</p>
+    <p>Dear <span th:text="${hoTenNguoiTao}"></span>,</p>
+    <p>Your request of type <span th:text="${loaiDon}"></span> has been processed.</p>
 
     <div class="details">
         <h3>Request Details:</h3>
         <ul>
-            <li><strong>Created By:</strong> <span th:text="${hoTenNguoiTao}">John Doe</span></li>
-            <li><strong>Approved By:</strong> <span th:text="${hoTenNguoiPheDuyet}">Jane Smith</span></li>
-            <li><strong>Request Type:</strong> <span th:text="${loaiDon}">Leave Request</span></li>
-            <li><strong>Request Date:</strong> <span th:text="${ngayTao}">2024-10-25</span></li>
-            <li><strong>Reason:</strong> <span th:text="${lyDo}">Personal reasons</span></li>
+            <li><strong>Created By:</strong> <span th:text="${hoTenNguoiTao}"></span></li>
+            <li><strong>Approved By:</strong> <span th:text="${hoTenNguoiPheDuyet}"></span></li>
+            <li><strong>Request Type:</strong> <span th:text="${loaiDon}"></span></li>
+            <li><strong>Request Date:</strong> <span th:text="${ngayTao}"></span></li>
+            <li><strong>Reason:</strong> <span th:text="${lyDo}"></span></li>
+            <li><strong>Status:</strong> <span th:text="${trangThai}"></span></li>
         </ul>
     </div>
 

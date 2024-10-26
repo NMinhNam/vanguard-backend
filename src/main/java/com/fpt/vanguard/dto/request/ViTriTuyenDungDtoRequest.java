@@ -1,4 +1,4 @@
-package com.fpt.vanguard.dto.response;
+package com.fpt.vanguard.dto.request;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,13 +7,13 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class TuyenDungDtoResponse {
-    private String maTuyenDung;
-    private String tenViec;
+public class ViTriTuyenDungDtoRequest {
+    private String maViTriTuyenDung;
+    private String tenViTri;
     private String maPhongBan;
     private Integer soLuongTuyen;
     private Integer soLuongUngTuyen;
-    private String trangThai;
+    private Boolean trangThai;
     private String moTa;
     private String yeuCau;
 }

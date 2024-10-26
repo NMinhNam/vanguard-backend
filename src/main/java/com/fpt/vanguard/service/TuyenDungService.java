@@ -1,13 +1,12 @@
 package com.fpt.vanguard.service;
 
-import com.fpt.vanguard.dto.request.TuyenDungDtoRequest;
-import com.fpt.vanguard.dto.response.TuyenDungDtoResponse;
-
+import com.fpt.vanguard.dto.request.ViTriTuyenDungDtoRequest;
+import com.fpt.vanguard.dto.response.ViTriTuyenDungDtoResponse;
 
 import java.util.List;
 
 public interface TuyenDungService {
-    List<TuyenDungDtoResponse> getAllTuyenDung();
-    TuyenDungDtoResponse getTuyenDungById(String maTuyenDung);
-    int saveTuyenDung(TuyenDungDtoRequest tuyenDung);
+    List<ViTriTuyenDungDtoResponse> getAllTuyenDung();
+    ViTriTuyenDungDtoResponse getTuyenDungById(String maTuyenDung);
+    int saveTuyenDung(ViTriTuyenDungDtoRequest tuyenDung);
 }

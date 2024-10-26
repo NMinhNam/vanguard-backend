@@ -7,7 +7,7 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/vanguard
     username: postgres
     password: root123
 
@@ -34,12 +34,5 @@ mybatis:
 
 jwt:
   signer-key: "gXNsKvdcP2xd0tfC9IxZjr8lbcqUIBhhdgyD5kD1cyXbiZUD4yu6BOZOWlAKss/Z"
-logging:
-  level:
-    org:
-      mybatis: DEBUG
-      springframework: DEBUG
-    com:
-      fpt:
-        vanguard: DEBUG
+
 

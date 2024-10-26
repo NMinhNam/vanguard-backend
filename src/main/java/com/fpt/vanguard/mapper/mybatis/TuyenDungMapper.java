@@ -1,17 +1,20 @@
 package com.fpt.vanguard.mapper.mybatis;
 
-import com.fpt.vanguard.dto.request.TuyenDungDtoRequest;
-import com.fpt.vanguard.entity.TuyenDung;
+import com.fpt.vanguard.entity.ViTriTuyenDung;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+
 @Mapper
 public interface TuyenDungMapper {
-    List<TuyenDung> getAllTuyenDung();
-    TuyenDung getTuyenDungById(String id);
-    int insertTuyenDung(@Param("TuyenDung") TuyenDungDtoRequest tuyenDung);
+    List<ViTriTuyenDung> getAllTuyenDung();
 
-//    int updateTuyenDung(@Param("TuyenDung") TuyenDungDtoRequest tuyenDung);
+    ViTriTuyenDung getTuyenDungById(String id);
+
+    int insertTuyenDung(@Param("TuyenDung") ViTriTuyenDung tuyenDung);
+
+    int updateTuyenDung(@Param("TuyenDung") ViTriTuyenDung tuyenDung);
+
     Boolean isExist(@Param("id") String maTuyenDung);
 }

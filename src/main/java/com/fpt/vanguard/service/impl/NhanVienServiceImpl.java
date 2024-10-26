@@ -52,8 +52,11 @@ public class NhanVienServiceImpl implements NhanVienService {
     @Override
     public Integer createNhanVien(NhanVienDtoRequest nhanVienDtoRequest) throws MessagingException, ParseException {
         String nhanVienId = nhanVienDtoRequest.getMaNhanVien();
-        if (nhanVienMapper.existsById(nhanVienId))
-            throw new AppException(ErrorCode.NHAN_VIEN_EXISTED);
+        if (nhanVienMapper.existsById(nhanVienId)) {
+            return nhanVienMapper.updateNhanVien(
+                    nhanVienMapstruct.toNhanVien(nhanVienDtoRequest)
+            );
+        }
 
         String email = nhanVienDtoRequest.getEmail();
         String name = nhanVienDtoRequest.getHoTen();

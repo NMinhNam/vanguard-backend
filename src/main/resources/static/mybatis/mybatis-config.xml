@@ -14,5 +14,6 @@
         <typeAlias type="com.fpt.vanguard.dto.response.ApprovalDetailsDtoResponse" alias="ApprovalDetails"/>
         <typeAlias type="com.fpt.vanguard.entity.ChucVu" alias="ChucVu"/>
         <typeAlias type="com.fpt.vanguard.entity.ViTriTuyenDung" alias="ViTriTuyenDung"/>
+        <typeAlias type="com.fpt.vanguard.entity.UngVien" alias="UngVien"/>
     </typeAliases>
 </configuration>

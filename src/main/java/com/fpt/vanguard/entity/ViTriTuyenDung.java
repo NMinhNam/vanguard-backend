@@ -14,4 +14,7 @@ public class ViTriTuyenDung {
     private Boolean trangThai;
     private String moTa;
     private String yeuCau;
+
+    // join
+    private String tenPhongBan;
 }

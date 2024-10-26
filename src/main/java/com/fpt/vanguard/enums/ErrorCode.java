@@ -31,7 +31,8 @@ public enum ErrorCode {
     MAIL_EXCEPTION(999, "mail exception"),
     EMAIL_EXISTED(1001, "email existed"),
     DON_YEU_CAU_NOT_EXIST(1000, "Don yeu cau not exist"),
-    DON_YEU_CAU_EXISTED(1001, "Don yeu cau existed")
+    DON_YEU_CAU_EXISTED(1001, "Don yeu cau existed"),
+    LIST_UNG_VIEN_EMPTY(1002, "list ung vien rong")
     ;
 
     private final int status;

@@ -15,10 +15,28 @@
     </resultMap>
 
     <sql id="columnUngVien">
-
+        ma_ung_vien,
+        ho_ten,
+        gioi_tinh,
+        ngay_sinh,
+        dien_thoai,
+        cccd,
+        dia_chi,
+        hinh_anh,
+        email,
+        ung_vien.ma_vi_tri_tuyen_dung
     </sql>
 
     <select id="findAll" resultMap="resultMapUngVien">
-
+        SELECT
+            <include refid="columnUngVien"/>
+        FROM ung_vien
+            join vi_tri_tuyen_dung
+                on ung_vien.ma_vi_tri_tuyen_dung = vi_tri_tuyen_dung.ma_vi_tri_tuyen_dung
+        <where>
+            <if test="tenViTri != null and tenViTri != ''">
+                ten_vi_tri = #{tenViTri}
+            </if>
+        </where>
     </select>
 </mapper>

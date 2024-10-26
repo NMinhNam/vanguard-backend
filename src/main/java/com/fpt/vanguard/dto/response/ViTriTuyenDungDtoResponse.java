@@ -16,4 +16,7 @@ public class ViTriTuyenDungDtoResponse {
     private String trangThai;
     private String moTa;
     private String yeuCau;
+
+    // join
+    private String tenPhongBan;
 }

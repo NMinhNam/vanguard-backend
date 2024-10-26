@@ -11,23 +11,26 @@
         <result column="trang_thai" property="trangThai"/>
         <result column="mo_ta" property="moTa"/>
         <result column="yeu_cau" property="yeuCau"/>
+        <result column="ten_phong_ban" property="tenPhongBan"/>
     </resultMap>
 
     <sql id="columnViTriTuyenDung">
         ma_vi_tri_tuyen_dung
         , ten_vi_tri
-        , ma_phong_ban
+        , vi_tri_tuyen_dung.ma_phong_ban
         , so_luong_tuyen
         , so_luong_ung_tuyen
         , trang_thai
         , mo_ta
         , yeu_cau
+        , ten_phong_ban
     </sql>
 
     <select id="getAllTuyenDung" resultMap="TuyenDungResultMap">
         SELECT
             <include refid="columnViTriTuyenDung"/>
         FROM vi_tri_tuyen_dung
+        join phong_ban on vi_tri_tuyen_dung.ma_phong_ban = phong_ban.ma_phong_ban
     </select>
 
     <select id="getTuyenDungById" resultMap="TuyenDungResultMap" parameterType="String">

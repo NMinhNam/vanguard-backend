@@ -12,7 +12,7 @@ public interface TuyenDungMapper {
 
     ViTriTuyenDung getTuyenDungById(String id);
 
-    int insertTuyenDung(@Param("TuyenDung") ViTriTuyenDung tuyenDung);
+    int insertTuyenDung(@Param("tuyenDung") ViTriTuyenDung tuyenDung);
 
     int updateTuyenDung(@Param("TuyenDung") ViTriTuyenDung tuyenDung);
 

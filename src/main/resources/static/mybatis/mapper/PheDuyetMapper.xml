@@ -2,21 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fpt.vanguard.mapper.mybatis.PheDuyetMapper">
     <resultMap id="resultMapPheDuyet" type="PheDuyet">
-        <id property="maPheDuyet" column="ma_phe_duyet" />
         <result property="maDon" column="ma_don" />
-        <result property="maNhanVien" column="ma_nhan_vien" />
+        <result property="hoTenNguoiPheDuyet" column="ho_ten_nguoi_phe_duyet" />
+        <result property="hoTenNguoiTao" column="ho_ten_nguoi_tao" />
+        <result property="loaiDon" column="loai_don" />
         <result property="trangThai" column="trang_thai" />
-        <result property="ghiChu" column="ghi_chu" />
+        <result property="ngayTao" column="ngay_tao" />
         <result property="ngayPheDuyet" column="ngay_phe_duyet" />
     </resultMap>
 
     <sql id="columnPheDuyet">
-        ma_phe_duyet
-        , ma_don
-        , ma_nhan_vien
-        , trang_thai
-        , ghi_chu
-        , ngay_phe_duyet
+        phe_duyet.ma_don,
+        nguoi_phe_duyet.ho_ten AS ho_ten_nguoi_phe_duyet,
+        nguoi_tao.ho_ten       AS ho_ten_nguoi_tao,
+        don_yeu_cau.loai_don,
+        phe_duyet.trang_thai,
+        don_yeu_cau.ngay_tao,
+        phe_duyet.ngay_phe_duyet
     </sql>
 
     <insert id="insertPheDuyet">
@@ -58,8 +60,11 @@
         SELECT
             <include refid="columnPheDuyet"/>
         FROM phe_duyet
+            JOIN don_yeu_cau ON phe_duyet.ma_don = don_yeu_cau.ma_don
+            JOIN nhan_vien nguoi_tao ON don_yeu_cau.ma_nhan_vien = nguoi_tao.ma_nhan_vien
+            JOIN nhan_vien nguoi_phe_duyet ON phe_duyet.ma_nhan_vien = nguoi_phe_duyet.ma_nhan_vien
         <where>
-            ma_nhan_vien = #{maNhanVien}
+            nguoi_phe_duyet.ma_nhan_vien = #{maNhanVien}
         </where>
     </select>
 

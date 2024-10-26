@@ -12,4 +12,10 @@ public class PheDuyet {
     private Integer trangThai;
     private String ghiChu;
     private String ngayPheDuyet;
+
+    // entity join
+    private String hoTenNguoiPheDuyet;
+    private String hoTenNguoiTao;
+    private String loaiDon;
+    private String ngayTao;
 }

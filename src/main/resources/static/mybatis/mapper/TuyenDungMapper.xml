@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fpt.vanguard.mapper.mybatis.TuyenDungMapper">
 
-    <resultMap id="TuyenDungResultMap" type="com.fpt.vanguard.entity.TuyenDung">
-        <id column="ma_tuyen_dung" property="maTuyenDung"/>
-        <result column="ten_viec" property="tenViec"/>
+    <resultMap id="TuyenDungResultMap" type="ViTriTuyenDung">
+        <id column="ma_tuyen_dung" property="maViTriTuyenDung"/>
+        <result column="ten_viec" property="tenViTri"/>
         <result column="ma_phong_ban" property="maPhongBan"/>
         <result column="so_luong_tuyen" property="soLuongTuyen"/>
         <result column="so_luong_ung_tuyen" property="soLuongUngTuyen"/>
@@ -12,44 +12,52 @@
         <result column="mo_ta" property="moTa"/>
         <result column="yeu_cau" property="yeuCau"/>
     </resultMap>
+
+    <sql id="">
+
+    </sql>
+
     <select id="getAllTuyenDung" resultMap="TuyenDungResultMap">
-        SELECT * FROM tuyen_dung
+        SELECT *
+        FROM tuyen_dung
     </select>
+
     <select id="getTuyenDungById" resultMap="TuyenDungResultMap" parameterType="String">
-        SELECT  *
+        SELECT *
         FROM tuyen_dung
         <if test="id != null and id != ''">
             WHERE ma_tuyen_dung = #{id}
         </if>
     </select>
+
     <select id="isExist" parameterType="String" resultType="Boolean">
         SELECT COUNT(ma_tuyen_dung)
         FROM tuyen_dung
         WHERE ma_tuyen_dung = #{id}
     </select>
+
     <insert id="insertTuyenDung" parameterType="com.fpt.vanguard.dto.request.TuyenDungDtoRequest">
-        INSERT INTO tuyen_dung (ma_tuyen_dung, ten_viec, ma_phong_ban, so_luong_tuyen, so_luong_ung_tuyen, trang_thai, mo_ta, yeu_cau)
-        VALUES (
-                   #{maTuyenDung},
-                   #{tenViec},
-                   #{maPhongBan},
-                   #{soLuongTuyen},
-                   #{soLuongUngTuyen},
-                   #{trangThai},
-                   #{moTa},
-                   #{yeuCau}
-               )
+        INSERT INTO tuyen_dung (ma_tuyen_dung, ten_viec, ma_phong_ban, so_luong_tuyen, so_luong_ung_tuyen, trang_thai,
+                                mo_ta, yeu_cau)
+        VALUES (#{maTuyenDung},
+                #{tenViec},
+                #{maPhongBan},
+                #{soLuongTuyen},
+                #{soLuongUngTuyen},
+                #{trangThai},
+                #{moTa},
+                #{yeuCau})
     </insert>
 
-    <!--    <update id="updateTuyenDung" parameterType="com.fpt.vanguard.dto.request.TuyenDungDtoRequest">-->
-<!--        UPDATE tuyen_dung-->
-<!--        SET ten_viec = #{tenViec},-->
-<!--            ma_phong_ban = #{maPhongBan},-->
-<!--            so_luong_tuyen = #{soLuongTuyen},-->
-<!--            so_luong_ung_tuyen = #{soLuongUngTuyen},-->
-<!--            trang_thai = #{trangThai},-->
-<!--            mo_ta = #{moTa},-->
-<!--            yeu_cau = #{yeuCau}-->
-<!--        WHERE ma_tuyen_dung = #{maTuyenDung}-->
-<!--    </update>-->
+    <update id="updateTuyenDung" parameterType="com.fpt.vanguard.dto.request.TuyenDungDtoRequest">
+        UPDATE tuyen_dung
+        SET ten_viec           = #{tenViec},
+            ma_phong_ban       = #{maPhongBan},
+            so_luong_tuyen     = #{soLuongTuyen},
+            so_luong_ung_tuyen = #{soLuongUngTuyen},
+            trang_thai         = #{trangThai},
+            mo_ta              = #{moTa},
+            yeu_cau            = #{yeuCau}
+        WHERE ma_tuyen_dung = #{maTuyenDung}
+    </update>
 </mapper>

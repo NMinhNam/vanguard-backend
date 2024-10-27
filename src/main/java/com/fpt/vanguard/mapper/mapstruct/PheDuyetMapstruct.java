@@ -11,4 +11,5 @@ import java.util.List;
 public interface PheDuyetMapstruct {
     List<PheDuyetDtoResponse> toDtoList(List<PheDuyet> pheDuyets);
     PheDuyet toPheDuyet(PheDuyetDtoRequest request);
+    PheDuyetDtoResponse toDto(PheDuyet pheDuyet);
 }

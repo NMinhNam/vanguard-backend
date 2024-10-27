@@ -13,19 +13,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>vanguard</name>
     <description>vanguard</description>
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -68,8 +55,8 @@
         </dependency>
         <dependency>
             <groupId>com.cloudinary</groupId>
-            <artifactId>cloudinary-http44</artifactId>
-            <version>1.34.0</version>
+            <artifactId>cloudinary-http45</artifactId>
+            <version>1.38.0</version>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>

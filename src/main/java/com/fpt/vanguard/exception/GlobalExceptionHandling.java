@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.io.IOException;
 import java.time.format.DateTimeParseException;
 
 @ControllerAdvice
@@ -94,6 +95,15 @@ public class GlobalExceptionHandling {
                 ApiResponse.builder()
                         .status(ErrorCode.MAIL_EXCEPTION.getStatus())
                         .message(ErrorCode.MAIL_EXCEPTION.getMessage())
+                        .build());
+    }
+
+    @ExceptionHandler(value = IOException.class)
+    ResponseEntity<ApiResponse> handleIOException(IOException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                ApiResponse.builder()
+                        .status(ErrorCode.FILE_UPLOAD_FAILED.getStatus())
+                        .message(ErrorCode.FILE_UPLOAD_FAILED.getMessage())
                         .build());
     }
 }

@@ -25,4 +25,6 @@ public interface NhanVienMapper {
     boolean existsByEmail(String email);
 
     NhanVien findNhanVienByUserName(@Param("username") String username);
+
+    int insertNhanVienList(List<NhanVien> nhanVienList);
 }

@@ -149,7 +149,6 @@ public class NhanVienServiceImpl implements NhanVienService {
         );
     }
 
-
     @Override
     public Integer deleteNhanVien(String id) {
         boolean isExistNhanVien = nhanVienMapper.existsById(id);
@@ -162,5 +161,10 @@ public class NhanVienServiceImpl implements NhanVienService {
         return nhanVienMapstruct.toNhanVienDtoResponse(
                 nhanVienMapper.findNhanVienByUserName(username)
         );
+    }
+
+    @Override
+    public Integer createNhanVienByExcel(List<NhanVienDtoRequest> nhanVienDtoRequestList) {
+        return 0;
     }
 }

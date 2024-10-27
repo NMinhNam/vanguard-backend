@@ -22,4 +22,6 @@ public interface NhanVienService {
     Integer deleteNhanVien(String id);
 
     NhanVienDtoResponse getNhanVienByUserName(String username);
+
+    Integer createNhanVienByExcel(List<NhanVienDtoRequest> nhanVienDtoRequestList);
 }

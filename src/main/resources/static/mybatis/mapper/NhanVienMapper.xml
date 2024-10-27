@@ -195,4 +195,13 @@
         where us.user_name = #{username}
     </select>
 
+    <insert id="insertNhanVienList">
+        INSERT INTO nhan_vien
+        ()
+        VALUES
+            <foreach collection="nhanVienList">
+
+            </foreach>
+    </insert>
+
 </mapper>

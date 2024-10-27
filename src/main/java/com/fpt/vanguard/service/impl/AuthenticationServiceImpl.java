@@ -51,10 +51,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String jwtId = generateUUID();
         var accessToken = generateAccessToken(user, jwtId);
         var refreshToken = generateRefreshToken(user, jwtId);
+        String roleName = user.getRole().getRoleName();
 
         return AuthenticationDtoResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
+                .role(roleName)
                 .build();
     }
 

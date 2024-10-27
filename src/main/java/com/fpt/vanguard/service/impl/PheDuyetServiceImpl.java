@@ -106,4 +106,11 @@ public class PheDuyetServiceImpl implements PheDuyetService {
     public Integer deletePheDuyet(String maDon) {
         return pheDuyetMapper.deletePheDuyet(maDon);
     }
+
+    @Override
+    public PheDuyetDtoResponse getPheDuyetDetail(String maDon) {
+        return pheDuyetMapstruct.toDto(
+                pheDuyetMapper.getPheDuyetDetail(maDon)
+        );
+    }
 }

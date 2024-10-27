@@ -12,19 +12,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/phe-duyet")
+@RequestMapping("api/v1/approvals")
 @RequiredArgsConstructor
 @CrossOrigin
 public class PheDuyetController {
     private final PheDuyetService pheDuyetService;
 
-    @GetMapping("/{maNhanVien}")
-    public ApiResponse<List<PheDuyetDtoResponse>> getPheDuyets
-            (@PathVariable("maNhanVien") String maNhanVien) {
+    @GetMapping("employee/{employeeId}")
+    public ApiResponse<List<PheDuyetDtoResponse>> getPheDuyets(@PathVariable("employeeId") String maNhanVien) {
         return ApiResponse.<List<PheDuyetDtoResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
                 .data(pheDuyetService.getPheDuyets(maNhanVien))
+                .build();
+    }
+
+    @GetMapping("/{requestId}")
+    public ApiResponse<PheDuyetDtoResponse> getPheDuyetDetail(@PathVariable("requestId") String maDon) {
+        return ApiResponse.<PheDuyetDtoResponse>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(pheDuyetService.getPheDuyetDetail(maDon))
                 .build();
     }
 
@@ -46,9 +54,8 @@ public class PheDuyetController {
                 .build();
     }
 
-    @DeleteMapping("/{maDon}")
-    public ApiResponse<Integer> deletePheDuyet
-            (@PathVariable("maDon") String maDon) {
+    @DeleteMapping("/{requestId}")
+    public ApiResponse<Integer> deletePheDuyet(@PathVariable("requestId") String maDon) {
         return ApiResponse.<Integer>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)

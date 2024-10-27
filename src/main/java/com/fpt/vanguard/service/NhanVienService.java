@@ -4,6 +4,7 @@ import com.fpt.vanguard.dto.request.NhanVienDtoRequest;
 import com.fpt.vanguard.dto.response.NhanVienDtoResponse;
 import jakarta.mail.MessagingException;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface NhanVienService {
 
     Integer createNhanVien(NhanVienDtoRequest nhanVienDtoRequest) throws MessagingException, ParseException;
 
-    Integer updateNhanVien(NhanVienDtoRequest nhanVienDtoRequest);
+    Integer updateNhanVien(NhanVienDtoRequest nhanVienDtoRequest) throws IOException;
 
     Integer deleteNhanVien(String id);
 

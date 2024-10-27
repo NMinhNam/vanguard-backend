@@ -13,12 +13,16 @@ import com.fpt.vanguard.mapper.mapstruct.NhanVienMapstruct;
 import com.fpt.vanguard.mapper.mybatis.NhanVienMapper;
 import com.fpt.vanguard.service.MailService;
 import com.fpt.vanguard.service.NhanVienService;
+import com.fpt.vanguard.service.UploadImageFileService;
 import com.fpt.vanguard.service.UserService;
+import com.fpt.vanguard.util.ImageUploadUtil;
 import com.fpt.vanguard.util.PasswordGeneratorUtil;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 
@@ -29,6 +33,7 @@ public class NhanVienServiceImpl implements NhanVienService {
     private final NhanVienMapstruct nhanVienMapstruct;
     private final MailService mailService;
     private final UserService userService;
+    private final UploadImageFileService uploadImageFileService;
 
     @Override
     public List<NhanVienDtoResponse> getAllNhanVien() {
@@ -50,7 +55,8 @@ public class NhanVienServiceImpl implements NhanVienService {
     }
 
     @Override
-    public Integer createNhanVien(NhanVienDtoRequest nhanVienDtoRequest) throws MessagingException, ParseException {
+    public Integer createNhanVien(NhanVienDtoRequest nhanVienDtoRequest)
+            throws MessagingException, ParseException {
         String nhanVienId = nhanVienDtoRequest.getMaNhanVien();
         if (nhanVienMapper.existsById(nhanVienId)) {
             return nhanVienMapper.updateNhanVien(
@@ -85,7 +91,8 @@ public class NhanVienServiceImpl implements NhanVienService {
         );
     }
 
-    private void sendWelcomeEmail(String email, String name) throws MessagingException {
+    private void sendWelcomeEmail(String email, String name)
+            throws MessagingException {
         Map<String, Object> welcomeVariables = new HashMap<>();
         welcomeVariables.put("name", name);
 
@@ -99,7 +106,8 @@ public class NhanVienServiceImpl implements NhanVienService {
         mailService.sendMail(welcomeMailDtoRequest);
     }
 
-    private void sendAccountCreationEmail(String email, String name, String password) throws MessagingException {
+    private void sendAccountCreationEmail(String email, String name, String password)
+            throws MessagingException {
         Map<String, Object> accountCreationVariables = new HashMap<>();
         accountCreationVariables.put("name", name);
         accountCreationVariables.put("username", email);
@@ -116,14 +124,31 @@ public class NhanVienServiceImpl implements NhanVienService {
     }
 
     @Override
-    public Integer updateNhanVien(NhanVienDtoRequest nhanVienDtoRequest) {
+    public Integer updateNhanVien(NhanVienDtoRequest nhanVienDtoRequest) throws IOException {
         String maNhanVien = nhanVienDtoRequest.getMaNhanVien();
         boolean isExistNhanVien = nhanVienMapper.existsById(maNhanVien);
         if (!isExistNhanVien) throw new AppException(ErrorCode.NHAN_VIEN_NOT_EXIST);
+
+        String imagePath = nhanVienDtoRequest.getHinhAnh();
+        String fileImage = null;
+
+        if (imagePath != null && !imagePath.isEmpty()) {
+            fileImage = ImageUploadUtil.convertImageToBase64(imagePath);
+
+            String fileName = "image_" + System.currentTimeMillis() + ".png";
+
+            MultipartFile multipartFile = ImageUploadUtil.convertBase64ToMultipartFile(fileImage, fileName);
+
+            fileImage = uploadImageFileService.uploadImage(multipartFile);
+        }
+
+        nhanVienDtoRequest.setHinhAnh(fileImage);
+
         return nhanVienMapper.updateNhanVien(
                 nhanVienMapstruct.toNhanVien(nhanVienDtoRequest)
         );
     }
+
 
     @Override
     public Integer deleteNhanVien(String id) {

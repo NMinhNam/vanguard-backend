@@ -68,7 +68,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .issueTime(new Date())
                 .expirationTime(Date.from(
                         Instant.now()
-                                .plus(1, ChronoUnit.MINUTES)
+                                .plus(1, ChronoUnit.HOURS)
                         )
                 )
                 .claim("token_type", "access")

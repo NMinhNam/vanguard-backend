@@ -1,18 +1,19 @@
 package com.fpt.vanguard.util;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class DateUtil {
     public static Date parseDate(String dateString) throws ParseException {
-        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
-        java.util.Date utilDate = inputFormat.parse(dateString);
-        return new Date(utilDate.getTime());
+        LocalDate localDate = LocalDate
+                .parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        return Date.valueOf(localDate);
     }
 
-    public static Timestamp convertDateToTimestamp(Date date) {
+    public static Timestamp convertDateToTimestamp(java.util.Date date) {
         if (date == null) {
             return null;
         }

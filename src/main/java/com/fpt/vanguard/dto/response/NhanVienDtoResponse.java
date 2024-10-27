@@ -16,8 +16,14 @@ public class NhanVienDtoResponse {
     private String cccd;
     private String diaChi;
     private String hinhAnh;
+    private String email;
     private String maPhongBan;
     private String maBoPhan;
     private String maChucVu;
-    private String maTrinhDo;
+    private Integer userId;
+
+    private String tenTruongPhong;
+    private String tenPhongBan;
+    private String tenBoPhan;
+    private String tenChucVu;
 }

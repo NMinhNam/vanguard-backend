@@ -19,12 +19,7 @@ public class MailServiceImpl implements MailService {
     private final TemplateEngine templateEngine;
 
     @Override
-    public MailDtoResponse sendWelcomeMail(MailDtoRequest request) {
-        if (request.getTo() == null || request.getSubject() == null || request.getTemplateName() == null) {
-            throw new IllegalArgumentException("Email, subject, and template name must not be null");
-        }
-
-        try {
+    public MailDtoResponse sendMail(MailDtoRequest request) throws MessagingException {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             helper.setTo(request.getTo());
@@ -40,12 +35,5 @@ public class MailServiceImpl implements MailService {
             return MailDtoResponse.builder()
                     .success(true)
                     .build();
-        } catch (MessagingException e) {
-            // Log the error (using a logging framework)
-            e.printStackTrace();
-            return MailDtoResponse.builder()
-                    .success(false)
-                    .build();
-        }
     }
 }

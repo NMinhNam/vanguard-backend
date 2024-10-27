@@ -9,6 +9,6 @@ public interface UserService {
     List<UserDtoResponse> getAllUser();
     UserDtoResponse getUserByUserName(String userName);
     UserDtoResponse getUserInfo();
-    Integer saveUser(UserDtoRequest request);
+    Integer createUser(UserDtoRequest request);
     Integer deleteUser(String username);
 }

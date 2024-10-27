@@ -28,6 +28,11 @@ public enum ErrorCode {
     INVALID_TOKEN(1003, "invalid token"),
     RESOURCE_NOT_FOUND(1004, "resource not found! Endpoints fail"),
     ACCOUNT_HAS_BEEN_DISABLE(1003, "Tai khoan da bi vo hieu hoa"),
+    MAIL_EXCEPTION(999, "mail exception"),
+    EMAIL_EXISTED(1001, "email existed"),
+    DON_YEU_CAU_NOT_EXIST(1000, "Don yeu cau not exist"),
+    DON_YEU_CAU_EXISTED(1001, "Don yeu cau existed"),
+    LIST_UNG_VIEN_EMPTY(1002, "list ung vien rong")
     ;
 
     private final int status;

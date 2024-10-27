@@ -11,10 +11,15 @@
         <result property="cccd" column="cccd"/>
         <result property="diaChi" column="dia_chi"/>
         <result property="hinhAnh" column="hinh_anh"/>
+        <result property="email" column="email"/>
         <result property="maPhongBan" column="ma_phong_ban"/>
         <result property="maBoPhan" column="ma_bo_phan"/>
         <result property="maChucVu" column="ma_chuc_vu"/>
-        <result property="maTrinhDo" column="ma_trinh_do"/>
+        <result property="userId" column="user_id"/>
+        <result property="tenTruongPhong" column="ten_truong_phong"/>
+        <result property="tenPhongBan" column="ten_phong_ban"/>
+        <result property="tenBoPhan" column="ten_bo_phan"/>
+        <result property="tenChucVu" column="ten_chuc_vu"/>
     </resultMap>
 
     <sql id="NhanVienColumnList">
@@ -26,10 +31,20 @@
         , cccd
         , dia_chi
         , hinh_anh
-        , ma_phong_ban
-        , ma_bo_phan
-        , ma_chuc_vu
-        , ma_trinh_do
+        , email
+        , nv.ma_phong_ban
+        , ten_phong_ban
+        , nv.ma_bo_phan
+        , ten_bo_phan
+        , nv.ma_chuc_vu
+        , ten_chuc_vu
+        , user_id
+    </sql>
+
+    <sql id="subQueryTruongPhong">
+        (select ho_ten
+         from nhan_vien
+         where ma_nhan_vien = truong_phong) as ten_truong_phong
     </sql>
 
     <insert id="insertNhanVien" parameterType="NhanVien">
@@ -41,55 +56,69 @@
                                cccd,
                                dia_chi,
                                hinh_anh,
+                               email,
                                ma_phong_ban,
                                ma_bo_phan,
                                ma_chuc_vu,
-                               ma_trinh_do)
-        VALUES (#{nhanVien.maNhanVien},
+                               user_id)
+        VALUES (generate_ma_nhan_vien(),
                 #{nhanVien.hoTen},
                 #{nhanVien.gioiTinh},
-                #{nhanVien.ngaySinh},
+                #{nhanVien.ngaySinh}::DATE,
                 #{nhanVien.dienThoai},
                 #{nhanVien.cccd},
                 #{nhanVien.diaChi},
                 #{nhanVien.hinhAnh},
+                #{nhanVien.email},
                 #{nhanVien.maPhongBan},
                 #{nhanVien.maBoPhan},
                 #{nhanVien.maChucVu},
-                #{nhanVien.maTrinhDo})
+                #{nhanVien.userId}
+               )
     </insert>
 
     <update id="updateNhanVien" parameterType="NhanVien">
         UPDATE nhan_vien
-        <set>
-            <if test="nhanVien.hoTen != null">ho_ten = #{nhanVien.hoTen},</if>
-            <if test="nhanVien.gioiTinh != null">gioi_tinh = #{nhanVien.gioiTinh},</if>
-            <if test="nhanVien.ngaySinh != null">ngay_sinh = #{nhanVien.ngaySinh},</if>
-            <if test="nhanVien.dienThoai != null">dien_thoai = #{nhanVien.dienThoai},</if>
-            <if test="nhanVien.cccd != null">cccd = #{nhanVien.cccd},</if>
-            <if test="nhanVien.diaChi != null">dia_chi = #{nhanVien.diaChi},</if>
-            <if test="nhanVien.hinhAnh != null">hinh_anh = #{nhanVien.hinhAnh},</if>
-            <if test="nhanVien.maPhongBan != null">ma_phong_ban = #{nhanVien.maPhongBan},</if>
-            <if test="nhanVien.maBoPhan != null">ma_bo_phan = #{nhanVien.maBoPhan},</if>
-            <if test="nhanVien.maChucVu != null">ma_chuc_vu = #{nhanVien.maChucVu},</if>
-            <if test="nhanVien.maTrinhDo != null">ma_trinh_do = #{nhanVien.maTrinhDo}</if>
-        </set>
+        SET
+            ho_ten = #{nhanVien.hoTen},
+            gioi_tinh = #{nhanVien.gioiTinh},
+            ngay_sinh = #{nhanVien.ngaySinh}::DATE,
+            dien_thoai = #{nhanVien.dienThoai},
+            cccd = #{nhanVien.cccd},
+            dia_chi = #{nhanVien.diaChi},
+            hinh_anh = #{nhanVien.hinhAnh},
+            ma_phong_ban = #{nhanVien.maPhongBan},
+            ma_bo_phan = #{nhanVien.maBoPhan},
+            ma_chuc_vu = #{nhanVien.maChucVu},
+            email = #{nhanVien.email}
         WHERE ma_nhan_vien = #{nhanVien.maNhanVien}
     </update>
+
     <delete id="deleteNhanVien">
+        delete from nhan_vien
+        where ma_nhan_vien = #{maNhanVien}
     </delete>
 
     <select id="findAll" resultMap="NhanVienResultMap">
         SELECT
-            <include refid="NhanVienColumnList"/>
+            <include refid="NhanVienColumnList"/>,
+            <include refid="subQueryTruongPhong"/>
         FROM nhan_vien nv
-        ORDER BY nv.ma_nhan_vien
+        LEFT JOIN phong_ban pb
+        ON nv.ma_phong_ban = pb.ma_phong_ban
+        left join bo_phan bp on nv.ma_bo_phan = bp.ma_bo_phan
+        left join chuc_vu cv on nv.ma_chuc_vu = cv.ma_chuc_vu
     </select>
 
     <select id="findById" parameterType="String" resultMap="NhanVienResultMap">
         SELECT
-        <include refid="NhanVienColumnList"/>
-        FROM nhan_vien
+        <include refid="NhanVienColumnList"/>,
+        <include refid="subQueryTruongPhong"/>
+        FROM nhan_vien nv
+        LEFT JOIN phong_ban pb
+        ON nv.ma_phong_ban = pb.ma_phong_ban
+        left join bo_phan bp on nv.ma_bo_phan = bp.ma_bo_phan
+        left join chuc_vu cv on nv.ma_chuc_vu = cv.ma_chuc_vu
         <where>
             <if test="id != null">
                 ma_nhan_vien = #{id}
@@ -98,14 +127,14 @@
     </select>
 
     <select id="existsById" parameterType="String" resultType="boolean">
-        SELECT
-        COUNT(*) > 0
-        FROM nhan_vien
-        WHERE ma_nhan_vien = #{maNhanVien}
+        SELECT EXISTS (
+            SELECT 1
+            FROM nhan_vien
+            WHERE ma_nhan_vien = #{maNhanVien}
+        )
     </select>
 
-    <select id="findNhanVien"
-            resultMap="NhanVienResultMap">
+    <select id="findNhanVien" resultMap="NhanVienResultMap">
         SELECT
         <include refid="NhanVienColumnList"/>
         FROM nhan_vien
@@ -146,4 +175,24 @@
             </if>
         </where>
     </select>
+
+    <select id="existsByEmail">
+        SELECT EXISTS (
+            SELECT 1
+            FROM nhan_vien
+            WHERE email = #{email}
+        )
+    </select>
+
+    <select id="findNhanVienByUserName" resultMap="NhanVienResultMap">
+        select nv.ma_nhan_vien
+             , nv.ho_ten
+             , nv.dien_thoai
+             , nv.cccd
+             , nv.email
+        from nhan_vien nv
+                 left join "user" us on nv.user_id = us.user_id
+        where us.user_name = #{username}
+    </select>
+
 </mapper>

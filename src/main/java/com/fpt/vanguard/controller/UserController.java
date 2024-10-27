@@ -49,7 +49,7 @@ public class UserController {
         return ApiResponse.<Integer>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
-                .data(userService.saveUser(request))
+                .data(userService.createUser(request))
                 .build();
     }
 

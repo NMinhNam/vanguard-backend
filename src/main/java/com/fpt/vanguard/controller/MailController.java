@@ -25,7 +25,7 @@ public class MailController {
         return ApiResponse.<MailDtoResponse>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
-                .data(mailService.sendWelcomeMail(request))
+                .data(mailService.sendMail(request))
                 .build();
     }
 }

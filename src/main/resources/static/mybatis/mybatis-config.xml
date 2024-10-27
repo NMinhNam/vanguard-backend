@@ -7,5 +7,13 @@
         <typeAlias type="com.fpt.vanguard.entity.Role" alias="Role"/>
         <typeAlias type="com.fpt.vanguard.entity.UngLuong" alias="UngLuong"/>
         <typeAlias type="com.fpt.vanguard.entity.PhongBan" alias="PhongBan"/>
+        <typeAlias type="com.fpt.vanguard.entity.HocVan" alias="HocVan"/>
+        <typeAlias type="com.fpt.vanguard.entity.LichSuCongViec" alias="LichSuCongViec"/>
+        <typeAlias type="com.fpt.vanguard.entity.DonYeuCau" alias="DonYeuCau"/>
+        <typeAlias type="com.fpt.vanguard.entity.PheDuyet" alias="PheDuyet"/>
+        <typeAlias type="com.fpt.vanguard.dto.response.ApprovalDetailsDtoResponse" alias="ApprovalDetails"/>
+        <typeAlias type="com.fpt.vanguard.entity.ChucVu" alias="ChucVu"/>
+        <typeAlias type="com.fpt.vanguard.entity.ViTriTuyenDung" alias="ViTriTuyenDung"/>
+        <typeAlias type="com.fpt.vanguard.entity.UngVien" alias="UngVien"/>
     </typeAliases>
 </configuration>

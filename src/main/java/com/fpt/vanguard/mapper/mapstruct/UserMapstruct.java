@@ -21,7 +21,6 @@ public interface UserMapstruct {
 
     @Mapping(target = "userName", source = "userDtoRequest.username")
     @Mapping(target = "password", source = "userDtoRequest.password")
-    @Mapping(target = "email", source = "userDtoRequest.email")
     @Mapping(target = "role", source = "userDtoRequest.roleId")
     User toUser(UserDtoRequest userDtoRequest);
 }

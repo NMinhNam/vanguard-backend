@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.UngVienMapper">
+    <resultMap id="resultMapUngVien" type="UngVien">
+        <id column="ma_ung_vien" property="maUngVien"/>
+        <result column="ho_ten" property="hoTen"/>
+        <result column="gioi_tinh" property="gioiTinh"/>
+        <result column="ngay_sinh" property="ngaySinh"/>
+        <result column="dien_thoai" property="dienThoai"/>
+        <result column="cccd" property="cccd"/>
+        <result column="dia_chi" property="diaChi"/>
+        <result column="hinh_anh" property="hinhAnh"/>
+        <result column="email" property="email"/>
+        <result column="ma_vi_tri_tuyen_dung" property="maViTriTuyenDung"/>
+    </resultMap>
+
+    <sql id="columnUngVien">
+        ma_ung_vien,
+        ho_ten,
+        gioi_tinh,
+        ngay_sinh,
+        dien_thoai,
+        cccd,
+        dia_chi,
+        hinh_anh,
+        email,
+        ung_vien.ma_vi_tri_tuyen_dung
+    </sql>
+
+    <select id="findAll" resultMap="resultMapUngVien">
+        SELECT
+            <include refid="columnUngVien"/>
+        FROM ung_vien
+            join vi_tri_tuyen_dung
+                on ung_vien.ma_vi_tri_tuyen_dung = vi_tri_tuyen_dung.ma_vi_tri_tuyen_dung
+        <where>
+            <if test="tenViTri != null and tenViTri != ''">
+                ten_vi_tri = #{tenViTri}
+            </if>
+        </where>
+    </select>
+</mapper>

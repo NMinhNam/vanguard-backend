@@ -9,7 +9,6 @@ import lombok.Setter;
 public class UserDtoResponse {
     private Integer userId;
     private String userName;
-    private String email;
     private Boolean enabled;
     private Role role;
 }

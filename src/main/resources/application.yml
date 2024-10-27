@@ -35,4 +35,8 @@ mybatis:
 jwt:
   signer-key: "gXNsKvdcP2xd0tfC9IxZjr8lbcqUIBhhdgyD5kD1cyXbiZUD4yu6BOZOWlAKss/Z"
 
+cloudinary:
+  cloud-name: "dqqqjxnfh"
+  api-key: "255558816145194"
+  api_secret: "gfcwesLzyJVykvcuJIHctzOOuoU"
 

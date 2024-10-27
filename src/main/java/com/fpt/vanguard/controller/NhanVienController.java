@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -76,7 +77,7 @@ public class NhanVienController {
     }
 
     @PutMapping
-    public ApiResponse<Integer> updateNhanVien(@RequestBody NhanVienDtoRequest nhanVienDtoRequest) throws MessagingException, ParseException {
+    public ApiResponse<Integer> updateNhanVien(@RequestBody NhanVienDtoRequest nhanVienDtoRequest) throws MessagingException, ParseException, IOException {
         ApiResponse<Integer> apiResponse = new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);

@@ -3,6 +3,7 @@ package com.fpt.vanguard.service;
 import com.fpt.vanguard.dto.request.NhanVienDtoRequest;
 import com.fpt.vanguard.dto.response.NhanVienDtoResponse;
 import jakarta.mail.MessagingException;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -23,5 +24,5 @@ public interface NhanVienService {
 
     NhanVienDtoResponse getNhanVienByUserName(String username);
 
-    Integer createNhanVienByExcel(List<NhanVienDtoRequest> nhanVienDtoRequestList);
+    Integer createNhanVienByExcel(MultipartFile file) throws IOException;
 }

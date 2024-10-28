@@ -1,12 +1,12 @@
 package com.fpt.vanguard.dto.response;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.Builder;
+import lombok.*;
 
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class NhanVienDtoResponse {
     private String maNhanVien;
     private String hoTen;

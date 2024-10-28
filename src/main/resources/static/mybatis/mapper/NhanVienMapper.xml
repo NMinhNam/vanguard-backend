@@ -195,13 +195,39 @@
         where us.user_name = #{username}
     </select>
 
-    <insert id="insertNhanVienList">
-        INSERT INTO nhan_vien
-        ()
+    <insert id="insertNhanVienList" parameterType="java.util.List">
+        INSERT INTO nhan_vien(
+        ma_nhan_vien,
+        ho_ten,
+        gioi_tinh,
+        ngay_sinh,
+        dien_thoai,
+        cccd,
+        dia_chi,
+        email,
+        ma_phong_ban,
+        ma_bo_phan,
+        ma_chuc_vu
+        )
         VALUES
-            <foreach collection="nhanVienList">
-
-            </foreach>
+        <foreach collection="nhanVienList"
+                 item="element"
+                 index="index"
+                 open="("
+                 separator="),("
+                 close=")">
+            generate_ma_nhan_vien(),
+            #{element.hoTen},
+            #{element.gioiTinh},
+            #{element.ngaySinh},
+            #{element.dienThoai},
+            #{element.cccd},
+            #{element.diaChi},
+            #{element.email},
+            #{element.maPhongBan},
+            #{element.maBoPhan},
+            #{element.maChucVu}
+        </foreach>
     </insert>
 
 </mapper>

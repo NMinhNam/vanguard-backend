@@ -11,10 +11,7 @@ import com.fpt.vanguard.exception.AppException;
 import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.mapper.mapstruct.NhanVienMapstruct;
 import com.fpt.vanguard.mapper.mybatis.NhanVienMapper;
-import com.fpt.vanguard.service.MailService;
-import com.fpt.vanguard.service.NhanVienService;
-import com.fpt.vanguard.service.UploadImageFileService;
-import com.fpt.vanguard.service.UserService;
+import com.fpt.vanguard.service.*;
 import com.fpt.vanguard.util.ImageUploadUtil;
 import com.fpt.vanguard.util.PasswordGeneratorUtil;
 import jakarta.mail.MessagingException;
@@ -34,6 +31,7 @@ public class NhanVienServiceImpl implements NhanVienService {
     private final MailService mailService;
     private final UserService userService;
     private final UploadImageFileService uploadImageFileService;
+    private final ExcelService excelService;
 
     @Override
     public List<NhanVienDtoResponse> getAllNhanVien() {
@@ -164,7 +162,12 @@ public class NhanVienServiceImpl implements NhanVienService {
     }
 
     @Override
-    public Integer createNhanVienByExcel(List<NhanVienDtoRequest> nhanVienDtoRequestList) {
-        return 0;
+    public Integer createNhanVienByExcel(MultipartFile file) throws IOException {
+        List<NhanVienDtoResponse> responseList = excelService.getNhanVienFromExcel(file);
+        List<NhanVienDtoRequest> requestList = nhanVienMapstruct.toNhanVienDtoRequestList(responseList);
+
+        return nhanVienMapper.insertNhanVienList(
+                nhanVienMapstruct.toNhanVienList(requestList)
+        );
     }
 }

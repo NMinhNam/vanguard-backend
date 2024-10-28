@@ -15,4 +15,7 @@ public interface NhanVienMapstruct {
 
     NhanVienDtoResponse toNhanVienDtoResponse(NhanVien nhanVien);
 
+    List<NhanVien> toNhanVienList(List<NhanVienDtoRequest> nhanVienDtoRequestList);
+
+    List<NhanVienDtoRequest> toNhanVienDtoRequestList(List<NhanVienDtoResponse> nhanVienDtoResponses);
 }

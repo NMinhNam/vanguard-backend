@@ -12,4 +12,5 @@ public interface PheDuyetService {
     Integer createPheDuyet(PheDuyetDtoRequest request) throws MessagingException;
     Integer updatePheDuyet(PheDuyetDtoRequest request) throws MessagingException;
     Integer deletePheDuyet(String maDon);
+    PheDuyetDtoResponse getPheDuyetDetail(String maDon);
 }

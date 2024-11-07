@@ -7,13 +7,15 @@ import java.util.List;
 
 @Mapper
 public interface ChamCongMapper {
-    List<BangChamCong> findByMaNhanVien();
+    List<BangChamCong> findByMaNhanVien(String maNhanVien);
 
     List<BangChamCong> findAll();
 
     Integer insertBangChamCong(BangChamCong bangChamCong);
 
-    Integer updateBangChamCong(BangChamCong bangCong);
+    Integer updateBangChamCong(BangChamCong bangChamCong);
 
-    Integer deleteBangChamCong(BangChamCong bangCong);
+    Integer deleteBangChamCong(BangChamCong bangChamCong);
+
+    Boolean isChamCong(BangChamCong bangChamCong);
 }

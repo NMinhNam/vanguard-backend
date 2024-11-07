@@ -15,4 +15,6 @@ public class BangChamCong {
     private Date gioVao;
     private Date gioRa;
     private Integer soGioLam;
+
+    private String tenNhanVien;
 }

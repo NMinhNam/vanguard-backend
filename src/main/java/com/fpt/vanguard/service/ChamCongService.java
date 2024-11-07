@@ -1,7 +1,16 @@
 package com.fpt.vanguard.service;
 
-public interface ChamCongService {
-    Integer doCheckIn();
+import com.fpt.vanguard.dto.request.ChamCongDtoRequest;
+import com.fpt.vanguard.dto.response.ChamCongDtoResponse;
 
-    Integer doCheckOut();
+import java.util.List;
+
+public interface ChamCongService {
+    Integer doCheckIn(ChamCongDtoRequest request);
+
+    Integer doCheckOut(ChamCongDtoRequest request);
+
+    List<ChamCongDtoResponse> getChamCongNhanVien(String maNhanVien);
+
+    List<ChamCongDtoResponse> getAllChamCong();
 }

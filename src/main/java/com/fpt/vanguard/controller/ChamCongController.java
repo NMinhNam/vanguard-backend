@@ -1,30 +1,40 @@
 package com.fpt.vanguard.controller;
 
 import com.fpt.vanguard.common.ApiResponse;
+import com.fpt.vanguard.dto.request.ChamCongDtoRequest;
 import com.fpt.vanguard.service.ChamCongService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/attendance")
+@RequestMapping("api/v1/attendances")
 @RequiredArgsConstructor
 @CrossOrigin
 public class ChamCongController {
     private final ChamCongService chamCongService;
 
-    
-
-    @PostMapping("/checkin")
-    public ApiResponse<?> doCheckIn() {
+    @GetMapping
+    public ApiResponse<?> getAttendance() {
         return null;
     }
 
+    @PostMapping("/checkin")
+    public ApiResponse<Integer> doCheckIn(@RequestBody ChamCongDtoRequest chamCongDtoRequest) {
+        return ApiResponse.<Integer>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(chamCongService.doCheckIn(chamCongDtoRequest))
+                .build();
+    }
+
     @PostMapping("/checkout")
-    public ApiResponse<?> doCheckOut() {
-        return null;
+    public ApiResponse<?> doCheckOut(@RequestBody ChamCongDtoRequest chamCongDtoRequest) {
+        return ApiResponse.<Integer>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(chamCongService.doCheckOut(chamCongDtoRequest))
+                .build();
     }
 
     @PostMapping("/approve")
@@ -32,5 +42,9 @@ public class ChamCongController {
         return null;
     }
 
+    @GetMapping("/employess/{id}")
+    public ApiResponse<?> getAttendanceByEmployessId(@PathVariable String maNhanVien) {
+        return null;
+    }
 
 }

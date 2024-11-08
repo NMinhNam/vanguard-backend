@@ -18,4 +18,9 @@ public class PheDuyet {
     private String hoTenNguoiTao;
     private String loaiDon;
     private String ngayTao;
+
+    // entity approval status
+    private int soLuongDaDuyet;
+    private int soLuongTuChoi;
+    private int soLuongChoDuyet;
 }

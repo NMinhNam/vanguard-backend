@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -28,8 +29,8 @@ public class PheDuyetController {
     }
 
     @GetMapping("/{requestId}")
-    public ApiResponse<PheDuyetDtoResponse> getPheDuyetDetail(@PathVariable("requestId") String maDon) {
-        return ApiResponse.<PheDuyetDtoResponse>builder()
+    public ApiResponse<List<PheDuyetDtoResponse>> getPheDuyetDetail(@PathVariable("requestId") String maDon) {
+        return ApiResponse.<List<PheDuyetDtoResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
                 .data(pheDuyetService.getPheDuyetDetail(maDon))
@@ -46,7 +47,7 @@ public class PheDuyetController {
     }
 
     @PutMapping
-    public ApiResponse<Integer> updatePheDuyet(@RequestBody PheDuyetDtoRequest pheDuyetDtoRequest) throws MessagingException {
+    public ApiResponse<Integer> updatePheDuyet(@RequestBody PheDuyetDtoRequest pheDuyetDtoRequest) throws MessagingException, ParseException {
         return ApiResponse.<Integer>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)

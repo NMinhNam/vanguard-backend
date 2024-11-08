@@ -3,22 +3,26 @@ package com.fpt.vanguard.service.impl;
 import com.fpt.vanguard.dto.request.ApprovalDetailsDtoRequest;
 import com.fpt.vanguard.dto.request.MailDtoRequest;
 import com.fpt.vanguard.dto.request.PheDuyetDtoRequest;
-import com.fpt.vanguard.dto.response.ApprovalDetailsDtoResponse;
 import com.fpt.vanguard.dto.response.PheDuyetDtoResponse;
+import com.fpt.vanguard.entity.DonYeuCau;
+import com.fpt.vanguard.entity.PheDuyet;
 import com.fpt.vanguard.enums.TrangThaiPheDuyet;
 import com.fpt.vanguard.mapper.mapstruct.ApprovalMapstruct;
 import com.fpt.vanguard.mapper.mapstruct.PheDuyetMapstruct;
+import com.fpt.vanguard.mapper.mybatis.DonYeuCauMapper;
 import com.fpt.vanguard.mapper.mybatis.PheDuyetMapper;
 import com.fpt.vanguard.service.MailService;
 import com.fpt.vanguard.service.PheDuyetService;
+import com.fpt.vanguard.util.DateUtil;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +31,7 @@ public class PheDuyetServiceImpl implements PheDuyetService {
     private final PheDuyetMapstruct pheDuyetMapstruct;
     private final MailService mailService;
     private final ApprovalMapstruct approvalMapstruct;
+    private final DonYeuCauMapper donYeuCauMapper;
 
     @Override
     public List<PheDuyetDtoResponse> getPheDuyets(String maNhanvien) {
@@ -38,16 +43,10 @@ public class PheDuyetServiceImpl implements PheDuyetService {
         Integer trangThaiMacDinh = TrangThaiPheDuyet.CHO_DUYET.getTrangThaiPheDuyet();
         request.setTrangThai(trangThaiMacDinh);
 
-        Integer pheDuyetResponse = pheDuyetMapper.insertPheDuyet(
-                pheDuyetMapstruct.toPheDuyet(request)
-        );
+        Integer pheDuyetResponse = pheDuyetMapper.insertPheDuyet(pheDuyetMapstruct.toPheDuyet(request));
 
         String maNguoiPheDuyet = request.getMaNhanVien();
-        sendApprovalNotificationEmail(
-                approvalMapstruct.toApprovalDetailsDtoRequest(
-                        pheDuyetMapper.getApprovalDetails(maNguoiPheDuyet)
-                )
-        );
+        sendApprovalNotificationEmail(approvalMapstruct.toApprovalDetailsDtoRequest(pheDuyetMapper.getApprovalDetails(maNguoiPheDuyet)));
 
         return pheDuyetResponse;
     }
@@ -66,19 +65,44 @@ public class PheDuyetServiceImpl implements PheDuyetService {
     }
 
     @Override
-    public Integer updatePheDuyet(PheDuyetDtoRequest request) throws MessagingException {
+    public Integer updatePheDuyet(PheDuyetDtoRequest request) throws MessagingException, ParseException {
         Integer pheDuyetResponse = pheDuyetMapper.updatePheDuyet(
                 pheDuyetMapstruct.toPheDuyet(request)
         );
 
-        String maNguoiPheDuyet = request.getMaNhanVien();
-        sendApprovalStatusUpdateEmail(
-                approvalMapstruct.toApprovalDetailsDtoRequest(
-                        pheDuyetMapper.getInfoFromRequestApproval(maNguoiPheDuyet)
-                )
-        );
+        String maDonYeuCau = request.getMaDon();
+        Integer trangThaiDon = getRequestStatus(maDonYeuCau);
+        DonYeuCau donYeuCau = donYeuCauMapper.findDonYeuCauDetail(maDonYeuCau);
+        String ngayTao = donYeuCau.getNgayTao();
+        String ngayBatDau = donYeuCau.getNgayBatDau();
+        String ngayKetThuc = donYeuCau.getNgayKetThuc();
+        DateUtil.parseDate(ngayTao);
+//        DateUtil.parseDate(ngayBatDau);
+//        DateUtil.parseDate(ngayKetThuc);
+
+        donYeuCau.setTrangThai(trangThaiDon);
+        donYeuCau.setNgayTao(ngayTao);
+//        donYeuCau.setNgayBatDau(ngayBatDau);
+//        donYeuCau.setNgayKetThuc(ngayKetThuc);
+        donYeuCauMapper.updateDonYeuCau(donYeuCau);
+
+        if (!Objects.equals(trangThaiDon, TrangThaiPheDuyet.CHO_DUYET.getTrangThaiPheDuyet())) {
+            String maNguoiPheDuyet = request.getMaNhanVien();
+            sendApprovalStatusUpdateEmail(
+                    approvalMapstruct.toApprovalDetailsDtoRequest(
+                            pheDuyetMapper.getInfoFromRequestApproval(maNguoiPheDuyet)
+                    )
+            );
+        }
 
         return pheDuyetResponse;
+    }
+
+    private Integer getRequestStatus(String maDonYeuCau) {
+        PheDuyet requestStatus = pheDuyetMapper.getApprovalStatusCount(maDonYeuCau);
+        int soLuongTuChoi = requestStatus.getSoLuongTuChoi();
+        int soLuongChoDuyet = requestStatus.getSoLuongChoDuyet();
+        return TrangThaiPheDuyet.getTrangThaiPheDuyet(soLuongTuChoi, soLuongChoDuyet);
     }
 
     public void sendApprovalStatusUpdateEmail(ApprovalDetailsDtoRequest approvalDetails) throws MessagingException {
@@ -93,11 +117,7 @@ public class PheDuyetServiceImpl implements PheDuyetService {
         String tenTrangThai = TrangThaiPheDuyet.getTenTrangThai(trangThai);
         variables.put("trangThai", tenTrangThai);
 
-        MailDtoRequest mailDtoRequest = MailDtoRequest.builder()
-                .to(approvalDetails.getEmailNguoiTao())
-                .subject("Update on Your Approval Request")
-                .templateName("approval-status-update.html")
-                .variables(variables).build();
+        MailDtoRequest mailDtoRequest = MailDtoRequest.builder().to(approvalDetails.getEmailNguoiTao()).subject("Update on Your Approval Request").templateName("approval-status-update.html").variables(variables).build();
 
         mailService.sendMail(mailDtoRequest);
     }
@@ -108,9 +128,7 @@ public class PheDuyetServiceImpl implements PheDuyetService {
     }
 
     @Override
-    public PheDuyetDtoResponse getPheDuyetDetail(String maDon) {
-        return pheDuyetMapstruct.toDto(
-                pheDuyetMapper.getPheDuyetDetail(maDon)
-        );
+    public List<PheDuyetDtoResponse> getPheDuyetDetail(String maDon) {
+        return pheDuyetMapstruct.toDtoList(pheDuyetMapper.getPheDuyet(maDon));
     }
 }

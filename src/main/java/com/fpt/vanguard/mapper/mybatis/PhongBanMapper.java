@@ -1,6 +1,7 @@
 package com.fpt.vanguard.mapper.mybatis;
 
 import com.fpt.vanguard.dto.request.PhongBanDtoRequest;
+import com.fpt.vanguard.entity.NhanVien;
 import com.fpt.vanguard.entity.PhongBan;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -20,4 +21,6 @@ public interface PhongBanMapper {
     int deletePhongBan(@Param("id") String id);
 
     Boolean isExist(@Param("id") String id);
+
+    List<PhongBan> orgChartPhongBan();
 }

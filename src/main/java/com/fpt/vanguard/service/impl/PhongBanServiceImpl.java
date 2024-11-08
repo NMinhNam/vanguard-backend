@@ -24,7 +24,7 @@ public class PhongBanServiceImpl implements PhongBanService {
         var listEntity = phongBanMapper.findAll();
         List<PhongBanDtoResponse> listResultEntity =
                 phongBanMapstruct.toPhongBanDtoResponseList(listEntity);
-        if(listResultEntity.isEmpty()) throw new AppException(ErrorCode.LIST_PHONG_BAN_EMPTY);
+        if (listResultEntity.isEmpty()) throw new AppException(ErrorCode.LIST_PHONG_BAN_EMPTY);
         return listResultEntity;
     }
 
@@ -33,15 +33,15 @@ public class PhongBanServiceImpl implements PhongBanService {
         PhongBanDtoResponse resultEntity = phongBanMapstruct.toPhongBanDtoResponse(
                 phongBanMapper.findById(maPhongBan)
         );
-        if(!Objects.nonNull(resultEntity)) throw new AppException(ErrorCode.PHONG_BAN_NOT_EXIST);
+        if (!Objects.nonNull(resultEntity)) throw new AppException(ErrorCode.PHONG_BAN_NOT_EXIST);
         return resultEntity;
     }
 
     @Override
     public int savePhongBan(PhongBanDtoRequest phongBan) {
-        if(phongBanMapper.isExist(phongBan.getMaPhongBan())){
+        if (phongBanMapper.isExist(phongBan.getMaPhongBan())) {
             return phongBanMapper.updatePhongBan(phongBan);
-        }else {
+        } else {
             return phongBanMapper.insertPhongBan(phongBan);
         }
     }
@@ -51,5 +51,12 @@ public class PhongBanServiceImpl implements PhongBanService {
         if (!phongBanMapper.isExist(maPhongBan))
             throw new AppException(ErrorCode.PHONG_BAN_NOT_EXIST);
         return phongBanMapper.deletePhongBan(maPhongBan);
+    }
+
+    @Override
+    public List<PhongBanDtoResponse> getOrgChart() {
+        return phongBanMapstruct.toPhongBanDtoResponseList(
+                phongBanMapper.orgChartPhongBan()
+        );
     }
 }

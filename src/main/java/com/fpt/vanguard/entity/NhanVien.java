@@ -2,6 +2,7 @@ package com.fpt.vanguard.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -13,7 +14,8 @@ public class NhanVien {
     private String dienThoai;
     private String cccd;
     private String diaChi;
-    private String hinhAnh;
+    private MultipartFile hinhAnh;
+    private String hinhAnhUrl;
     private String email;
     private String maPhongBan;
     private String maBoPhan;

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/phong_ban")
+@RequestMapping("api/v1/departments")
 @RequiredArgsConstructor
 @CrossOrigin
 public class PhongBanController {
@@ -51,5 +51,14 @@ public class PhongBanController {
         apiResponse.setSuccess(true);
         apiResponse.setData(phongBanService.deletePhongBan(maPhongBan));
         return apiResponse;
+    }
+
+    @GetMapping("/orgchart")
+    public ApiResponse<List<PhongBanDtoResponse>> getOrgChartPhongBan(){
+        return ApiResponse.<List<PhongBanDtoResponse>>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(phongBanService.getOrgChart())
+                .build();
     }
 }

@@ -9,7 +9,9 @@ public class PhongBan {
     private String maPhongBan;
     private String tenPhongBan;
     private String truongPhong;
+    private String maPhongBanCapTren;
 
-    // Số lượng nhân viên trong phòng ban, được tính từ kết quả truy vấn SQL.
+    // Join column SQL
     private Integer soLuongNhanVien;
+    private String anhTruongPhong;
 }

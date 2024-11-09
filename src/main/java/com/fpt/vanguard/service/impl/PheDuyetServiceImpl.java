@@ -123,9 +123,11 @@ public class PheDuyetServiceImpl implements PheDuyetService {
     }
 
     @Override
-    public PheDuyetDtoResponse getPheDuyetDetail(String maDon, String maNhanVien) {
+    public PheDuyetDtoResponse getPheDuyetDetail(PheDuyetDtoRequest request) {
         return pheDuyetMapstruct.toDto(
-                pheDuyetMapper.getPheDuyet(maDon, maNhanVien)
+                pheDuyetMapper.getPheDuyet(
+                        pheDuyetMapstruct.toPheDuyet(request)
+                )
         );
     }
 }

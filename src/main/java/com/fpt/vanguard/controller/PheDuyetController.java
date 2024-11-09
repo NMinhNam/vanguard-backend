@@ -28,12 +28,12 @@ public class PheDuyetController {
                 .build();
     }
 
-    @GetMapping("/{requestId}")
-    public ApiResponse<List<PheDuyetDtoResponse>> getPheDuyetDetail(@PathVariable("requestId") String maDon) {
-        return ApiResponse.<List<PheDuyetDtoResponse>>builder()
+    @GetMapping("/search")
+    public ApiResponse<PheDuyetDtoResponse> getPheDuyetDetail(@RequestParam String maDon, @RequestParam String maNhanVien) {
+        return ApiResponse.<PheDuyetDtoResponse>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
-                .data(pheDuyetService.getPheDuyetDetail(maDon))
+                .data(pheDuyetService.getPheDuyetDetail(maDon, maNhanVien))
                 .build();
     }
 

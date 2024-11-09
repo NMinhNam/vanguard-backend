@@ -10,7 +10,7 @@
         <result property="dienThoai" column="dien_thoai"/>
         <result property="cccd" column="cccd"/>
         <result property="diaChi" column="dia_chi"/>
-        <result property="hinhAnh" column="hinh_anh"/>
+        <result property="hinhAnhUrl" column="hinh_anh"/>
         <result property="email" column="email"/>
         <result property="maPhongBan" column="ma_phong_ban"/>
         <result property="maBoPhan" column="ma_bo_phan"/>
@@ -86,7 +86,7 @@
             dien_thoai = #{nhanVien.dienThoai},
             cccd = #{nhanVien.cccd},
             dia_chi = #{nhanVien.diaChi},
-            hinh_anh = #{nhanVien.hinhAnh},
+            hinh_anh = #{nhanVien.hinhAnhUrl},
             ma_phong_ban = #{nhanVien.maPhongBan},
             ma_bo_phan = #{nhanVien.maBoPhan},
             ma_chuc_vu = #{nhanVien.maChucVu},

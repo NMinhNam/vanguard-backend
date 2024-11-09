@@ -1,6 +1,7 @@
 package com.fpt.vanguard.dto.response;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -15,7 +16,8 @@ public class NhanVienDtoResponse {
     private String dienThoai;
     private String cccd;
     private String diaChi;
-    private String hinhAnh;
+    private MultipartFile hinhAnh;
+    private String hinhAnhUrl;
     private String email;
     private String maPhongBan;
     private String maBoPhan;

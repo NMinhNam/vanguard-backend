@@ -8,7 +8,9 @@ public class DonYeuCauDtoResponse {
     private String maDon;
     private String maNhanVien;
     private String loaiDon;
-    private String liDo;
+    private String moTa;
     private Integer trangThai;
     private String ngayTao;
+    private String ngayBatDau;
+    private String ngayKetThuc;
 }

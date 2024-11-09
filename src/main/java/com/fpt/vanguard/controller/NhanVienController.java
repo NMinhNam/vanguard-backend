@@ -77,7 +77,7 @@ public class NhanVienController {
     }
 
     @PutMapping
-    public ApiResponse<Integer> updateNhanVien(@RequestBody NhanVienDtoRequest nhanVienDtoRequest) throws MessagingException, ParseException, IOException {
+    public ApiResponse<Integer> updateNhanVien(@ModelAttribute NhanVienDtoRequest nhanVienDtoRequest) throws MessagingException, ParseException, IOException {
         ApiResponse<Integer> apiResponse = new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);

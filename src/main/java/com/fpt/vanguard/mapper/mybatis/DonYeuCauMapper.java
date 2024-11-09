@@ -13,4 +13,6 @@ public interface DonYeuCauMapper {
     Integer deleteDonYeuCau(@Param("maDon") String maDon);
     Boolean isExistDonYeuCau(@Param("maDon") String maDon);
     List<DonYeuCau> findAll();
+    Integer updateDonYeuCau(@Param("donYeuCau") DonYeuCau donYeuCau);
+    DonYeuCau findDonYeuCauDetail(@Param("maDonYeuCau") String maDonYeuCau);
 }

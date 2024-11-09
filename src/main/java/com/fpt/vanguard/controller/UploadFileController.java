@@ -17,7 +17,6 @@ import java.io.IOException;
 @CrossOrigin
 public class UploadFileController {
     private final UploadImageFileService uploadImageFileService;
-    private final ExcelService excelService;
     private final NhanVienService nhanVienService;
 
     @PostMapping("/image")

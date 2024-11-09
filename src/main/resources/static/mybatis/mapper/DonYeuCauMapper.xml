@@ -8,6 +8,8 @@
         <result property="moTa" column="mo_ta"/>
         <result property="trangThai" column="trang_thai"/>
         <result property="ngayTao" column="ngay_tao"/>
+        <result property="ngayBatDau" column="ngay_bat_dau"/>
+        <result property="ngayKetThuc" column="ngay_ket_thuc"/>
     </resultMap>
 
     <sql id="columnDonYeuCau">
@@ -17,6 +19,8 @@
         , mo_ta
         , trang_thai
         , ngay_tao
+        , ngay_bat_dau
+        , ngay_ket_thuc
     </sql>
 
     <insert id="insertDonYeuCau">
@@ -31,7 +35,7 @@
                , ngay_ket_thuc
         )
         VALUES (
-                #{donYeuCau.maDon}
+                generatemadon()
                ,#{donYeuCau.maNhanVien}
                ,#{donYeuCau.loaiDon}
                ,#{donYeuCau.moTa}

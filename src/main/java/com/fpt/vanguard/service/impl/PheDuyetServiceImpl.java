@@ -73,17 +73,12 @@ public class PheDuyetServiceImpl implements PheDuyetService {
         String maDonYeuCau = request.getMaDon();
         Integer trangThaiDon = getRequestStatus(maDonYeuCau);
         DonYeuCau donYeuCau = donYeuCauMapper.findDonYeuCauDetail(maDonYeuCau);
-        String ngayTao = donYeuCau.getNgayTao();
-        String ngayBatDau = donYeuCau.getNgayBatDau();
-        String ngayKetThuc = donYeuCau.getNgayKetThuc();
-        DateUtil.parseDate(ngayTao);
-//        DateUtil.parseDate(ngayBatDau);
-//        DateUtil.parseDate(ngayKetThuc);
-
         donYeuCau.setTrangThai(trangThaiDon);
+
+        String ngayTao = donYeuCau.getNgayTao();
+        DateUtil.parseDate(ngayTao);
+
         donYeuCau.setNgayTao(ngayTao);
-//        donYeuCau.setNgayBatDau(ngayBatDau);
-//        donYeuCau.setNgayKetThuc(ngayKetThuc);
         donYeuCauMapper.updateDonYeuCau(donYeuCau);
 
         if (!Objects.equals(trangThaiDon, TrangThaiPheDuyet.CHO_DUYET.getTrangThaiPheDuyet())) {
@@ -128,7 +123,9 @@ public class PheDuyetServiceImpl implements PheDuyetService {
     }
 
     @Override
-    public List<PheDuyetDtoResponse> getPheDuyetDetail(String maDon) {
-        return pheDuyetMapstruct.toDtoList(pheDuyetMapper.getPheDuyet(maDon));
+    public PheDuyetDtoResponse getPheDuyetDetail(String maDon, String maNhanVien) {
+        return pheDuyetMapstruct.toDto(
+                pheDuyetMapper.getPheDuyet(maDon, maNhanVien)
+        );
     }
 }

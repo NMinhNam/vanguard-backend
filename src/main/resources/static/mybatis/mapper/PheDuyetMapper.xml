@@ -75,7 +75,7 @@
         <result property="hoTenNguoiTao" column="ho_ten_nguoi_tao"/>
         <result property="loaiDon" column="loai_don"/>
         <result property="ngayTao" column="ngay_tao"/>
-        <result property="lyDo" column="ly_do"/>
+        <result property="lyDo" column="mo_ta"/>
         <result property="trangThai" column="trang_thai"/>
     </resultMap>
 
@@ -132,8 +132,8 @@
             JOIN nhan_vien nguoi_tao ON don_yeu_cau.ma_nhan_vien = nguoi_tao.ma_nhan_vien
             JOIN nhan_vien nguoi_phe_duyet ON phe_duyet.ma_nhan_vien = nguoi_phe_duyet.ma_nhan_vien
         <where>
-            phe_duyet.ma_don = #{maDon}
-            AND nguoi_phe_duyet.ma_nhan_vien = #{maNhanVien}
+            phe_duyet.ma_don = #{pheDuyet.maDon}
+            AND nguoi_phe_duyet.ma_nhan_vien = #{pheDuyet.maNhanVien}
         </where>
     </select>
 

@@ -16,21 +16,21 @@
         pb.ten_phong_ban,
         pb.ma_phong_ban_cap_tren,
         COUNT(nv.ma_nhan_vien) AS so_luong_nhan_vien,
-        (SELECT nv_ho_ten.ho_ten
-         FROM nhan_vien nv_ho_ten
-         WHERE nv_ho_ten.ma_nhan_vien = pb.truong_phong) AS ten_truong_phong,
-        nv.hinh_anh AS anh_truong_phong
+        truong_phong_nv.ho_ten AS ten_truong_phong,
+        truong_phong_nv.hinh_anh AS anh_truong_phong
     </sql>
 
     <select id="orgChartPhongBan" resultMap="resultMapThongKe">
         SELECT
             <include refid="columnThongKe"/>
         FROM phong_ban pb
-                 LEFT JOIN nhan_vien nv ON pb.ma_phong_ban = nv.ma_phong_ban
-        GROUP BY pb.ma_phong_ban
-               , pb.ten_phong_ban
-               , pb.ma_phong_ban_cap_tren
-               , pb.truong_phong
-               , nv.hinh_anh
+            LEFT JOIN nhan_vien nv ON pb.ma_phong_ban = nv.ma_phong_ban
+            LEFT JOIN nhan_vien truong_phong_nv ON pb.truong_phong = truong_phong_nv.ma_nhan_vien
+        GROUP BY
+            pb.ma_phong_ban,
+            pb.ten_phong_ban,
+            pb.ma_phong_ban_cap_tren,
+            truong_phong_nv.ho_ten,
+            truong_phong_nv.hinh_anh
     </select>
 </mapper>

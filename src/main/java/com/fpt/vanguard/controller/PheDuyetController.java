@@ -29,7 +29,7 @@ public class PheDuyetController {
     }
 
     @GetMapping("/search")
-    public ApiResponse<PheDuyetDtoResponse> getPheDuyetDetail(@RequestParam String maDon, @RequestParam String maNhanVien) {
+    public ApiResponse<PheDuyetDtoResponse> getPheDuyetDetail(@RequestParam("maDon") String maDon, @RequestParam("maNhanVien") String maNhanVien) {
         return ApiResponse.<PheDuyetDtoResponse>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
@@ -64,3 +64,4 @@ public class PheDuyetController {
                 .build();
     }
 }
+

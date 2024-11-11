@@ -16,5 +16,6 @@
         <typeAlias type="com.fpt.vanguard.entity.ViTriTuyenDung" alias="ViTriTuyenDung"/>
         <typeAlias type="com.fpt.vanguard.entity.UngVien" alias="UngVien"/>
         <typeAlias type="com.fpt.vanguard.entity.BangChamCong" alias="BangChamCong"/>
+        <typeAlias type="com.fpt.vanguard.entity.NgayLe" alias="NgayLe"/>
     </typeAliases>
 </configuration>

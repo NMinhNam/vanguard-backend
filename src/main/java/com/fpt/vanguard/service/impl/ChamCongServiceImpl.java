@@ -9,10 +9,12 @@ import com.fpt.vanguard.mapper.mapstruct.ChamCongMapstruct;
 import com.fpt.vanguard.mapper.mybatis.ChamCongMapper;
 import com.fpt.vanguard.mapper.mybatis.NhanVienMapper;
 import com.fpt.vanguard.service.ChamCongService;
+import com.fpt.vanguard.service.LoaiCongService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -23,15 +25,27 @@ public class ChamCongServiceImpl implements ChamCongService {
     private final ChamCongMapper chamCongMapper;
     private final ChamCongMapstruct chamCongMapstruct;
     private final NhanVienMapper nhanVienMapper;
+    private final LoaiCongService loaiCongService;
 
     @Override
     public Integer doCheckIn(ChamCongDtoRequest request) {
+        LocalDate ngayChamCong = LocalDate.now();
+        request.setNgayChamCong(ngayChamCong);
+
+        LocalTime gioVao = LocalTime.now();
+        request.setGioVao(gioVao);
+
+        Integer maLoaiCong = loaiCongService.getLoaiCong(ngayChamCong.toString());
+        request.setMaLoaiCong(maLoaiCong);
+
         BangChamCong chamCongDtoRequest = chamCongMapstruct.toChamCong(request);
 
         Boolean isChamCong = chamCongMapper.isChamCong(chamCongDtoRequest);
         if (isChamCong) throw new AppException(ErrorCode.ATTENDED);
-
-        return chamCongMapper.insertBangChamCong(chamCongDtoRequest);
+        
+        return chamCongMapper.insertBangChamCong(
+                chamCongMapstruct.toChamCong(request)
+        );
     }
 
     @Override
@@ -64,11 +78,7 @@ public class ChamCongServiceImpl implements ChamCongService {
         );
     }
 
-    private Double tinhSoGioLam(String gioVaoStr, String gioRaStr) {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-
-        LocalTime gioVao = LocalTime.parse(gioVaoStr, timeFormatter);
-        LocalTime gioRa = LocalTime.parse(gioRaStr, timeFormatter);
+    private Double tinhSoGioLam(LocalTime gioVao, LocalTime gioRa) {
 
         long secondsWorked;
         if (gioRa.isAfter(gioVao) || gioRa.equals(gioVao)) {

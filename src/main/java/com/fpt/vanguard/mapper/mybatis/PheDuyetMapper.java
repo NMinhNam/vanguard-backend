@@ -14,7 +14,7 @@ public interface PheDuyetMapper {
     Integer updatePheDuyet(@Param("pheDuyet") PheDuyet pheDuyet);
     Integer deletePheDuyet(@Param("maDon") String maDon);
     ApprovalDetailsDtoResponse getApprovalDetails(@Param("maNhanVien") String maNhanVien);
-    ApprovalDetailsDtoResponse getInfoFromRequestApproval(@Param("maNhanVien") String maNhanVien);
+    ApprovalDetailsDtoResponse getInfoFromRequestApproval(@Param("maNguoiDuyet") String maNguoiDuyet, @Param("maNguoiTao") String maNguoiTao);
     PheDuyet getPheDuyet(@Param("maDon") String maDon, @Param("maNhanVien") String maNhanVien);
     PheDuyet getApprovalStatusCount(@Param("maDon") String maDon);
 }

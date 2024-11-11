@@ -120,7 +120,9 @@
         JOIN phe_duyet ON don_yeu_cau.ma_don = phe_duyet.ma_don
         JOIN nhan_vien nguoi_phe_duyet ON phe_duyet.ma_nhan_vien = nguoi_phe_duyet.ma_nhan_vien
         <where>
-            nguoi_phe_duyet.ma_nhan_vien = #{maNhanVien}
+            nguoi_phe_duyet.ma_nhan_vien = #{maNguoiDuyet}
+            AND
+            nguoi_tao.ma_nhan_vien = #{maNguoiTao}
         </where>
     </select>
 

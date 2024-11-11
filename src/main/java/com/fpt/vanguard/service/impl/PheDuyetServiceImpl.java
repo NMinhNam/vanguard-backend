@@ -83,9 +83,10 @@ public class PheDuyetServiceImpl implements PheDuyetService {
 
         if (!Objects.equals(trangThaiDon, TrangThaiPheDuyet.CHO_DUYET.getTrangThaiPheDuyet())) {
             String maNguoiPheDuyet = request.getMaNhanVien();
+            String maNguoiTao = donYeuCau.getMaNhanVien();
             sendApprovalStatusUpdateEmail(
                     approvalMapstruct.toApprovalDetailsDtoRequest(
-                            pheDuyetMapper.getInfoFromRequestApproval(maNguoiPheDuyet)
+                            pheDuyetMapper.getInfoFromRequestApproval(maNguoiPheDuyet , maNguoiTao)
                     )
             );
         }

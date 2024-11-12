@@ -25,4 +25,6 @@ public interface NhanVienService {
     NhanVienDtoResponse getNhanVienByUserName(String username);
 
     Integer createNhanVienByExcel(MultipartFile file) throws IOException;
+
+    List<NhanVienDtoResponse> getOrgChartNhanVien();
 }

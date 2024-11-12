@@ -127,16 +127,6 @@ public class NhanVienServiceImpl implements NhanVienService {
         boolean isExistNhanVien = nhanVienMapper.existsById(maNhanVien);
         if (!isExistNhanVien) throw new AppException(ErrorCode.NHAN_VIEN_NOT_EXIST);
 
-        String fileImageUrl = null;
-
-        MultipartFile imageFile = nhanVienDtoRequest.getHinhAnh();
-
-        if (imageFile != null && !imageFile.isEmpty()) {
-            fileImageUrl = uploadImageFileService.uploadImage(imageFile);
-        }
-
-        nhanVienDtoRequest.setHinhAnhUrl(fileImageUrl);
-
         return nhanVienMapper.updateNhanVien(
                 nhanVienMapstruct.toNhanVien(nhanVienDtoRequest)
         );
@@ -163,6 +153,13 @@ public class NhanVienServiceImpl implements NhanVienService {
 
         return nhanVienMapper.insertNhanVienList(
                 nhanVienMapstruct.toNhanVienList(requestList)
+        );
+    }
+
+    @Override
+    public List<NhanVienDtoResponse> getOrgChartNhanVien() {
+        return nhanVienMapstruct.toNhanVienDtoResponseList(
+                nhanVienMapper.getOrgChart()
         );
     }
 }

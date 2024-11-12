@@ -77,11 +77,20 @@ public class NhanVienController {
     }
 
     @PutMapping
-    public ApiResponse<Integer> updateNhanVien(@ModelAttribute NhanVienDtoRequest nhanVienDtoRequest) throws MessagingException, ParseException, IOException {
+    public ApiResponse<Integer> updateNhanVien(@RequestBody NhanVienDtoRequest nhanVienDtoRequest) throws MessagingException, ParseException, IOException {
         ApiResponse<Integer> apiResponse = new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);
         apiResponse.setData(nhanVienService.updateNhanVien(nhanVienDtoRequest));
         return apiResponse;
+    }
+
+    @GetMapping("orgchart")
+    public ApiResponse<List<NhanVienDtoResponse>> getOrgChartNhanVien() {
+        return ApiResponse.<List<NhanVienDtoResponse>>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(nhanVienService.getOrgChartNhanVien())
+                .build();
     }
 }

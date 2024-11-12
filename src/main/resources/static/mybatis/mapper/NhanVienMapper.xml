@@ -196,6 +196,7 @@
     </select>
 
     <resultMap id="resultMapOrgChart" type="NhanVien">
+        <result property="maNhanVien" column="ma_nhan_vien"/>
         <result property="hoTen" column="ho_ten"/>
         <result property="hinhAnh" column="hinh_anh"/>
         <result property="tenTruongPhong" column="truong_phong"/>
@@ -204,7 +205,8 @@
     </resultMap>
 
     <sql id="columnOrgChart">
-        ho_ten
+        ma_nhan_vien
+        , ho_ten
         , hinh_anh
         , pb.truong_phong
         , pb.ten_phong_ban

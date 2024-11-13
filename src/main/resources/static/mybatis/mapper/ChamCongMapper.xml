@@ -44,7 +44,7 @@
         )
         VALUES (
             #{bangChamCong.maNhanVien}
-          , #{bangChamCong.ngayChamCong}
+          , #{bangChamCong.ngayChamCong}::DATE
           , #{bangChamCong.gioVao}
           , #{bangChamCong.maLoaiCong}
         )
@@ -52,7 +52,8 @@
 
     <update id="updateBangChamCong">
         UPDATE bang_cham_cong
-        SET gio_ra = #{bangChamCong.gioRa}::TIME
+        SET gio_ra = #{bangChamCong.gioRa},
+            so_gio_lam = #{bangChamCong.soGioLam}
         WHERE ma_nhan_vien = #{bangChamCong.maNhanVien}
           AND ngay = #{bangChamCong.ngayChamCong}::DATE
     </update>
@@ -90,6 +91,18 @@
             where ma_nhan_vien = #{bangChamCong.maNhanVien}
               and ngay = #{bangChamCong.ngayChamCong}
         )
+    </select>
+
+    <select id="findDetail" resultMap="resultMapBangChamCong">
+        SELECT
+            <include refid="columnBangChamCong"/>
+        FROM bang_cham_cong bcc
+        LEFT JOIN nhan_vien nv ON bcc.ma_nhan_vien = nv.ma_nhan_vien
+        LEFT JOIN loai_cong lc ON bcc.ma_loai_cong = lc.ma_loai_cong
+        <where>
+            nv.ma_nhan_vien = #{maNhanVien}
+        AND bcc.ngay = #{ngayChamCong}::DATE
+        </where>
     </select>
 
 </mapper>

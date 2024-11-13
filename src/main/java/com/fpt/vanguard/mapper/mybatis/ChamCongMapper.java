@@ -2,6 +2,7 @@ package com.fpt.vanguard.mapper.mybatis;
 
 import com.fpt.vanguard.entity.BangChamCong;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,11 +12,13 @@ public interface ChamCongMapper {
 
     List<BangChamCong> findAll();
 
-    Integer insertBangChamCong(BangChamCong bangChamCong);
+    Integer insertBangChamCong(@Param("bangChamCong") BangChamCong bangChamCong);
 
-    Integer updateBangChamCong(BangChamCong bangChamCong);
+    Integer updateBangChamCong(@Param("bangChamCong") BangChamCong bangChamCong);
 
     Integer deleteBangChamCong(BangChamCong bangChamCong);
 
     Boolean isChamCong(BangChamCong bangChamCong);
+
+    BangChamCong findDetail(String maNhanVien, String ngayChamCong);
 }

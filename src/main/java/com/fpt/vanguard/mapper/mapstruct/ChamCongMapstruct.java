@@ -11,4 +11,5 @@ import java.util.List;
 public interface ChamCongMapstruct {
     List<ChamCongDtoResponse> toDtoResponseList(List<BangChamCong> bangChamCongList);
     BangChamCong toChamCong(ChamCongDtoRequest request);
+    ChamCongDtoResponse toDtoResponse(BangChamCong bangChamCong);
 }

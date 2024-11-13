@@ -33,9 +33,7 @@ public enum ErrorCode {
     DON_YEU_CAU_NOT_EXIST(1000, "Don yeu cau not exist"),
     DON_YEU_CAU_EXISTED(1001, "Don yeu cau existed"),
     LIST_UNG_VIEN_EMPTY(1002, "list ung vien rong"),
-    FILE_UPLOAD_FAILED(999, "file upload failed"),
-    ATTENDED(1001, "Nhan vien da checkin"),
-    NOT_ATTENDED(1001, "Nhan vien chua checkin")
+    FILE_UPLOAD_FAILED(999, "file upload failed")
     ;
 
     private final int status;

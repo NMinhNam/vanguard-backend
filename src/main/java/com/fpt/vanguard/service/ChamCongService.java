@@ -13,4 +13,6 @@ public interface ChamCongService {
     List<ChamCongDtoResponse> getChamCongNhanVien(String maNhanVien);
 
     List<ChamCongDtoResponse> getAllChamCong();
+
+    ChamCongDtoResponse getChamCongDetail(ChamCongDtoRequest request);
 }

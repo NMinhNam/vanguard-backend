@@ -2,20 +2,18 @@ package com.fpt.vanguard.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class BangChamCong {
     private Integer maChamCong;
     private String maNhanVien;
     private Integer maLoaiCong;
-    private LocalDate ngayChamCong;
-    private LocalTime gioVao;
-    private LocalTime gioRa;
+    private String ngayChamCong;
+    private String gioVao;
+    private String gioRa;
     private Double soGioLam;
 
     private String tenNhanVien;

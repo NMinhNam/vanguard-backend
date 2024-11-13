@@ -2,7 +2,6 @@ package com.fpt.vanguard.service.impl;
 
 import com.fpt.vanguard.dto.request.ChamCongDtoRequest;
 import com.fpt.vanguard.dto.response.ChamCongDtoResponse;
-import com.fpt.vanguard.entity.BangChamCong;
 import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.exception.AppException;
 import com.fpt.vanguard.mapper.mapstruct.ChamCongMapstruct;
@@ -29,20 +28,15 @@ public class ChamCongServiceImpl implements ChamCongService {
 
     @Override
     public Integer doCheckIn(ChamCongDtoRequest request) {
-        LocalDate ngayChamCong = LocalDate.now();
+        String ngayChamCong = LocalDate.now().toString();
         request.setNgayChamCong(ngayChamCong);
 
-        LocalTime gioVao = LocalTime.now();
+        String gioVao = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
         request.setGioVao(gioVao);
 
-        Integer maLoaiCong = loaiCongService.getLoaiCong(ngayChamCong.toString());
+        Integer maLoaiCong = loaiCongService.getLoaiCong(ngayChamCong);
         request.setMaLoaiCong(maLoaiCong);
 
-        BangChamCong chamCongDtoRequest = chamCongMapstruct.toChamCong(request);
-
-        Boolean isChamCong = chamCongMapper.isChamCong(chamCongDtoRequest);
-        if (isChamCong) throw new AppException(ErrorCode.ATTENDED);
-        
         return chamCongMapper.insertBangChamCong(
                 chamCongMapstruct.toChamCong(request)
         );
@@ -50,47 +44,52 @@ public class ChamCongServiceImpl implements ChamCongService {
 
     @Override
     public Integer doCheckOut(ChamCongDtoRequest request) {
-        BangChamCong chamCongDtoRequest = chamCongMapstruct.toChamCong(request);
+        String ngayChamCong = LocalDate.now().toString();
+        request.setNgayChamCong(ngayChamCong);
 
-        Boolean isChamCong = chamCongMapper.isChamCong(chamCongDtoRequest);
-        if (!isChamCong) throw new AppException(ErrorCode.NOT_ATTENDED);
+        String gioRa = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        request.setGioRa(gioRa);
 
-        Double soGioLam = tinhSoGioLam(request.getGioVao(), request.getGioRa());
+        String gioVao = getChamCongDetail(request).getGioVao();
+
+        Double soGioLam = tinhSoGioLam(gioVao, gioRa);
         request.setSoGioLam(soGioLam);
 
-        return chamCongMapper.updateBangChamCong(chamCongDtoRequest);
+        return chamCongMapper.updateBangChamCong(
+                chamCongMapstruct.toChamCong(request)
+        );
     }
 
     @Override
     public List<ChamCongDtoResponse> getChamCongNhanVien(String maNhanVien) {
-        if (!nhanVienMapper.existsById(maNhanVien))
-            throw new AppException(ErrorCode.NHAN_VIEN_NOT_EXIST);
+        if (!nhanVienMapper.existsById(maNhanVien)) throw new AppException(ErrorCode.NHAN_VIEN_NOT_EXIST);
 
-        return chamCongMapstruct.toDtoResponseList(
-                chamCongMapper.findByMaNhanVien(maNhanVien)
-        );
+        return chamCongMapstruct.toDtoResponseList(chamCongMapper.findByMaNhanVien(maNhanVien));
     }
 
     @Override
     public List<ChamCongDtoResponse> getAllChamCong() {
-        return chamCongMapstruct.toDtoResponseList(
-                chamCongMapper.findAll()
+        return chamCongMapstruct.toDtoResponseList(chamCongMapper.findAll());
+    }
+
+    @Override
+    public ChamCongDtoResponse getChamCongDetail(ChamCongDtoRequest request) {
+        return chamCongMapstruct.toDtoResponse(
+                chamCongMapper.findDetail(request.getMaNhanVien(), request.getNgayChamCong())
         );
     }
 
-    private Double tinhSoGioLam(LocalTime gioVao, LocalTime gioRa) {
+    private Double tinhSoGioLam(String gioVaoStr, String gioRaStr) {
+        LocalTime gioVao = LocalTime.parse(gioVaoStr, DateTimeFormatter.ofPattern("HH:mm:ss"));
+        LocalTime gioRa = LocalTime.parse(gioRaStr, DateTimeFormatter.ofPattern("HH:mm:ss"));
 
-        long secondsWorked;
+        long giayLamViec;
         if (gioRa.isAfter(gioVao) || gioRa.equals(gioVao)) {
-            secondsWorked = Duration
-                    .between(gioVao, gioRa)
-                    .getSeconds();
+            giayLamViec = Duration.between(gioVao, gioRa).getSeconds();
         } else {
-            secondsWorked = Duration
-                    .between(gioVao, gioRa.plusHours(24))
-                    .getSeconds();
+            giayLamViec = Duration.between(gioVao, gioRa.plusHours(24)).getSeconds();
         }
 
-        return Math.round((secondsWorked / 3600.0) * 100.0) / 100.0;
+        return Math.round((giayLamViec / 3600.0) * 100.0) / 100.0;
     }
 }

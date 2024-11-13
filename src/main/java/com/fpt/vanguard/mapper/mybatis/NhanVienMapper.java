@@ -27,4 +27,6 @@ public interface NhanVienMapper {
     NhanVien findNhanVienByUserName(@Param("username") String username);
 
     int insertNhanVienList(List<NhanVien> nhanVienList);
+
+    List<NhanVien> getOrgChart();
 }

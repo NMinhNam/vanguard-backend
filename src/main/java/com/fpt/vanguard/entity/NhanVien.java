@@ -14,8 +14,7 @@ public class NhanVien {
     private String dienThoai;
     private String cccd;
     private String diaChi;
-    private MultipartFile hinhAnh;
-    private String hinhAnhUrl;
+    private String hinhAnh;
     private String email;
     private String maPhongBan;
     private String maBoPhan;

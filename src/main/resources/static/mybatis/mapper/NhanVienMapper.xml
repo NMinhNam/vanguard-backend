@@ -10,7 +10,7 @@
         <result property="dienThoai" column="dien_thoai"/>
         <result property="cccd" column="cccd"/>
         <result property="diaChi" column="dia_chi"/>
-        <result property="hinhAnhUrl" column="hinh_anh"/>
+        <result property="hinhAnh" column="hinh_anh"/>
         <result property="email" column="email"/>
         <result property="maPhongBan" column="ma_phong_ban"/>
         <result property="maBoPhan" column="ma_bo_phan"/>
@@ -86,7 +86,7 @@
             dien_thoai = #{nhanVien.dienThoai},
             cccd = #{nhanVien.cccd},
             dia_chi = #{nhanVien.diaChi},
-            hinh_anh = #{nhanVien.hinhAnhUrl},
+            hinh_anh = #{nhanVien.hinhAnh},
             ma_phong_ban = #{nhanVien.maPhongBan},
             ma_bo_phan = #{nhanVien.maBoPhan},
             ma_chuc_vu = #{nhanVien.maChucVu},
@@ -193,6 +193,32 @@
         from nhan_vien nv
                  left join "user" us on nv.user_id = us.user_id
         where us.user_name = #{username}
+    </select>
+
+    <resultMap id="resultMapOrgChart" type="NhanVien">
+        <result property="maNhanVien" column="ma_nhan_vien"/>
+        <result property="hoTen" column="ho_ten"/>
+        <result property="hinhAnh" column="hinh_anh"/>
+        <result property="tenTruongPhong" column="truong_phong"/>
+        <result property="tenPhongBan" column="ten_phong_ban"/>
+        <result property="tenChucVu" column="ten_chuc_vu"/>
+    </resultMap>
+
+    <sql id="columnOrgChart">
+        ma_nhan_vien
+        , ho_ten
+        , hinh_anh
+        , pb.truong_phong
+        , pb.ten_phong_ban
+        , cv.ten_chuc_vu
+    </sql>
+
+    <select id="getOrgChart" resultMap="resultMapOrgChart">
+        SELECT
+            <include refid="columnOrgChart"/>
+        FROM nhan_vien nv
+        left join phong_ban pb on nv.ma_phong_ban = pb.ma_phong_ban
+        left join chuc_vu cv on nv.ma_chuc_vu = cv.ma_chuc_vu
     </select>
 
     <insert id="insertNhanVienList" parameterType="java.util.List">

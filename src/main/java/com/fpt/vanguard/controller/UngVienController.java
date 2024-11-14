@@ -1,6 +1,7 @@
 package com.fpt.vanguard.controller;
 
 import com.fpt.vanguard.common.ApiResponse;
+import com.fpt.vanguard.dto.request.UngVienDtoRequest;
 import com.fpt.vanguard.dto.response.UngVienDtoResponse;
 import com.fpt.vanguard.service.UngVienService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,15 @@ public class UngVienController {
                 .status(HttpStatus.OK.value())
                 .success(true)
                 .data(ungVienService.getUngVien(tenViTri))
+                .build();
+    }
+
+    @PostMapping
+    public ApiResponse<Integer> saveUngVien(@RequestBody UngVienDtoRequest ungVienDtoRequest){
+        return ApiResponse.<Integer>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(ungVienService.saveUngVien(ungVienDtoRequest))
                 .build();
     }
 }

@@ -1,5 +1,6 @@
 package com.fpt.vanguard.service.impl;
 
+import com.fpt.vanguard.dto.request.UngVienDtoRequest;
 import com.fpt.vanguard.dto.response.UngVienDtoResponse;
 import com.fpt.vanguard.entity.UngVien;
 import com.fpt.vanguard.enums.ErrorCode;
@@ -24,5 +25,31 @@ public class UngVienServiceImpl implements UngVienService {
         if (responseList.isEmpty()) throw new AppException(ErrorCode.LIST_UNG_VIEN_EMPTY);
 
         return ungVienMapstruct.toUngVienDtoResponseList(responseList);
+    }
+
+    @Override
+    public int saveUngVien(UngVienDtoRequest ungVienDtoRequest) {
+        System.out.println(ungVienMapper.isExistUngVien(ungVienDtoRequest.getMaUngVien()));
+        if (ungVienMapper.isExistUngVien(ungVienDtoRequest.getMaUngVien()))
+            return updateUngVien(ungVienDtoRequest);
+        return insertUngVien(ungVienDtoRequest);
+    }
+
+    @Override
+    public int insertUngVien(UngVienDtoRequest ungVienDtoRequest) {
+        String maUngVien = ungVienDtoRequest.getMaUngVien();
+        Boolean isExitsUngVien = ungVienMapper.isExistUngVien(maUngVien);
+        if(isExitsUngVien)
+            throw new AppException(ErrorCode.NHAN_VIEN_EXISTED);
+        return ungVienMapper.insertUngVien(ungVienMapstruct.toUngVien(ungVienDtoRequest));
+    }
+
+    @Override
+    public int updateUngVien(UngVienDtoRequest ungVienDtoRequest) {
+        String maUngVien = ungVienDtoRequest.getMaUngVien();
+        Boolean isExitsUngVien = ungVienMapper.isExistUngVien(maUngVien);
+        if(!isExitsUngVien)
+            throw new AppException(ErrorCode.NHAN_VIEN_NOT_EXIST);
+        return ungVienMapper.updateUngVien(ungVienMapstruct.toUngVien(ungVienDtoRequest));
     }
 }

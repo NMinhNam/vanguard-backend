@@ -27,16 +27,65 @@
         ung_vien.ma_vi_tri_tuyen_dung
     </sql>
 
+
     <select id="findAll" resultMap="resultMapUngVien">
         SELECT
-            <include refid="columnUngVien"/>
+        <include refid="columnUngVien"/>
         FROM ung_vien
-            join vi_tri_tuyen_dung
-                on ung_vien.ma_vi_tri_tuyen_dung = vi_tri_tuyen_dung.ma_vi_tri_tuyen_dung
+        join vi_tri_tuyen_dung
+        on ung_vien.ma_vi_tri_tuyen_dung = vi_tri_tuyen_dung.ma_vi_tri_tuyen_dung
         <where>
             <if test="tenViTri != null and tenViTri != ''">
                 ten_vi_tri = #{tenViTri}
             </if>
         </where>
     </select>
+
+    <select id="isExistUngVien" resultType="Boolean">
+        SELECT EXISTS (
+            SELECT 1
+            FROM ung_vien
+            WHERE ma_ung_vien = #{maUngVien}
+        )
+    </select>
+
+    <insert id="insertUngVien">
+        INSERT INTO ung_vien
+            (ma_ung_vien
+            , ho_ten
+            , gioi_tinh
+            , ngay_sinh
+            , dien_thoai
+            , cccd
+            , dia_chi
+            , hinh_anh
+            , email
+            , ma_vi_tri_tuyen_dung
+        ) VALUES
+              (generate_ma_ung_vien()
+              , #{hoTen}
+              , #{gioiTinh}
+              , #{ngaySinh}::DATE
+              , #{dienThoai}
+              , #{cccd}
+              , #{diaChi}
+              , #{hinhAnh}
+              , #{email}
+              , #{maViTriTuyenDung});
+    </insert>
+
+    <update id="updateUngVien">
+        UPDATE ung_vien
+        SET
+            ho_ten = #{hoTen},
+            gioi_tinh = #{gioiTinh},
+            ngay_sinh = #{ngaySinh}::DATE,
+            dien_thoai = #{dienThoai},
+            cccd = #{cccd},
+            dia_chi = #{diaChi},
+            hinh_anh = #{hinhAnh},
+            email = #{email},
+            ma_vi_tri_tuyen_dung = #{maViTriTuyenDung}
+        WHERE ma_ung_vien = #{maUngVien}
+    </update>
 </mapper>

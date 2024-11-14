@@ -11,6 +11,7 @@ import com.fpt.vanguard.service.DonYeuCauService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -34,6 +35,10 @@ public class DonYeuCauServiceImpl implements DonYeuCauService {
 
         Integer trangThaiMacDinh = TrangThaiPheDuyet.CHO_DUYET.getTrangThaiPheDuyet();
         request.setTrangThai(trangThaiMacDinh);
+
+        String ngayTao = LocalDate.now().toString();
+        request.setNgayTao(ngayTao);
+
         return donYeuCauMapper.insertDonYeuCau(
                 donYeuCauMapstruct.toDonYeuCau(request)
         );

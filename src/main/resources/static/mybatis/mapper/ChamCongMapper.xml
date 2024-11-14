@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.ChamCongMapper">
+
+    <resultMap id="resultMapBangChamCong" type="BangChamCong">
+        <id column="ma_cham_cong" property="maChamCong"/>
+        <result column="ma_nhan_vien" property="maNhanVien"/>
+        <result column="ngay" property="ngayChamCong"/>
+        <result column="gio_vao" property="gioVao"/>
+        <result column="gio_ra" property="gioRa"/>
+        <result column="so_gio_lam" property="soGioLam"/>
+        <result column="ma_loai_cong" property="maLoaiCong"/>
+        <result column="ten_loai_cong" property="tenLoaiCong"/>
+        <result column="ho_ten" property="tenNhanVien"/>
+    </resultMap>
+
+    <resultMap id="resultMapFindAllBangChamCong" type="BangChamCong">
+        <result column="ma_nhan_vien" property="maNhanVien"/>
+        <result column="ho_ten" property="tenNhanVien"/>
+        <result column="ngay" property="ngayChamCong"/>
+        <result column="gio_vao" property="gioVao"/>
+        <result column="gio_ra" property="gioRa"/>
+        <result column="so_gio_lam" property="soGioLam"/>
+    </resultMap>
+
+    <sql id="columnBangChamCong">
+        ma_cham_cong
+        , bcc.ma_nhan_vien
+        , ngay
+        , gio_vao
+        , gio_ra
+        , so_gio_lam
+        , bcc.ma_loai_cong
+        , nv.ho_ten
+        , lc.ten_loai_cong
+    </sql>
+
+    <insert id="insertBangChamCong">
+        INSERT INTO bang_cham_cong(
+            ma_nhan_vien
+          , ngay
+          , gio_vao
+          , ma_loai_cong
+        )
+        VALUES (
+            #{bangChamCong.maNhanVien}
+          , #{bangChamCong.ngayChamCong}::DATE
+          , #{bangChamCong.gioVao}
+          , #{bangChamCong.maLoaiCong}
+        )
+    </insert>
+
+    <update id="updateBangChamCong">
+        UPDATE bang_cham_cong
+        SET gio_ra = #{bangChamCong.gioRa},
+            so_gio_lam = #{bangChamCong.soGioLam}
+        WHERE ma_nhan_vien = #{bangChamCong.maNhanVien}
+          AND ngay = #{bangChamCong.ngayChamCong}::DATE
+    </update>
+
+    <delete id="deleteBangChamCong">
+
+    </delete>
+
+    <select id="findByMaNhanVien" resultMap="resultMapBangChamCong">
+        SELECT
+            <include refid="columnBangChamCong"/>
+        FROM bang_cham_cong bcc
+        LEFT JOIN nhan_vien nv ON bcc.ma_nhan_vien = nv.ma_nhan_vien
+        LEFT JOIN loai_cong lc ON bcc.ma_loai_cong = lc.ma_loai_cong
+        <where>
+            nv.ma_nhan_vien = #{maNhanVien}
+        </where>
+    </select>
+
+    <select id="findAll" resultMap="resultMapFindAllBangChamCong">
+        select bang_cham_cong.ma_nhan_vien
+             , ho_ten
+             , ngay
+             , gio_vao
+             , gio_ra
+        from bang_cham_cong
+            left join nhan_vien
+            on bang_cham_cong.ma_nhan_vien = nhan_vien.ma_nhan_vien
+    </select>
+
+    <select id="isChamCong">
+        select exists(
+            select 1
+            from bang_cham_cong
+            where ma_nhan_vien = #{bangChamCong.maNhanVien}
+              and ngay = #{bangChamCong.ngayChamCong}
+        )
+    </select>
+
+    <select id="findDetail" resultMap="resultMapBangChamCong">
+        SELECT
+            <include refid="columnBangChamCong"/>
+        FROM bang_cham_cong bcc
+        LEFT JOIN nhan_vien nv ON bcc.ma_nhan_vien = nv.ma_nhan_vien
+        LEFT JOIN loai_cong lc ON bcc.ma_loai_cong = lc.ma_loai_cong
+        <where>
+            nv.ma_nhan_vien = #{maNhanVien}
+        AND bcc.ngay = #{ngayChamCong}::DATE
+        </where>
+    </select>
+
+</mapper>

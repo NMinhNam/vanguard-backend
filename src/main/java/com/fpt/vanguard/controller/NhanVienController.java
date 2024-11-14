@@ -84,4 +84,13 @@ public class NhanVienController {
         apiResponse.setData(nhanVienService.updateNhanVien(nhanVienDtoRequest));
         return apiResponse;
     }
+
+    @GetMapping("orgchart")
+    public ApiResponse<List<NhanVienDtoResponse>> getOrgChartNhanVien() {
+        return ApiResponse.<List<NhanVienDtoResponse>>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(nhanVienService.getOrgChartNhanVien())
+                .build();
+    }
 }

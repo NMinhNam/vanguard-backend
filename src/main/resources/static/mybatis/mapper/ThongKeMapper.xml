@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.PhongBanMapper">
+
+    <resultMap id="resultMapThongKe" type="PhongBan">
+        <id property="maPhongBan" column="ma_phong_ban"/>
+        <result property="tenPhongBan" column="ten_phong_ban"/>
+        <result property="maPhongBanCapTren" column="ma_phong_ban_cap_tren"/>
+        <result property="soLuongNhanVien" column="so_luong_nhan_vien"/>
+        <result property="truongPhong" column="ten_truong_phong"/>
+        <result property="anhTruongPhong" column="anh_truong_phong"/>
+    </resultMap>
+
+    <sql id="columnThongKe">
+        pb.ma_phong_ban,
+        pb.ten_phong_ban,
+        pb.ma_phong_ban_cap_tren,
+        COUNT(nv.ma_nhan_vien) AS so_luong_nhan_vien,
+        truong_phong_nv.ho_ten AS ten_truong_phong,
+        truong_phong_nv.hinh_anh AS anh_truong_phong
+    </sql>
+
+    <select id="orgChartPhongBan" resultMap="resultMapThongKe">
+        SELECT
+            <include refid="columnThongKe"/>
+        FROM phong_ban pb
+            LEFT JOIN nhan_vien nv ON pb.ma_phong_ban = nv.ma_phong_ban
+            LEFT JOIN nhan_vien truong_phong_nv ON pb.truong_phong = truong_phong_nv.ma_nhan_vien
+        GROUP BY
+            pb.ma_phong_ban,
+            pb.ten_phong_ban,
+            pb.ma_phong_ban_cap_tren,
+            truong_phong_nv.ho_ten,
+            truong_phong_nv.hinh_anh
+    </select>
+</mapper>

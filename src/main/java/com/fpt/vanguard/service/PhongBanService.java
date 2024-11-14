@@ -13,4 +13,6 @@ public interface PhongBanService {
     int savePhongBan(PhongBanDtoRequest phongBan);
 
     int deletePhongBan(String maPhongBan);
+
+    List<PhongBanDtoResponse> getOrgChart();
 }

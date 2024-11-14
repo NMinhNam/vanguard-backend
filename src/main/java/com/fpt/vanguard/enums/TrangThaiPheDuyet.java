@@ -21,4 +21,14 @@ public enum TrangThaiPheDuyet {
         }
         return "Unknown";
     }
+
+    public static Integer getTrangThaiPheDuyet(int soLuongTuChoi, int soLuongChoDuyet) {
+        if (soLuongTuChoi > 0) {
+            return TU_CHOI.getTrangThaiPheDuyet();
+        } else if (soLuongChoDuyet > 0) {
+            return CHO_DUYET.getTrangThaiPheDuyet();
+        } else {
+            return DA_DUYET.getTrangThaiPheDuyet();
+        }
+    }
 }

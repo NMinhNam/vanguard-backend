@@ -35,7 +35,7 @@
              #{pheDuyet.maNhanVien},
              #{pheDuyet.trangThai},
              #{pheDuyet.ghiChu},
-             #{pheDuyet.ngayPheDuyet}
+             #{pheDuyet.ngayPheDuyet}::DATE
             )
     </insert>
 
@@ -75,7 +75,7 @@
         <result property="hoTenNguoiTao" column="ho_ten_nguoi_tao"/>
         <result property="loaiDon" column="loai_don"/>
         <result property="ngayTao" column="ngay_tao"/>
-        <result property="lyDo" column="ly_do"/>
+        <result property="lyDo" column="mo_ta"/>
         <result property="trangThai" column="trang_thai"/>
     </resultMap>
 
@@ -85,7 +85,7 @@
         nguoi_tao.ho_ten AS ho_ten_nguoi_tao,
         don_yeu_cau.loai_don,
         don_yeu_cau.ngay_tao,
-        don_yeu_cau.ly_do
+        don_yeu_cau.mo_ta
     </sql>
 
     <select id="getApprovalDetails" resultMap="resultMapApprovalDetails">
@@ -107,7 +107,7 @@
         , nguoi_phe_duyet.ho_ten AS ho_ten_nguoi_phe_duyet
         , nguoi_tao.ho_ten       AS ho_ten_nguoi_tao
         , loai_don
-        , ly_do
+        , mo_ta
         , phe_duyet.trang_thai as trang_thai
         , ngay_tao
     </sql>
@@ -120,11 +120,13 @@
         JOIN phe_duyet ON don_yeu_cau.ma_don = phe_duyet.ma_don
         JOIN nhan_vien nguoi_phe_duyet ON phe_duyet.ma_nhan_vien = nguoi_phe_duyet.ma_nhan_vien
         <where>
-            nguoi_phe_duyet.ma_nhan_vien = #{maNhanVien}
+            nguoi_phe_duyet.ma_nhan_vien = #{maNguoiDuyet}
+            AND
+            nguoi_tao.ma_nhan_vien = #{maNguoiTao}
         </where>
     </select>
 
-    <select id="getPheDuyetDetail" resultMap="resultMapPheDuyet">
+    <select id="getPheDuyet" resultMap="resultMapPheDuyet">
         SELECT
             <include refid="columnPheDuyet"/>
         FROM phe_duyet
@@ -133,7 +135,23 @@
             JOIN nhan_vien nguoi_phe_duyet ON phe_duyet.ma_nhan_vien = nguoi_phe_duyet.ma_nhan_vien
         <where>
             phe_duyet.ma_don = #{maDon}
+            AND nguoi_phe_duyet.ma_nhan_vien = #{maNhanVien}
         </where>
+    </select>
+
+    <resultMap id="resultMapApprovalStatus" type="PheDuyet">
+        <result column="so_luong_cho_duyet" property="soLuongChoDuyet"/>
+        <result column="so_luong_da_duyet" property="soLuongDaDuyet"/>
+        <result column="so_luong_tu_choi" property="soLuongTuChoi"/>
+    </resultMap>
+
+    <select id="getApprovalStatusCount" resultMap="resultMapApprovalStatus">
+        SELECT
+            SUM(CASE WHEN trang_thai = 1 THEN 1 ELSE 0 END) AS so_luong_cho_duyet,
+            SUM(CASE WHEN trang_thai = 2 THEN 1 ELSE 0 END) AS so_luong_da_duyet,
+            SUM(CASE WHEN trang_thai = 3 THEN 1 ELSE 0 END) AS so_luong_tu_choi
+        FROM phe_duyet
+        WHERE ma_don = #{maDon}
     </select>
 
 </mapper>

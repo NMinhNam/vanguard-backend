@@ -1,6 +1,7 @@
 package com.fpt.vanguard.dto.response;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter

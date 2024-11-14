@@ -3,6 +3,7 @@ package com.fpt.vanguard.dto.request;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Builder;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter

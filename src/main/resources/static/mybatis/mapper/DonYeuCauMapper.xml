@@ -5,18 +5,22 @@
         <id property="maDon" column="ma_don"/>
         <result property="maNhanVien" column="ma_nhan_vien"/>
         <result property="loaiDon" column="loai_don"/>
-        <result property="liDo" column="ly_do"/>
+        <result property="moTa" column="mo_ta"/>
         <result property="trangThai" column="trang_thai"/>
         <result property="ngayTao" column="ngay_tao"/>
+        <result property="ngayBatDau" column="ngay_bat_dau"/>
+        <result property="ngayKetThuc" column="ngay_ket_thuc"/>
     </resultMap>
 
     <sql id="columnDonYeuCau">
         ma_don
         , ma_nhan_vien
         , loai_don
-        , ly_do
+        , mo_ta
         , trang_thai
         , ngay_tao
+        , ngay_bat_dau
+        , ngay_ket_thuc
     </sql>
 
     <insert id="insertDonYeuCau">
@@ -24,19 +28,34 @@
                  ma_don
                , ma_nhan_vien
                , loai_don
-               , ly_do
+               , mo_ta
                , trang_thai
                , ngay_tao
+               , ngay_bat_dau
+               , ngay_ket_thuc
         )
         VALUES (
-                #{donYeuCau.maDon}
+                generatemadon()
                ,#{donYeuCau.maNhanVien}
                ,#{donYeuCau.loaiDon}
-               ,#{donYeuCau.liDo}
+               ,#{donYeuCau.moTa}
                ,#{donYeuCau.trangThai}
-               ,now()
+               ,#{donYeuCau.ngayTao}::DATE
+               ,#{donYeuCau.ngayBatDau}::DATE
+               ,#{donYeuCau.ngayKetThuc}::DATE
         )
     </insert>
+
+    <update id="updateDonYeuCau">
+        UPDATE don_yeu_cau
+        SET loai_don = #{donYeuCau.loaiDon}
+          , mo_ta = #{donYeuCau.moTa}
+          , trang_thai = #{donYeuCau.trangThai}
+          , ngay_tao = #{donYeuCau.ngayTao}::DATE
+          , ngay_bat_dau = #{donYeuCau.ngayBatDau}::DATE
+          , ngay_ket_thuc = #{donYeuCau.ngayKetThuc}::DATE
+        WHERE ma_don = #{donYeuCau.maDon}
+    </update>
 
     <delete id="deleteDonYeuCau">
         DELETE FROM don_yeu_cau
@@ -65,12 +84,21 @@
     <select id="findAll" resultMap="resultMapDonYeuCau">
         SELECT d.ma_don
              , d.loai_don
-             , d.ly_do
+             , d.mo_ta
              , p.trang_thai
              , n.ho_ten
              , d.ngay_tao
         FROM don_yeu_cau d
             JOIN phe_duyet p ON d.ma_don = p.ma_don
             JOIN nhan_vien n ON d.ma_nhan_vien = n.ma_nhan_vien
+    </select>
+
+    <select id="findDonYeuCauDetail" resultMap="resultMapDonYeuCau">
+        SELECT
+            <include refid="columnDonYeuCau"/>
+        FROM don_yeu_cau
+        <where>
+            ma_don = #{maDonYeuCau}
+        </where>
     </select>
 </mapper>

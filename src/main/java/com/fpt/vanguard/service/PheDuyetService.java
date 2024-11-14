@@ -2,15 +2,15 @@ package com.fpt.vanguard.service;
 
 import com.fpt.vanguard.dto.request.PheDuyetDtoRequest;
 import com.fpt.vanguard.dto.response.PheDuyetDtoResponse;
-import com.fpt.vanguard.entity.PheDuyet;
 import jakarta.mail.MessagingException;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface PheDuyetService {
     List<PheDuyetDtoResponse> getPheDuyets(String maNhanVien);
     Integer createPheDuyet(PheDuyetDtoRequest request) throws MessagingException;
-    Integer updatePheDuyet(PheDuyetDtoRequest request) throws MessagingException;
+    Integer updatePheDuyet(PheDuyetDtoRequest request) throws MessagingException, ParseException;
     Integer deletePheDuyet(String maDon);
-    PheDuyetDtoResponse getPheDuyetDetail(String maDon);
+    PheDuyetDtoResponse getPheDuyetDetail(String maDon, String maNhanVien);
 }

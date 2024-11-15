@@ -17,4 +17,6 @@ public interface UngVienMapper {
 
     boolean isExistUngVien(@Param("maUngVien") String maUngVien);
 
+    List<UngVien> getUngVienByViTriAndTrangThai(String viTri,int trangThai);
+
 }

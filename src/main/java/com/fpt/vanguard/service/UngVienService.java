@@ -2,15 +2,17 @@ package com.fpt.vanguard.service;
 
 import com.fpt.vanguard.dto.request.UngVienDtoRequest;
 import com.fpt.vanguard.dto.response.UngVienDtoResponse;
+import jakarta.mail.MessagingException;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface UngVienService {
     List<UngVienDtoResponse> getUngVien(String tenViTri);
 
-    int saveUngVien(UngVienDtoRequest ungVienDtoRequest);
+    int saveUngVien(UngVienDtoRequest ungVienDtoRequest) throws MessagingException, ParseException;
 
     int insertUngVien(UngVienDtoRequest ungVienDtoRequest);
 
-    int updateUngVien(UngVienDtoRequest ungVienDtoRequest);
+    int updateUngVien(UngVienDtoRequest ungVienDtoRequest) throws MessagingException, ParseException;
 }

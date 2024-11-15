@@ -4,10 +4,12 @@ import com.fpt.vanguard.common.ApiResponse;
 import com.fpt.vanguard.dto.request.UngVienDtoRequest;
 import com.fpt.vanguard.dto.response.UngVienDtoResponse;
 import com.fpt.vanguard.service.UngVienService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -27,7 +29,7 @@ public class UngVienController {
     }
 
     @PostMapping
-    public ApiResponse<Integer> saveUngVien(@RequestBody UngVienDtoRequest ungVienDtoRequest){
+    public ApiResponse<Integer> saveUngVien(@RequestBody UngVienDtoRequest ungVienDtoRequest) throws MessagingException, ParseException {
         return ApiResponse.<Integer>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)

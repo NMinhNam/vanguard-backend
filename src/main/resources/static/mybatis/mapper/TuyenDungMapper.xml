@@ -40,8 +40,9 @@
     <select id="getTuyenDungById" resultMap="TuyenDungResultMap" parameterType="String">
         SELECT
             <include refid="columnViTriTuyenDung"/>
-        FROM vi_tri_tuyen_dung
-        WHERE ma_tuyen_dung = #{id}
+        FROM vi_tri_tuyen_dung td
+        LEFT JOIN phong_ban pb on td.ma_phong_ban = pb.ma_phong_ban
+        WHERE ma_vi_tri_tuyen_dung = #{id}
     </select>
 
     <select id="isExist">
@@ -78,7 +79,7 @@
         SET ten_vi_tri         = #{TuyenDung.tenViTri},
             ma_phong_ban       = #{TuyenDung.maPhongBan},
             so_luong_tuyen     = #{TuyenDung.soLuongTuyen},
-            so_luong_ung_tuyen = #{TuyenDung.soLuongUngTuyen},
+            so_luong_ung_tuyen = #{TuyenDung.soLuongUngTuyen}, 
             trang_thai         = #{TuyenDung.trangThai},
             mo_ta              = #{TuyenDung.moTa},
             yeu_cau            = #{TuyenDung.yeuCau}

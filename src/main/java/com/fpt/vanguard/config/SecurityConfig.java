@@ -22,7 +22,8 @@ public class SecurityConfig {
             "/api/v1/auth/logout",
             "/api/v1/auth/introspect",
             "/api/v1/auth/refresh",
-            "/api/v1/users/register"
+            "/api/v1/users/register",
+            "/api/v1/ung-vien"
     };
 
     @Bean
@@ -31,6 +32,7 @@ public class SecurityConfig {
         httpSecurity
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/vi-tri-tuyen-dung").permitAll()
                         .requestMatchers("/api/v1/*/*").permitAll()
                         .anyRequest().authenticated()
                 )

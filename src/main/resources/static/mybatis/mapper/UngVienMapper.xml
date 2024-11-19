@@ -58,6 +58,13 @@
         WHERE uv.ma_vi_tri_tuyen_dung = #{viTri} and uv.trang_thai = #{trangThai}
     </select>
 
+    <select id="getUngVienById">
+        SELECT
+            <include refid="columnUngVien"/>
+        FROM ung_vien uv
+        WHERE ma_ung_vien = #{maUngVien}
+    </select>
+
     <insert id="insertUngVien">
         INSERT INTO ung_vien
             (ma_ung_vien

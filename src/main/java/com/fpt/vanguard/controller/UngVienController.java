@@ -28,6 +28,15 @@ public class UngVienController {
                 .build();
     }
 
+    @GetMapping("/search")
+    public ApiResponse<UngVienDtoResponse> getUngVienByMaUngVien(@RequestParam("maUngVien") String maUngVien) {
+        return ApiResponse.<UngVienDtoResponse>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(ungVienService.getUngVienByMaUngVien(maUngVien))
+                .build();
+    }
+
     @PostMapping
     public ApiResponse<Integer> saveUngVien(@RequestBody UngVienDtoRequest ungVienDtoRequest) throws MessagingException, ParseException {
         return ApiResponse.<Integer>builder()

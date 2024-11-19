@@ -15,4 +15,6 @@ public interface UngVienService {
     int insertUngVien(UngVienDtoRequest ungVienDtoRequest);
 
     int updateUngVien(UngVienDtoRequest ungVienDtoRequest) throws MessagingException, ParseException;
+
+    UngVienDtoResponse getUngVienByMaUngVien(String maUngVien);
 }

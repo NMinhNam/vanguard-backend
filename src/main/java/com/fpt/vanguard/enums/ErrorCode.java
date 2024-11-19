@@ -34,7 +34,8 @@ public enum ErrorCode {
     DON_YEU_CAU_EXISTED(1001, "Don yeu cau existed"),
     LIST_UNG_VIEN_EMPTY(1002, "list ung vien rong"),
     FILE_UPLOAD_FAILED(999, "file upload failed"),
-    DU_UNG_VIEN_DAT_YEU_CAU(1111, "Ung vien dat yeu cau qua gioi han")
+    DU_UNG_VIEN_DAT_YEU_CAU(1111, "Ung vien dat yeu cau qua gioi han"),
+    UNG_VIEN_KHONG_TON_TAI(1003, "Ung vien khong ton tai")
     ;
 
     private final int status;

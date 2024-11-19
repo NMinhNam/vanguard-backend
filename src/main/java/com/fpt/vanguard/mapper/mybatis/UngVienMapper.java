@@ -19,4 +19,6 @@ public interface UngVienMapper {
 
     List<UngVien> getUngVienByViTriAndTrangThai(String viTri,int trangThai);
 
+    UngVien getUngVienById(@Param("maUngVien") String maUngVien);
+
 }

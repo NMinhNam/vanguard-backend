@@ -100,4 +100,12 @@ public class UngVienServiceImpl implements UngVienService {
         }
         return ungVienResponse;
     }
+
+    @Override
+    public UngVienDtoResponse getUngVienByMaUngVien(String maUngVien) {
+        UngVienDtoResponse ungVien = ungVienMapstruct.toUngVienDtoResponse(ungVienMapper.getUngVienById(maUngVien));
+        if(ungVien != null)
+            throw new AppException(ErrorCode.UNG_VIEN_KHONG_TON_TAI);
+        return ungVien;
+    }
 }

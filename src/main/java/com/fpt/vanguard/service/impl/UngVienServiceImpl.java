@@ -2,6 +2,7 @@ package com.fpt.vanguard.service.impl;
 
 import com.fpt.vanguard.dto.request.NhanVienDtoRequest;
 import com.fpt.vanguard.dto.request.UngVienDtoRequest;
+import com.fpt.vanguard.dto.response.PhongBanDtoResponse;
 import com.fpt.vanguard.dto.response.UngVienDtoResponse;
 import com.fpt.vanguard.dto.response.ViTriTuyenDungDtoResponse;
 import com.fpt.vanguard.entity.UngVien;
@@ -103,9 +104,16 @@ public class UngVienServiceImpl implements UngVienService {
 
     @Override
     public UngVienDtoResponse getUngVienByMaUngVien(String maUngVien) {
-        UngVienDtoResponse ungVien = ungVienMapstruct.toUngVienDtoResponse(ungVienMapper.getUngVienById(maUngVien));
-        if(ungVien != null)
-            throw new AppException(ErrorCode.UNG_VIEN_KHONG_TON_TAI);
-        return ungVien;
+        UngVienDtoResponse resultEntity = ungVienMapstruct.toUngVienDtoResponse(
+                ungVienMapper.getUngVienById(maUngVien)
+        );
+        if (!Objects.nonNull(resultEntity)) throw new AppException(ErrorCode.UNG_VIEN_KHONG_TON_TAI);
+        return resultEntity;
+    }
+
+    @Override
+    public int deleteUngVien(String maUngVien) {
+        if (!ungVienMapper.isExistUngVien(maUngVien)) throw new AppException(ErrorCode.UNG_VIEN_KHONG_TON_TAI);
+        return ungVienMapper.deleteUngVien(maUngVien);
     }
 }

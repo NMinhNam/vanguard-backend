@@ -21,4 +21,6 @@ public interface UngVienMapper {
 
     UngVien getUngVienById(@Param("maUngVien") String maUngVien);
 
+    int deleteUngVien(@Param("maUngVien") String maUngVien);
+
 }

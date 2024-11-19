@@ -45,4 +45,12 @@ public class UngVienController {
                 .data(ungVienService.saveUngVien(ungVienDtoRequest))
                 .build();
     }
+    @DeleteMapping("/{maUngVien}")
+    public ApiResponse<Integer> deleteUngVien(@PathVariable("maUngVien") String maUngVien){
+        ApiResponse<Integer> apiResponse =new ApiResponse<>();
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setSuccess(true);
+        apiResponse.setData(ungVienService.deleteUngVien(maUngVien));
+        return apiResponse;
+    }
 }

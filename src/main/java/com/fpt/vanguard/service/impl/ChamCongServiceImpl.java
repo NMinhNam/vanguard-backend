@@ -79,6 +79,15 @@ public class ChamCongServiceImpl implements ChamCongService {
         );
     }
 
+    @Override
+    public ChamCongDtoResponse getChamCongToDay(String maNhanVien) {
+        String ngayHienTai = LocalDate.now().toString();
+
+        return chamCongMapstruct.toDtoResponse(
+                chamCongMapper.findDetail(maNhanVien, ngayHienTai)
+        );
+    }
+
     private Double tinhSoGioLam(String gioVaoStr, String gioRaStr) {
         LocalTime gioVao = LocalTime.parse(gioVaoStr, DateTimeFormatter.ofPattern("HH:mm:ss"));
         LocalTime gioRa = LocalTime.parse(gioRaStr, DateTimeFormatter.ofPattern("HH:mm:ss"));

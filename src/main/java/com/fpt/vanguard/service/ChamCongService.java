@@ -15,4 +15,6 @@ public interface ChamCongService {
     List<ChamCongDtoResponse> getAllChamCong();
 
     ChamCongDtoResponse getChamCongDetail(ChamCongDtoRequest request);
+
+    ChamCongDtoResponse getChamCongToDay(String maNhanVien);
 }

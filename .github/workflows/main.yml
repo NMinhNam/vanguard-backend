@@ -1,54 +1,54 @@
-name: Build & Deploy Vanguard Application
-
-on:
-  pull_request:
-    branches: [ main ]
-
-  push:
-    branches: [ main ]
-
-env:
-  USER_PROJECT: "vanguard"
-  IMAGE_VERSION: ""
-
-jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out branch
-        uses: actions/checkout@v3
-
-      - name: Log in to Docker Hub
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-
-      - name: Build Docker image
-        run: docker build -t $IMAGE_VERSION .
-
-      - name: Log out of Docker
-        run: docker logout
-
-  push:
-    name: Push
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Log in to Docker Hub
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-
-      - name: Push Docker image
-        run: docker push $IMAGE_VERSION
-
-      - name: Log out of Docker
-        run: docker logout
-
-
-
-
-
+#name: Build & Deploy Vanguard Application
+#
+#on:
+#  pull_request:
+#    branches: [ main ]
+#
+#  push:
+#    branches: [ main ]
+#
+#env:
+#  USER_PROJECT: "vanguard"
+#  IMAGE_VERSION: ""
+#
+#jobs:
+#  build:
+#    name: Build
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Check out branch
+#        uses: actions/checkout@v3
+#
+#      - name: Log in to Docker Hub
+#        env:
+#          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+#          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+#        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+#
+#      - name: Build Docker image
+#        run: docker build -t $IMAGE_VERSION .
+#
+#      - name: Log out of Docker
+#        run: docker logout
+#
+#  push:
+#    name: Push
+#    runs-on: ubuntu-latest
+#    needs: build
+#    steps:
+#      - name: Log in to Docker Hub
+#        env:
+#          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+#          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+#        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+#
+#      - name: Push Docker image
+#        run: docker push $IMAGE_VERSION
+#
+#      - name: Log out of Docker
+#        run: docker logout
+#
+#
+#
+#
+#

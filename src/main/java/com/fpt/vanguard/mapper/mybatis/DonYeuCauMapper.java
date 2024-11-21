@@ -15,4 +15,5 @@ public interface DonYeuCauMapper {
     List<DonYeuCau> findAll();
     Integer updateDonYeuCau(@Param("donYeuCau") DonYeuCau donYeuCau);
     DonYeuCau findDonYeuCauDetail(@Param("maDonYeuCau") String maDonYeuCau);
+    Integer updateStatusDonYeuCau(@Param("maDon") String maDon, @Param("trangThai") Integer trangThai);
 }

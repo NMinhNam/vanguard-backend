@@ -43,10 +43,17 @@ public class PheDuyetServiceImpl implements PheDuyetService {
         Integer trangThaiMacDinh = TrangThaiPheDuyet.CHO_DUYET.getTrangThaiPheDuyet();
         request.setTrangThai(trangThaiMacDinh);
 
-        Integer pheDuyetResponse = pheDuyetMapper.insertPheDuyet(pheDuyetMapstruct.toPheDuyet(request));
+        Integer pheDuyetResponse = pheDuyetMapper.insertPheDuyet(
+                pheDuyetMapstruct.toPheDuyet(request)
+        );
+
+        donYeuCauMapper.updateStatusDonYeuCau(request.getMaDon(), trangThaiMacDinh);
 
         String maNguoiPheDuyet = request.getMaNhanVien();
-        sendApprovalNotificationEmail(approvalMapstruct.toApprovalDetailsDtoRequest(pheDuyetMapper.getApprovalDetails(maNguoiPheDuyet)));
+        sendApprovalNotificationEmail(approvalMapstruct.toApprovalDetailsDtoRequest(
+                pheDuyetMapper.getApprovalDetails(maNguoiPheDuyet)
+                )
+        );
 
         return pheDuyetResponse;
     }
@@ -66,9 +73,7 @@ public class PheDuyetServiceImpl implements PheDuyetService {
 
     @Override
     public Integer updatePheDuyet(PheDuyetDtoRequest request) throws MessagingException, ParseException {
-        Integer pheDuyetResponse = pheDuyetMapper.updatePheDuyet(
-                pheDuyetMapstruct.toPheDuyet(request)
-        );
+        Integer pheDuyetResponse = pheDuyetMapper.updatePheDuyet(pheDuyetMapstruct.toPheDuyet(request));
 
         String maDonYeuCau = request.getMaDon();
         Integer trangThaiDon = getRequestStatus(maDonYeuCau);
@@ -84,11 +89,7 @@ public class PheDuyetServiceImpl implements PheDuyetService {
         if (!Objects.equals(trangThaiDon, TrangThaiPheDuyet.CHO_DUYET.getTrangThaiPheDuyet())) {
             String maNguoiPheDuyet = request.getMaNhanVien();
             String maNguoiTao = donYeuCau.getMaNhanVien();
-            sendApprovalStatusUpdateEmail(
-                    approvalMapstruct.toApprovalDetailsDtoRequest(
-                            pheDuyetMapper.getInfoFromRequestApproval(maNguoiPheDuyet , maNguoiTao)
-                    )
-            );
+            sendApprovalStatusUpdateEmail(approvalMapstruct.toApprovalDetailsDtoRequest(pheDuyetMapper.getInfoFromRequestApproval(maNguoiPheDuyet, maNguoiTao)));
         }
 
         return pheDuyetResponse;
@@ -125,8 +126,6 @@ public class PheDuyetServiceImpl implements PheDuyetService {
 
     @Override
     public PheDuyetDtoResponse getPheDuyetDetail(String maDon, String maNhanVien) {
-        return pheDuyetMapstruct.toDto(
-                pheDuyetMapper.getPheDuyet(maDon, maNhanVien)
-        );
+        return pheDuyetMapstruct.toDto(pheDuyetMapper.getPheDuyet(maDon, maNhanVien));
     }
 }

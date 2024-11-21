@@ -57,6 +57,12 @@
         WHERE ma_don = #{donYeuCau.maDon}
     </update>
 
+    <update id="updateStatusDonYeuCau">
+        UPDATE don_yeu_cau
+        SET trang_thai = #{trangThai}
+        WHERE ma_don = #{maDon}
+    </update>
+
     <delete id="deleteDonYeuCau">
         DELETE FROM don_yeu_cau
         <where>

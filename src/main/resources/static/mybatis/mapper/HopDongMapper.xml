@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.HopDongMapper">
+
+    <resultMap id="HopDongResultMap" type="com.fpt.vanguard.entity.HopDong">
+        <id column="so_hop_dong" property="soHopDong"/>
+        <result column="ngay_bat_dau" property="ngayBatDau"/>
+        <result column="ngay_ket_thuc" property="ngayKetThuc"/>
+        <result column="ngay_ky" property="ngayKy"/>
+        <result column="noi_dung" property="noiDung"/>
+        <result column="lan_ky" property="lanKy"/>
+        <result column="thoi_han" property="thoiHan"/>
+        <result column="he_so_luong" property="heSoLuong"/>
+        <result column="ma_nhan_vien" property="maNhanVien"/>
+    </resultMap>
+
+    <sql id="columnHopDong">
+        hd.so_hop_dong,
+    hd.ngay_bat_dau,
+    hd.ngay_ket_thuc,
+    hd.ngay_ky,
+    hd.noi_dung,
+    hd.lan_ky,
+    hd.thoi_han,
+    hd.he_so_luong,
+    hd.ma_nhan_vien
+    </sql>
+
+    <select id="getAllHopDong" resultMap="HopDongResultMap">
+        SELECT
+        <include refid="columnHopDong"/>
+        FROM
+        hop_dong hd
+        LEFT JOIN
+        nhan_vien nv ON hd.ma_nhan_vien = nv.ma_nhan_vien
+    </select>
+
+    <insert id="insertHopDong" parameterType="com.fpt.vanguard.dto.request.HopDongDtoRequest">
+        INSERT INTO hop_dong (
+            so_hop_dong,
+            ngay_bat_dau,
+            ngay_ket_thuc,
+            ngay_ky,
+            noi_dung,
+            lan_ky,
+            thoi_han,
+            he_so_luong,
+            ma_nhan_vien
+        )
+        VALUES (
+                   #{hopDong.soHopDong},
+                   #{hopDong.ngayBatDau},
+                   #{hopDong.ngayKetThuc},
+                   #{hopDong.ngayKy},
+                   #{hopDong.noiDung},
+                   #{hopDong.lanKy},
+                   #{hopDong.thoiHan},
+                   #{hopDong.heSoLuong},
+                   #{hopDong.maNhanVien}
+               )
+    </insert>
+
+    <update id="updateHopDong" parameterType="com.fpt.vanguard.dto.request.HopDongDtoRequest">
+        UPDATE hop_dong
+        <set>
+            <if test="hopDong.ngayBatDau != null">ngay_bat_dau = #{hopDong.ngayBatDau},</if>
+            <if test="hopDong.ngayKetThuc != null">ngay_ket_thuc = #{hopDong.ngayKetThuc},</if>
+            <if test="hopDong.ngayKy != null">ngay_ky = #{hopDong.ngayKy},</if>
+            <if test="hopDong.noiDung != null">noi_dung = #{hopDong.noiDung},</if>
+            <if test="hopDong.lanKy != null">lan_ky = #{hopDong.lanKy},</if>
+            <if test="hopDong.thoiHan != null">thoi_han = #{hopDong.thoiHan},</if>
+            <if test="hopDong.heSoLuong != null">he_so_luong = #{hopDong.heSoLuong},</if>
+            <if test="hopDong.maNhanVien != null">ma_nhan_vien = #{hopDong.maNhanVien},</if>
+        </set>
+        WHERE so_hop_dong = #{hopDong.soHopDong}
+    </update>
+
+    <select id="existsById" parameterType="String" resultType="Boolean">
+        SELECT
+        COUNT(*) > 0
+        FROM hop_dong
+        <where>
+            so_hop_dong = #{id}
+        </where>
+    </select>
+
+    <select id="findById" parameterType="String" resultMap="HopDongResultMap">
+        SELECT
+        <include refid="columnHopDong"/>
+        FROM hop_dong hd
+        <where>
+            <if test="id != null">
+                so_hop_dong = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteHopDong">
+        DELETE FROM hop_dong
+        WHERE so_hop_dong = #{soHopDong}
+    </delete>
+
+
+</mapper>

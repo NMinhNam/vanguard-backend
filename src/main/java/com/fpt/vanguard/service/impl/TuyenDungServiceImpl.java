@@ -25,7 +25,7 @@ public class TuyenDungServiceImpl implements TuyenDungService {
                 viTriTuyenDungMapstructMapper.toDtoResponseList(
                         tuyenDungMapper.getAllTuyenDung()
                 );
-        if (listResultEntity.isEmpty()) throw new AppException(ErrorCode.LIST_PHONG_BAN_EMPTY);
+        if (listResultEntity.isEmpty()) throw new AppException(ErrorCode.LIST_TUYEN_DUNG_EMPTY);
         return listResultEntity;
     }
 
@@ -35,7 +35,7 @@ public class TuyenDungServiceImpl implements TuyenDungService {
                 tuyenDungMapper.getTuyenDungById(maViTriTuyenDung)
         );
         if (!Objects.nonNull(resultEntity))
-            throw new AppException(ErrorCode.PHONG_BAN_NOT_EXIST);
+            throw new AppException(ErrorCode.TUYEN_DUNG_NOT_EXIST);
         return resultEntity;
     }
 

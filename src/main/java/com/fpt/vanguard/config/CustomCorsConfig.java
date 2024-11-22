@@ -11,11 +11,11 @@ public class CustomCorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOrigin("http://157.66.26.146:1668");
         corsConfiguration.addAllowedOrigin("https://vanguardhrm.io.vn");
-        corsConfiguration.addAllowedOrigin("http://localhost:1668");
-        corsConfiguration.addAllowedOrigin("http://157.66.26.146:1688");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);

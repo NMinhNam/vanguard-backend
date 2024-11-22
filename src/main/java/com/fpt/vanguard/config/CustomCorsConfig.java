@@ -13,6 +13,7 @@ public class CustomCorsConfig {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("https://vanguardhrm.io.vn");
         corsConfiguration.addAllowedOrigin("http://localhost:1668");
+        corsConfiguration.addAllowedOrigin("http://157.66.26.146:1688");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.addAllowedHeader("*");
 

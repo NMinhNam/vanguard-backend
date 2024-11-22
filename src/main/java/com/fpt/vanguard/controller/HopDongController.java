@@ -46,11 +46,11 @@ public class HopDongController {
     }
 
     @DeleteMapping("/{id}")
-    public ApiResponse<Integer> deleteUngLuong(@PathVariable("id") String id){
+    public ApiResponse<Integer> deleteHopDong(@PathVariable("id") String id){
         ApiResponse<Integer> apiResponse = new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);
-        apiResponse.setData(hopDongService.deleteUngLuong(id));
+        apiResponse.setData(hopDongService.deleteHopDong(id));
         return apiResponse;
     }
 }

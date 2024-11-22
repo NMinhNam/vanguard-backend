@@ -47,7 +47,7 @@ public class HopDongServiceImpl implements HopDongService {
     }
 
     @Override
-    public int deleteUngLuong(String id) {
+    public int deleteHopDong(String id) {
         if (!hopDongMapper.existsById(id)) throw new AppException(ErrorCode.HOP_DONG_NOT_EXIST);
         return hopDongMapper.deleteHopDong(id);
     }

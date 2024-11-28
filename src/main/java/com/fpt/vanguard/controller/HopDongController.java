@@ -37,20 +37,20 @@ public class HopDongController {
     }
 
     @GetMapping("/search")
-    public ApiResponse<HopDongDtoResponse> getHopDongById(@RequestParam(name = "id") String id) {
+    public ApiResponse<HopDongDtoResponse> getHopDongById(@RequestParam(name = "soHopDong") String soHopDong) {
         ApiResponse<HopDongDtoResponse> apiResponse = new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);
-        apiResponse.setData(hopDongService.getHopDongById(id));
+        apiResponse.setData(hopDongService.getHopDongById(soHopDong));
         return apiResponse;
     }
 
-    @DeleteMapping("/{id}")
-    public ApiResponse<Integer> deleteUngLuong(@PathVariable("id") String id){
+    @DeleteMapping("/delete")
+    public ApiResponse<Integer> deleteUngLuong(@RequestParam(name = "soHopDong") String soHopDong){
         ApiResponse<Integer> apiResponse = new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);
-        apiResponse.setData(hopDongService.deleteUngLuong(id));
+        apiResponse.setData(hopDongService.deleteUngLuong(soHopDong));
         return apiResponse;
     }
 }

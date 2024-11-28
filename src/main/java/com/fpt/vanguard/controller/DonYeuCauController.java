@@ -53,4 +53,13 @@ public class DonYeuCauController {
                 .data(donYeuCauService.getAllDonYeuCau())
                 .build();
     }
+
+    @PutMapping
+    public ApiResponse<Integer> updateDonYeuCau(@RequestBody DonYeuCauDtoRequest request) {
+        return ApiResponse.<Integer>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(donYeuCauService.updateDonYeuCau(request))
+                .build();
+    }
 }

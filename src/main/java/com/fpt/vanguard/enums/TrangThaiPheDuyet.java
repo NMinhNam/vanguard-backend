@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum TrangThaiPheDuyet {
+    TAO_MOI(0, "Tạo mới"),
     CHO_DUYET(1, "Chờ duyệt"),
     DA_DUYET(2, "Đã duyệt"),
     TU_CHOI(3, "Từ chối");

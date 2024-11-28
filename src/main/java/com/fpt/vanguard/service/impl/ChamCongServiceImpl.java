@@ -31,7 +31,7 @@ public class ChamCongServiceImpl implements ChamCongService {
         String ngayChamCong = LocalDate.now().toString();
         request.setNgayChamCong(ngayChamCong);
 
-        String gioVao = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        String gioVao = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
         request.setGioVao(gioVao);
 
         Integer maLoaiCong = loaiCongService.getLoaiCong(ngayChamCong);
@@ -47,7 +47,7 @@ public class ChamCongServiceImpl implements ChamCongService {
         String ngayChamCong = LocalDate.now().toString();
         request.setNgayChamCong(ngayChamCong);
 
-        String gioRa = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        String gioRa = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
         request.setGioRa(gioRa);
 
         String gioVao = getChamCongDetail(request).getGioVao();
@@ -79,9 +79,18 @@ public class ChamCongServiceImpl implements ChamCongService {
         );
     }
 
+    @Override
+    public ChamCongDtoResponse getChamCongToDay(String maNhanVien) {
+        String ngayHienTai = LocalDate.now().toString();
+
+        return chamCongMapstruct.toDtoResponse(
+                chamCongMapper.findDetail(maNhanVien, ngayHienTai)
+        );
+    }
+
     private Double tinhSoGioLam(String gioVaoStr, String gioRaStr) {
-        LocalTime gioVao = LocalTime.parse(gioVaoStr, DateTimeFormatter.ofPattern("HH:mm:ss"));
-        LocalTime gioRa = LocalTime.parse(gioRaStr, DateTimeFormatter.ofPattern("HH:mm:ss"));
+        LocalTime gioVao = LocalTime.parse(gioVaoStr, DateTimeFormatter.ofPattern("HH:mm"));
+        LocalTime gioRa = LocalTime.parse(gioRaStr, DateTimeFormatter.ofPattern("HH:mm"));
 
         long giayLamViec;
         if (gioRa.isAfter(gioVao) || gioRa.equals(gioVao)) {

@@ -11,19 +11,21 @@
         <result column="lan_ky" property="lanKy"/>
         <result column="thoi_han" property="thoiHan"/>
         <result column="he_so_luong" property="heSoLuong"/>
+        <result column="luong_co_ban" property="luongCoBan"/>
         <result column="ma_nhan_vien" property="maNhanVien"/>
     </resultMap>
 
     <sql id="columnHopDong">
         hd.so_hop_dong,
-    hd.ngay_bat_dau,
-    hd.ngay_ket_thuc,
-    hd.ngay_ky,
-    hd.noi_dung,
-    hd.lan_ky,
-    hd.thoi_han,
-    hd.he_so_luong,
-    hd.ma_nhan_vien
+        hd.ngay_bat_dau,
+        hd.ngay_ket_thuc,
+        hd.ngay_ky,
+        hd.noi_dung,
+        hd.lan_ky,
+        hd.thoi_han,
+        hd.he_so_luong,
+        hd.luong_co_ban,
+        hd.ma_nhan_vien
     </sql>
 
     <select id="getAllHopDong" resultMap="HopDongResultMap">
@@ -45,6 +47,7 @@
             lan_ky,
             thoi_han,
             he_so_luong,
+            luong_co_ban,
             ma_nhan_vien
         )
         VALUES (
@@ -56,6 +59,7 @@
                    #{hopDong.lanKy},
                    #{hopDong.thoiHan},
                    #{hopDong.heSoLuong},
+                   #{hopDong.luongCoBan},
                    #{hopDong.maNhanVien}
                )
     </insert>
@@ -70,6 +74,7 @@
             <if test="hopDong.lanKy != null">lan_ky = #{hopDong.lanKy},</if>
             <if test="hopDong.thoiHan != null">thoi_han = #{hopDong.thoiHan},</if>
             <if test="hopDong.heSoLuong != null">he_so_luong = #{hopDong.heSoLuong},</if>
+            <if test="hopDong.luongCoBan != null">luong_co_ban = #{hopDong.luongCoBan},</if>
             <if test="hopDong.maNhanVien != null">ma_nhan_vien = #{hopDong.maNhanVien},</if>
         </set>
         WHERE so_hop_dong = #{hopDong.soHopDong}

@@ -16,5 +16,6 @@ public class HopDongDtoRequest {
     private Integer lanKy;
     private Integer thoiHan;
     private Double heSoLuong;
+    private Double luongCoBan;
     private String maNhanVien;
 }

@@ -13,9 +13,9 @@ public interface ChucVuMapper {
 
     ChucVu findById(String id);
 
-    int insertChucVu(@Param("ChucVu") ChucVuDtoRequest chucVu);
+    int insertChucVu(@Param("chucVu") ChucVu chucVu);
 
-    int updateChucVu(@Param("ChucVu") ChucVuDtoRequest chucVu);
+    int updateChucVu(@Param("chucVu") ChucVu chucVu);
 
     Boolean isExist(@Param("id") String id);
 

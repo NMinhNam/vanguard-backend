@@ -38,9 +38,9 @@ public class ChucVuServiceImpl implements ChucVuService {
     @Override
     public int saveChucVu(ChucVuDtoRequest chucVu) {
         if (chucVuMapper.isExist(chucVu.getMaChucVu())) {
-            return chucVuMapper.updateChucVu(chucVu);
+            return chucVuMapper.updateChucVu(chucVuMapstruct.toChucVu(chucVu));
         } else {
-            return chucVuMapper.insertChucVu(chucVu);
+            return chucVuMapper.insertChucVu(chucVuMapstruct.toChucVu(chucVu));
         }
     }
 

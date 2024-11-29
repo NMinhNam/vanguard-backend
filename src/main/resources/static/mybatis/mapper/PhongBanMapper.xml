@@ -7,6 +7,7 @@
         <result column="ten_phong_ban" property="tenPhongBan"/>
         <result column="truong_phong" property="truongPhong"/>
         <result column="so_luong_nhan_vien" property="soLuongNhanVien"/>
+        <result column="phong_ban_cap_tren" property="maPhongBanCapTren"/>
     </resultMap>
 
     <select id="findAll" resultMap="PhongBanResultMap">
@@ -41,11 +42,12 @@
     </select>
 
     <insert id="insertPhongBan" parameterType="com.fpt.vanguard.dto.request.PhongBanDtoRequest">
-        INSERT INTO phong_ban (ma_phong_ban, ten_phong_ban, truong_phong)
+        INSERT INTO phong_ban (ma_phong_ban, ten_phong_ban, truong_phong, ma_phong_ban_cap_tren)
         VALUES (
-            #{PhongBan.maPhongBan}
+            generate_ma_phong_ban()
             ,#{PhongBan.tenPhongBan}
             ,#{PhongBan.truongPhong}
+            ,#{PhongBan.maPhongBanCapTren}
         )
     </insert>
 
@@ -53,6 +55,7 @@
         UPDATE phong_ban
         SET ten_phong_ban = #{PhongBan.tenPhongBan},
             truong_phong = #{PhongBan.truongPhong},
+            ma_phong_ban_cap_tren = #{PhongBan.maPhongBanCapTren}
         WHERE ma_phong_ban = #{PhongBan.maPhongBan};
     </update>
 

@@ -17,6 +17,7 @@ public enum ErrorCode {
     HOP_DONG_NOT_EXIST(1000,"HOP DONG KHONG TON TAI"),
     TUYEN_DUNG_NOT_EXIST(1000,"TUYEN DUNG KHONG TON TAI"),
     PHONG_BAN_NOT_EXIST(1000, "phong ban khong ton tai"),
+    CHUC_VU_NOT_EXIST(1000,"chuc vu khong ton tai"),
     BO_PHAN_NOT_EXIST(1000, "bo phan khong ton tai"),
     LIST_UNG_LUONG_EMPTY(1002, "list ung luon rong"),
     UNG_LUONG_NOT_EXIST(1000, "ung luon khong ton tai"),

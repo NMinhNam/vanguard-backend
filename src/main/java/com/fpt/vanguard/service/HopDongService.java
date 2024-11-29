@@ -13,5 +13,5 @@ public interface HopDongService {
 
     HopDongDtoResponse getHopDongById(String id);
 
-    int deleteUngLuong(String id);
+    int deleteHopDong(String id);
 }

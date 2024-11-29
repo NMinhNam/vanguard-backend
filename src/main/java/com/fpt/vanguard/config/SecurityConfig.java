@@ -23,7 +23,8 @@ public class SecurityConfig {
             "/api/v1/auth/introspect",
             "/api/v1/auth/refresh",
             "/api/v1/users/register",
-            "/api/v1/ung-vien"
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
     };
 
     @Bean
@@ -32,8 +33,7 @@ public class SecurityConfig {
         httpSecurity
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/vi-tri-tuyen-dung").permitAll()
-                        .requestMatchers("/api/v1/*/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, PUBLIC_ENDPOINTS).permitAll()
                         .anyRequest().authenticated()
                 )
 

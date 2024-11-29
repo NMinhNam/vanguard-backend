@@ -10,4 +10,5 @@ public interface DonYeuCauService {
     Integer createDonYeuCau(DonYeuCauDtoRequest request);
     Integer deleteDonYeuCau(String maDon);
     List<DonYeuCauDtoResponse> getAllDonYeuCau();
+    Integer updateDonYeuCau(DonYeuCauDtoRequest request);
 }

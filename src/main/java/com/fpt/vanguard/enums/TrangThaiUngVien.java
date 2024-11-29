@@ -10,9 +10,11 @@ import javax.swing.*;
 @AllArgsConstructor
 public enum TrangThaiUngVien {
     CHO_DUYET(1,"Chờ duyệt"),
-    PHONG_VAN(2,"Phỏng vấn"),
-    DAU_PHONG_VAN(3,"Đậu phỏng vấn"),
-    ROT_PHONG_VAN(4,"Rớt phỏng vấn");
+    PHONG_VAN_LAN_1(2,"Phỏng vấn lần 1"),
+    PHONG_VAN_LAN_2(3,"Phỏng vấn lần 2"),
+    NHAN_VIEC(4,"Đậu phỏng vấn"),
+    TU_CHOI(5,"Rớt phỏng vấn")
+    ;
 
     private int trangThaiUngVien;
     private String tenTrangThai;

@@ -67,16 +67,16 @@ public class UngVienServiceImpl implements UngVienService {
         Integer soLuongTuyen = viTriUngTuyen.getSoLuongTuyen();
         Integer soLuongDauPhongVan = ungVienMapper.getUngVienByViTriAndTrangThai(
                 ungVienDtoRequest.getMaViTriTuyenDung()
-                ,TrangThaiUngVien.DAU_PHONG_VAN.getTrangThaiUngVien())
+                ,TrangThaiUngVien.NHAN_VIEC.getTrangThaiUngVien())
                 .toArray()
                 .length;
-        if (Objects.equals(trangThaiUngVien,TrangThaiUngVien.DAU_PHONG_VAN.getTrangThaiUngVien())){
+        if (Objects.equals(trangThaiUngVien,TrangThaiUngVien.NHAN_VIEC.getTrangThaiUngVien())){
             if(soLuongDauPhongVan >= soLuongTuyen){
                 throw new AppException(ErrorCode.DU_UNG_VIEN_DAT_YEU_CAU);
             }
             //gửi mail
             System.out.println("gửi mail đậu phỏng vấn");
-
+            //Tạo hợp đồng
             NhanVienDtoRequest nhanVienMoi = new NhanVienDtoRequest();
             nhanVienMoi.setCccd(ungVienDtoRequest.getCccd());
             nhanVienMoi.setEmail(ungVienDtoRequest.getEmail());
@@ -90,14 +90,21 @@ public class UngVienServiceImpl implements UngVienService {
             nhanVienService.createNhanVien(nhanVienMoi);
         }
 
-        if (Objects.equals(trangThaiUngVien,TrangThaiUngVien.ROT_PHONG_VAN.getTrangThaiUngVien())) {
+        if (Objects.equals(trangThaiUngVien,TrangThaiUngVien.TU_CHOI.getTrangThaiUngVien())) {
             //gửi mail
             System.out.println("gửi mail rớt phỏng vấn");
+            //Xoá ứng viên
+            deleteUngVien(maUngVien);
         }
 
-        if (Objects.equals(trangThaiUngVien,TrangThaiUngVien.PHONG_VAN.getTrangThaiUngVien())) {
+        if (Objects.equals(trangThaiUngVien,TrangThaiUngVien.PHONG_VAN_LAN_1.getTrangThaiUngVien())) {
             //gửi mail
-            System.out.println("gửi mail đi phỏng vấn");
+            System.out.println("gửi mail đi phỏng vấn lần 1");
+        }
+
+        if (Objects.equals(trangThaiUngVien,TrangThaiUngVien.PHONG_VAN_LAN_2.getTrangThaiUngVien())) {
+            //gửi mail
+            System.out.println("gửi mail đi phỏng vấn lần 2");
         }
         return ungVienResponse;
     }

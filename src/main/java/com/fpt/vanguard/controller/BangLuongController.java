@@ -1,2 +1,4 @@
-package com.fpt.vanguard.controller;public class BangLuongController {
+package com.fpt.vanguard.controller;
+
+public class BangLuongController {
 }

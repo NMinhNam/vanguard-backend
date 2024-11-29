@@ -1,2 +1,4 @@
-package com.fpt.vanguard.service;public interface BangLuongService {
+package com.fpt.vanguard.service;
+
+public interface BangLuongService {
 }

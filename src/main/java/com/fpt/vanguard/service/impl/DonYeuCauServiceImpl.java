@@ -33,7 +33,7 @@ public class DonYeuCauServiceImpl implements DonYeuCauService {
         Boolean isExistDonYeuCau = donYeuCauMapper.isExistDonYeuCau(maDon);
         if (isExistDonYeuCau) throw new AppException(ErrorCode.DON_YEU_CAU_EXISTED);
 
-        Integer trangThaiMacDinh = TrangThaiPheDuyet.CHO_DUYET.getTrangThaiPheDuyet();
+        Integer trangThaiMacDinh = TrangThaiPheDuyet.TAO_MOI.getTrangThaiPheDuyet();
         request.setTrangThai(trangThaiMacDinh);
 
         String ngayTao = LocalDate.now().toString();
@@ -56,6 +56,17 @@ public class DonYeuCauServiceImpl implements DonYeuCauService {
     public List<DonYeuCauDtoResponse> getAllDonYeuCau() {
         return donYeuCauMapstruct.toListResponseDto(
                 donYeuCauMapper.findAll()
+        );
+    }
+
+    @Override
+    public Integer updateDonYeuCau(DonYeuCauDtoRequest request) {
+        String maDon = request.getMaDon();
+        Boolean isExistDonYeuCau = donYeuCauMapper.isExistDonYeuCau(maDon);
+        if (!isExistDonYeuCau) throw new AppException(ErrorCode.DON_YEU_CAU_NOT_EXIST);
+
+        return donYeuCauMapper.updateDonYeuCau(
+                donYeuCauMapstruct.toDonYeuCau(request)
         );
     }
 }

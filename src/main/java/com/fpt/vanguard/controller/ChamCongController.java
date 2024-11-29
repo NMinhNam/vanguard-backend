@@ -58,4 +58,12 @@ public class ChamCongController {
                 .build();
     }
 
+    @GetMapping("today/{employeeId}")
+    public ApiResponse<ChamCongDtoResponse> getAttendanceToDay(@PathVariable("employeeId") String maNhanVien) {
+        return ApiResponse.<ChamCongDtoResponse>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(chamCongService.getChamCongToDay(maNhanVien))
+                .build();
+    }
 }

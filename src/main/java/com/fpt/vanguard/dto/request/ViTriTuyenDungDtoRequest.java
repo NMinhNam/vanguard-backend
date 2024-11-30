@@ -12,7 +12,6 @@ public class ViTriTuyenDungDtoRequest {
     private String tenViTri;
     private String maPhongBan;
     private Integer soLuongTuyen;
-    private Integer soLuongUngTuyen;
     private Boolean trangThai;
     private String moTa;
     private String yeuCau;

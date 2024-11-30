@@ -16,4 +16,5 @@ public class UngVienDtoResponse {
     private String hinhAnh;
     private String email;
     private String maViTriTuyenDung;
+    private Integer trangThai;
 }

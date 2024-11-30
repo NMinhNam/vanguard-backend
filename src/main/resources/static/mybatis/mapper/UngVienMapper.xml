@@ -12,6 +12,7 @@
         <result column="hinh_anh" property="hinhAnh"/>
         <result column="email" property="email"/>
         <result column="ma_vi_tri_tuyen_dung" property="maViTriTuyenDung"/>
+        <result column="trang_thai" property="trangThai"/>
     </resultMap>
 
     <sql id="columnUngVien">
@@ -24,19 +25,90 @@
         dia_chi,
         hinh_anh,
         email,
-        ung_vien.ma_vi_tri_tuyen_dung
+        uv.ma_vi_tri_tuyen_dung,
+        uv.trang_thai
     </sql>
+
 
     <select id="findAll" resultMap="resultMapUngVien">
         SELECT
-            <include refid="columnUngVien"/>
-        FROM ung_vien
-            join vi_tri_tuyen_dung
-                on ung_vien.ma_vi_tri_tuyen_dung = vi_tri_tuyen_dung.ma_vi_tri_tuyen_dung
+        <include refid="columnUngVien"/>
+        FROM ung_vien uv
+        join vi_tri_tuyen_dung vt
+        on uv.ma_vi_tri_tuyen_dung = vt.ma_vi_tri_tuyen_dung
         <where>
             <if test="tenViTri != null and tenViTri != ''">
                 ten_vi_tri = #{tenViTri}
             </if>
         </where>
     </select>
+
+    <select id="isExistUngVien" resultType="Boolean">
+        SELECT EXISTS (
+            SELECT 1
+            FROM ung_vien
+            WHERE ma_ung_vien = #{maUngVien}
+        )
+    </select>
+
+    <select id="getUngVienByViTriAndTrangThai">
+        SELECT
+            <include refid="columnUngVien"/>
+        FROM ung_vien uv
+        WHERE uv.ma_vi_tri_tuyen_dung = #{viTri} and uv.trang_thai = #{trangThai}
+    </select>
+
+    <select id="getUngVienById" resultMap="resultMapUngVien">
+        SELECT
+        <include refid="columnUngVien"/>
+        FROM ung_vien uv
+        WHERE ma_ung_vien = #{maUngVien}
+    </select>
+
+    <insert id="insertUngVien">
+        INSERT INTO ung_vien
+            (ma_ung_vien
+            , ho_ten
+            , gioi_tinh
+            , ngay_sinh
+            , dien_thoai
+            , cccd
+            , dia_chi
+            , hinh_anh
+            , email
+            , ma_vi_tri_tuyen_dung
+            , trang_thai
+        ) VALUES
+              (generate_ma_ung_vien()
+              , #{hoTen}
+              , #{gioiTinh}
+              , #{ngaySinh}::DATE
+              , #{dienThoai}
+              , #{cccd}
+              , #{diaChi}
+              , #{hinhAnh}
+              , #{email}
+              , #{maViTriTuyenDung}
+              ,#{trangThai});
+    </insert>
+
+    <update id="updateUngVien">
+        UPDATE ung_vien
+        SET
+            ho_ten = #{hoTen},
+            gioi_tinh = #{gioiTinh},
+            ngay_sinh = #{ngaySinh}::DATE,
+            dien_thoai = #{dienThoai},
+            cccd = #{cccd},
+            dia_chi = #{diaChi},
+            hinh_anh = #{hinhAnh},
+            email = #{email},
+            ma_vi_tri_tuyen_dung = #{maViTriTuyenDung},
+            trang_thai = #{trangThai}
+        WHERE ma_ung_vien = #{maUngVien}
+    </update>
+    <delete id="deleteUngVien">
+        DELETE FROM ung_vien
+        WHERE ma_ung_vien = #{maUngVien}
+    </delete>
 </mapper>

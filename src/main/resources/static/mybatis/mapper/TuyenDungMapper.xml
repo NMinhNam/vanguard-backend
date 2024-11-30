@@ -15,29 +15,34 @@
     </resultMap>
 
     <sql id="columnViTriTuyenDung">
-        ma_vi_tri_tuyen_dung
-        , ten_vi_tri
-        , vi_tri_tuyen_dung.ma_phong_ban
-        , so_luong_tuyen
-        , so_luong_ung_tuyen
-        , trang_thai
-        , mo_ta
-        , yeu_cau
-        , ten_phong_ban
+        td.ma_vi_tri_tuyen_dung
+        , td.ten_vi_tri
+        , td.ma_phong_ban
+        , td.so_luong_tuyen
+        , td.trang_thai
+        , td.mo_ta
+        , td.yeu_cau
+        , pb.ten_phong_ban
     </sql>
 
     <select id="getAllTuyenDung" resultMap="TuyenDungResultMap">
         SELECT
             <include refid="columnViTriTuyenDung"/>
-        FROM vi_tri_tuyen_dung
-        join phong_ban on vi_tri_tuyen_dung.ma_phong_ban = phong_ban.ma_phong_ban
+            , COUNT(uv.ma_ung_vien) AS so_luong_ung_tuyen
+        FROM vi_tri_tuyen_dung td
+        JOIN phong_ban pb ON td.ma_phong_ban = pb.ma_phong_ban
+        LEFT JOIN ung_vien uv ON td.ma_vi_tri_tuyen_dung = uv.ma_vi_tri_tuyen_dung
+        GROUP BY
+            td.ma_vi_tri_tuyen_dung,
+            pb.ten_phong_ban
     </select>
 
     <select id="getTuyenDungById" resultMap="TuyenDungResultMap" parameterType="String">
         SELECT
             <include refid="columnViTriTuyenDung"/>
-        FROM vi_tri_tuyen_dung
-        WHERE ma_tuyen_dung = #{id}
+        FROM vi_tri_tuyen_dung td
+        LEFT JOIN phong_ban pb on td.ma_phong_ban = pb.ma_phong_ban
+        WHERE ma_vi_tri_tuyen_dung = #{id}
     </select>
 
     <select id="isExist">
@@ -52,7 +57,6 @@
           , ten_vi_tri
           , ma_phong_ban
           , so_luong_tuyen
-          , so_luong_ung_tuyen
           , trang_thai
           , mo_ta
           , yeu_cau
@@ -62,7 +66,6 @@
             #{tuyenDung.tenViTri},
             #{tuyenDung.maPhongBan},
             #{tuyenDung.soLuongTuyen},
-            #{tuyenDung.soLuongUngTuyen},
             #{tuyenDung.trangThai},
             #{tuyenDung.moTa},
             #{tuyenDung.yeuCau}
@@ -74,7 +77,6 @@
         SET ten_vi_tri         = #{TuyenDung.tenViTri},
             ma_phong_ban       = #{TuyenDung.maPhongBan},
             so_luong_tuyen     = #{TuyenDung.soLuongTuyen},
-            so_luong_ung_tuyen = #{TuyenDung.soLuongUngTuyen},
             trang_thai         = #{TuyenDung.trangThai},
             mo_ta              = #{TuyenDung.moTa},
             yeu_cau            = #{TuyenDung.yeuCau}

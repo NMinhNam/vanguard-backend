@@ -44,11 +44,6 @@ public class ChamCongController {
                 .build();
     }
 
-    @PostMapping("/approve")
-    public ApiResponse<?> doApprove() {
-        return null;
-    }
-
     @GetMapping("/employess/{id}")
     public ApiResponse<List<ChamCongDtoResponse>> getAttendanceByEmployessId(@PathVariable("id") String maNhanVien) {
         return ApiResponse.<List<ChamCongDtoResponse>>builder()

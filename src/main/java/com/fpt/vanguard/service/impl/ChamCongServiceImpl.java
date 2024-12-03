@@ -31,7 +31,7 @@ public class ChamCongServiceImpl implements ChamCongService {
     @Override
     public Integer doCheckIn(ChamCongDtoRequest request) {
         String publicIp = request.getPublicIp();
-        isWifiValid(publicIp);
+        wifiAuthService.isWifiValid(publicIp);
 
         String ngayChamCong = LocalDate.now().toString();
         request.setNgayChamCong(ngayChamCong);
@@ -50,7 +50,7 @@ public class ChamCongServiceImpl implements ChamCongService {
     @Override
     public Integer doCheckOut(ChamCongDtoRequest request) {
         String publicIp = request.getPublicIp();
-        isWifiValid(publicIp);
+        wifiAuthService.isWifiValid(publicIp);
 
         String ngayChamCong = LocalDate.now().toString();
         request.setNgayChamCong(ngayChamCong);
@@ -66,12 +66,6 @@ public class ChamCongServiceImpl implements ChamCongService {
         return chamCongMapper.updateBangChamCong(
                 chamCongMapstruct.toChamCong(request)
         );
-    }
-
-    private void isWifiValid(String publicIp) {
-        Boolean isAuthWifi = wifiAuthService.isWifiValid(publicIp);
-
-        if (!isAuthWifi) throw new AppException(ErrorCode.WIFI_NOT_VALID);
     }
 
     @Override

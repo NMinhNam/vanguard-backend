@@ -12,8 +12,7 @@ import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.mapper.mapstruct.NhanVienMapstruct;
 import com.fpt.vanguard.mapper.mybatis.NhanVienMapper;
 import com.fpt.vanguard.service.*;
-import com.fpt.vanguard.util.ImageUploadUtil;
-import com.fpt.vanguard.util.PasswordGeneratorUtil;
+import com.fpt.vanguard.util.PasswordUtil;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -64,7 +63,7 @@ public class NhanVienServiceImpl implements NhanVienService {
 
         String email = nhanVienDtoRequest.getEmail();
         String name = nhanVienDtoRequest.getHoTen();
-        String password = PasswordGeneratorUtil.generateRandomPassword();
+        String password = PasswordUtil.generateRandomPassword();
         Integer roleId = Roles.USER.getRoleId();
 
         if (nhanVienMapper.existsByEmail(email))

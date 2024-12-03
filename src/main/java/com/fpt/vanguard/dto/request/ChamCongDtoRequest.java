@@ -12,4 +12,5 @@ public class ChamCongDtoRequest {
     private String gioVao;
     private String gioRa;
     private Double soGioLam;
+    private String publicIp;
 }

@@ -41,7 +41,8 @@ public enum ErrorCode {
     FILE_UPLOAD_FAILED(999, "file upload failed"),
     DU_UNG_VIEN_DAT_YEU_CAU(1111, "Ung vien dat yeu cau qua gioi han"),
     UNG_VIEN_KHONG_TON_TAI(1003, "Ung vien khong ton tai"),
-    QUAN_LY_NOT_EXIST(2000, "quan ly khong ton tai"),
+    WIFI_NOT_VALID(1003, "connection not valid"),
+    QUAN_LY_NOT_EXIST(2000, "quan ly khong ton tai")
     ;
 
     private final int status;

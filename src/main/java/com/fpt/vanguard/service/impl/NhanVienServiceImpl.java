@@ -174,4 +174,11 @@ public class NhanVienServiceImpl implements NhanVienService {
                 nhanVienMapstruct.toNhanVien(nhanVienDtoRequest)
         );
     }
+
+    @Override
+    public NhanVienDtoResponse getNhanVienByCCCD(String cccd) {
+        return nhanVienMapstruct.toNhanVienDtoResponse(
+                nhanVienMapper.getNhanVienByCCCD(cccd)
+        );
+    }
 }

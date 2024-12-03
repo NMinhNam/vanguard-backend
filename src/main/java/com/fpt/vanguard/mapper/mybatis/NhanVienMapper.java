@@ -31,4 +31,6 @@ public interface NhanVienMapper {
     List<NhanVien> getOrgChart();
 
     int updateQuanLy(@Param("nhanVien") NhanVien nhanVien);
+
+    NhanVien getNhanVienByCCCD(@Param("cccd") String cccd);
 }

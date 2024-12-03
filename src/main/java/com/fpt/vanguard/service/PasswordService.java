@@ -5,5 +5,6 @@ import jakarta.mail.MessagingException;
 
 public interface PasswordService {
     Integer changePassword(PasswordDtoRequest passwordDtoRequest);
-    Void forgotPassword(PasswordDtoRequest passwordDtoRequest) throws MessagingException;
+    Integer forgotPassword(PasswordDtoRequest passwordDtoRequest) throws MessagingException;
+    Integer resetPassword(PasswordDtoRequest passwordDtoRequest) throws MessagingException;
 }

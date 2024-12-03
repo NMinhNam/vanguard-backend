@@ -25,8 +25,8 @@ public class PasswordController {
     }
 
     @PostMapping("forgot-password")
-    public ApiResponse<Void> forgotPassword(@RequestBody PasswordDtoRequest passwordDto) throws MessagingException {
-        return ApiResponse.<Void>builder()
+    public ApiResponse<Integer> forgotPassword(@RequestBody PasswordDtoRequest passwordDto) throws MessagingException {
+        return ApiResponse.<Integer>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
                 .data(passwordService.forgotPassword(passwordDto))

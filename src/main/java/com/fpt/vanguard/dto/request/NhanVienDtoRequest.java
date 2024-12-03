@@ -23,4 +23,5 @@ public class NhanVienDtoRequest {
     private String maBoPhan;
     private String maChucVu;
     private Integer userId;
+    private String quanLy;
 }

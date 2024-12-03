@@ -93,4 +93,13 @@ public class NhanVienController {
                 .data(nhanVienService.getOrgChartNhanVien())
                 .build();
     }
+
+    @PutMapping("updateQuanLy")
+    public ApiResponse<Integer> updateQuanLy(@RequestBody NhanVienDtoRequest nhanVienDtoRequest) throws MessagingException, ParseException, IOException {
+        ApiResponse<Integer> apiResponse = new ApiResponse<>();
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setSuccess(true);
+        apiResponse.setData(nhanVienService.updateQuanLy(nhanVienDtoRequest));
+        return apiResponse;
+    }
 }

@@ -27,4 +27,6 @@ public interface NhanVienService {
     Integer createNhanVienByExcel(MultipartFile file) throws IOException;
 
     List<NhanVienDtoResponse> getOrgChartNhanVien();
+
+    int updateQuanLy(NhanVienDtoRequest nhanVienDtoRequest);
 }

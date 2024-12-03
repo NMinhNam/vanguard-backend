@@ -16,7 +16,8 @@
         <result property="maBoPhan" column="ma_bo_phan"/>
         <result property="maChucVu" column="ma_chuc_vu"/>
         <result property="userId" column="user_id"/>
-        <result property="tenTruongPhong" column="ten_truong_phong"/>
+        <result property="tenQuanLy" column="ten_quan_ly"/>
+        <result property="quanLy" column="quan_ly"/>
         <result property="tenPhongBan" column="ten_phong_ban"/>
         <result property="tenBoPhan" column="ten_bo_phan"/>
         <result property="tenChucVu" column="ten_chuc_vu"/>
@@ -91,6 +92,12 @@
             ma_bo_phan = #{nhanVien.maBoPhan},
             ma_chuc_vu = #{nhanVien.maChucVu},
             email = #{nhanVien.email}
+        WHERE ma_nhan_vien = #{nhanVien.maNhanVien}
+    </update>
+
+    <update id="updateQuanLy" parameterType="NhanVien">
+        UPDATE nhan_vien
+        SET quan_ly = #{nhanVien.quanLy}
         WHERE ma_nhan_vien = #{nhanVien.maNhanVien}
     </update>
 
@@ -197,18 +204,20 @@
 
     <resultMap id="resultMapOrgChart" type="NhanVien">
         <result property="maNhanVien" column="ma_nhan_vien"/>
+        <result property="quanLy" column="quan_ly"/>
         <result property="hoTen" column="ho_ten"/>
         <result property="hinhAnh" column="hinh_anh"/>
-        <result property="tenTruongPhong" column="truong_phong"/>
+        <result property="tenQuanLy" column="ten_quan_ly"/>
         <result property="tenPhongBan" column="ten_phong_ban"/>
         <result property="tenChucVu" column="ten_chuc_vu"/>
     </resultMap>
 
     <sql id="columnOrgChart">
-        ma_nhan_vien
-        , ho_ten
-        , hinh_anh
-        , pb.truong_phong
+        nv.ma_nhan_vien
+        , nv.ho_ten
+        , nv.hinh_anh
+        , nv.quan_ly
+        , ql.ho_ten as ten_quan_ly
         , pb.ten_phong_ban
         , cv.ten_chuc_vu
     </sql>
@@ -217,8 +226,9 @@
         SELECT
             <include refid="columnOrgChart"/>
         FROM nhan_vien nv
+        left join nhan_vien ql on nv.quan_ly = ql.ma_nhan_vien
         left join phong_ban pb on nv.ma_phong_ban = pb.ma_phong_ban
-        left join chuc_vu cv on nv.ma_chuc_vu = cv.ma_chuc_vu
+        left join chuc_vu cv on nv.ma_chuc_vu = cv.ma_chuc_vu;
     </select>
 
     <insert id="insertNhanVienList" parameterType="java.util.List">

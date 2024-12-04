@@ -94,12 +94,21 @@ public class NhanVienController {
                 .build();
     }
 
-    @PutMapping("updateQuanLy")
+    @PutMapping("/manager")
     public ApiResponse<Integer> updateQuanLy(@RequestBody NhanVienDtoRequest nhanVienDtoRequest) throws MessagingException, ParseException, IOException {
         ApiResponse<Integer> apiResponse = new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);
         apiResponse.setData(nhanVienService.updateQuanLy(nhanVienDtoRequest));
         return apiResponse;
+    }
+
+    @GetMapping("/cccd/{id}")
+    public ApiResponse<NhanVienDtoResponse> getNhanVienByCCCD(@PathVariable("id") String cccd) {
+        ApiResponse<NhanVienDtoResponse> apiResponse = new ApiResponse<>();
+            apiResponse.setStatus(HttpStatus.OK.value());
+            apiResponse.setSuccess(true);
+            apiResponse.setData(nhanVienService.getNhanVienByCCCD(cccd));
+            return apiResponse;
     }
 }

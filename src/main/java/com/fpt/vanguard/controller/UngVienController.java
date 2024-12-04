@@ -13,7 +13,7 @@ import java.text.ParseException;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/ung-vien")
+@RequestMapping("api/v1/candidates")
 @RequiredArgsConstructor
 @CrossOrigin
 public class UngVienController {
@@ -28,7 +28,7 @@ public class UngVienController {
                 .build();
     }
 
-    @GetMapping("/search")
+    @GetMapping("/id")
     public ApiResponse<UngVienDtoResponse> getUngVienByMaUngVien(@RequestParam("maUngVien") String maUngVien) {
         return ApiResponse.<UngVienDtoResponse>builder()
                 .status(HttpStatus.OK.value())
@@ -54,8 +54,9 @@ public class UngVienController {
                 .data(ungVienService.saveUngVien(ungVienDtoRequest))
                 .build();
     }
-    @DeleteMapping("/{maUngVien}")
-    public ApiResponse<Integer> deleteUngVien(@PathVariable("maUngVien") String maUngVien){
+
+    @DeleteMapping("/{id}")
+    public ApiResponse<Integer> deleteUngVien(@PathVariable("id") String maUngVien){
         ApiResponse<Integer> apiResponse =new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);

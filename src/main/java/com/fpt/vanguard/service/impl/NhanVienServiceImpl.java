@@ -12,8 +12,7 @@ import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.mapper.mapstruct.NhanVienMapstruct;
 import com.fpt.vanguard.mapper.mybatis.NhanVienMapper;
 import com.fpt.vanguard.service.*;
-import com.fpt.vanguard.util.ImageUploadUtil;
-import com.fpt.vanguard.util.PasswordGeneratorUtil;
+import com.fpt.vanguard.util.PasswordUtil;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -64,7 +63,7 @@ public class NhanVienServiceImpl implements NhanVienService {
 
         String email = nhanVienDtoRequest.getEmail();
         String name = nhanVienDtoRequest.getHoTen();
-        String password = PasswordGeneratorUtil.generateRandomPassword();
+        String password = PasswordUtil.generateRandomPassword();
         Integer roleId = Roles.USER.getRoleId();
 
         if (nhanVienMapper.existsByEmail(email))
@@ -164,7 +163,7 @@ public class NhanVienServiceImpl implements NhanVienService {
     }
 
     @Override
-    public int updateQuanLy(NhanVienDtoRequest nhanVienDtoRequest) {
+    public Integer updateQuanLy(NhanVienDtoRequest nhanVienDtoRequest) {
         String maNhanVien = nhanVienDtoRequest.getMaNhanVien();
         String quanLy = nhanVienDtoRequest.getQuanLy();
         boolean isExistNhanVien = nhanVienMapper.existsById(maNhanVien);
@@ -173,6 +172,13 @@ public class NhanVienServiceImpl implements NhanVienService {
         if (!isExistQuanLy) throw new AppException(ErrorCode.QUAN_LY_NOT_EXIST);
         return nhanVienMapper.updateQuanLy(
                 nhanVienMapstruct.toNhanVien(nhanVienDtoRequest)
+        );
+    }
+
+    @Override
+    public NhanVienDtoResponse getNhanVienByCCCD(String cccd) {
+        return nhanVienMapstruct.toNhanVienDtoResponse(
+                nhanVienMapper.getNhanVienByCCCD(cccd)
         );
     }
 }

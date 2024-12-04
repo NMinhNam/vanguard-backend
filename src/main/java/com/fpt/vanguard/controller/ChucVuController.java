@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/chuc-vu")
+@RequestMapping("api/v1/positions")
 @RequiredArgsConstructor
 @CrossOrigin
 public class ChucVuController {
@@ -25,7 +25,8 @@ public class ChucVuController {
                 .data(chucVuService.getAllChucVu())
                 .build();
     }
-    @GetMapping("/search")
+
+    @GetMapping("/id")
     public ApiResponse<ChucVuDtoResponse> getChucVuByMaChucVu(@RequestParam("maChucVu") String maChucVu) {
         ApiResponse<ChucVuDtoResponse> apiResponse = new ApiResponse<>();
         apiResponse.setData(chucVuService.findChucVuByMaChucVu(maChucVu));
@@ -42,6 +43,7 @@ public class ChucVuController {
         apiResponse.setData(chucVuService.saveChucVu(chucVuDtoRequest));
         return apiResponse;
     }
+
     @DeleteMapping("/{id}")
     public ApiResponse<Integer> deleteUngLuong(@PathVariable("id") String id){
         ApiResponse<Integer> apiResponse = new ApiResponse<>();

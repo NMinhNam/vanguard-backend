@@ -51,4 +51,18 @@ public class TuyenDungServiceImpl implements TuyenDungService {
                 viTriTuyenDungMapstructMapper.toTuyenDung(tuyenDung)
         );
     }
+
+    @Override
+    public String getMaViTriByTenViTri(String tenViTri) {
+        String maViTri = "";
+        try {
+            maViTri = tuyenDungMapper.getMaViTriByTenViTri(tenViTri);
+        }catch (AppException e){
+            if(maViTri == "")
+                throw new AppException(ErrorCode.TUYEN_DUNG_NOT_EXIST);
+            else
+                throw new AppException(ErrorCode.TUYEN_DUNG_NOT_EXIST);
+        }
+        return maViTri;
+    }
 }

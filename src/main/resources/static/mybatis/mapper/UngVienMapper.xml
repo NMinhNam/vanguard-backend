@@ -51,7 +51,7 @@
         )
     </select>
 
-    <select id="getUngVienByViTriAndTrangThai">
+    <select id="getUngVienByViTriAndTrangThai" resultMap="resultMapUngVien">
         SELECT
             <include refid="columnUngVien"/>
         FROM ung_vien uv

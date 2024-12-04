@@ -51,6 +51,12 @@
         WHERE ma_vi_tri_tuyen_dung = #{id}
     </select>
 
+    <select id="getMaViTriByTenViTri">
+        SELECT ma_vi_tri_tuyen_dung
+        FROM vi_tri_tuyen_dung
+        WHERE #{tenViTri} ILIKE concat('%', ten_vi_tri, '%');
+    </select>
+
     <insert id="insertTuyenDung">
         INSERT INTO vi_tri_tuyen_dung (
            ma_vi_tri_tuyen_dung

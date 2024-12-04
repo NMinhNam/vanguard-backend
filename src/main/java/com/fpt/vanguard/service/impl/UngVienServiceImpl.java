@@ -51,63 +51,51 @@ public class UngVienServiceImpl implements UngVienService {
     public int insertUngVien(UngVienDtoRequest ungVienDtoRequest) {
         Integer trangThaiMacDinh = TrangThaiUngVien.CHO_DUYET.getTrangThaiUngVien();
         ungVienDtoRequest.setTrangThai(trangThaiMacDinh);
-        System.out.println(ungVienDtoRequest.getTrangThai());
         return ungVienMapper.insertUngVien(ungVienMapstruct.toUngVien(ungVienDtoRequest));
     }
 
     @Override
     public int updateUngVien(UngVienDtoRequest ungVienDtoRequest) throws MessagingException, ParseException {
         String maUngVien = ungVienDtoRequest.getMaUngVien();
-        Integer ungVienResponse =  ungVienMapper.updateUngVien(ungVienMapstruct.toUngVien(ungVienDtoRequest));
         Integer trangThaiUngVien = ungVienDtoRequest.getTrangThai();
-        System.out.println(trangThaiUngVien);
         ViTriTuyenDungDtoResponse viTriUngTuyen = tuyenDungService.getTuyenDungById(ungVienDtoRequest.getMaViTriTuyenDung());
-        String maViTri = "CV01";
-        String maPhongBan = viTriUngTuyen.getMaPhongBan();
         Integer soLuongTuyen = viTriUngTuyen.getSoLuongTuyen();
         Integer soLuongDauPhongVan = ungVienMapper.getUngVienByViTriAndTrangThai(
-                ungVienDtoRequest.getMaViTriTuyenDung()
-                ,TrangThaiUngVien.NHAN_VIEC.getTrangThaiUngVien())
-                .toArray()
-                .length;
-        if (Objects.equals(trangThaiUngVien,TrangThaiUngVien.NHAN_VIEC.getTrangThaiUngVien())){
-            if(soLuongDauPhongVan >= soLuongTuyen){
+                        ungVienDtoRequest.getMaViTriTuyenDung(),
+                        TrangThaiUngVien.NHAN_VIEC.getTrangThaiUngVien())
+                .toArray().length;
+        if (Objects.equals(trangThaiUngVien, TrangThaiUngVien.NHAN_VIEC.getTrangThaiUngVien())) {
+            if (soLuongDauPhongVan >= soLuongTuyen) {
                 throw new AppException(ErrorCode.DU_UNG_VIEN_DAT_YEU_CAU);
             }
-            //gửi mail
-            System.out.println("gửi mail đậu phỏng vấn");
-            //Tạo hợp đồng
-            NhanVienDtoRequest nhanVienMoi = new NhanVienDtoRequest();
-            nhanVienMoi.setCccd(ungVienDtoRequest.getCccd());
-            nhanVienMoi.setEmail(ungVienDtoRequest.getEmail());
-            nhanVienMoi.setDiaChi(ungVienDtoRequest.getDiaChi());
-            nhanVienMoi.setDienThoai(ungVienDtoRequest.getDienThoai());
-            nhanVienMoi.setHinhAnh(ungVienDtoRequest.getHinhAnh());
-            nhanVienMoi.setGioiTinh(ungVienDtoRequest.getGioiTinh());
-            nhanVienMoi.setHoTen(ungVienDtoRequest.getHoTen());
-            nhanVienMoi.setMaPhongBan(maPhongBan);
-            nhanVienMoi.setMaChucVu(maViTri);
-            nhanVienService.createNhanVien(nhanVienMoi);
+        }
+        Integer ungVienResponse = ungVienMapper.updateUngVien(ungVienMapstruct.toUngVien(ungVienDtoRequest));
+        if (ungVienResponse != null) {
+            if (Objects.equals(trangThaiUngVien, TrangThaiUngVien.PHONG_VAN_LAN_1.getTrangThaiUngVien())) {
+                // Gửi email khi ứng viên phỏng vấn lần 1
+                System.out.println("Gửi mail đi phỏng vấn lần 1");
+            }
+
+            if (Objects.equals(trangThaiUngVien, TrangThaiUngVien.PHONG_VAN_LAN_2.getTrangThaiUngVien())) {
+                // Gửi email khi ứng viên phỏng vấn lần 2
+                System.out.println("Gửi mail đi phỏng vấn lần 2");
+            }
+
+            if (Objects.equals(trangThaiUngVien, TrangThaiUngVien.NHAN_VIEC.getTrangThaiUngVien())) {
+                // Gửi email khi ứng viên đậu phỏng vấn
+                System.out.println("Gửi mail đậu phỏng vấn");
+            }
+
+            if (Objects.equals(trangThaiUngVien, TrangThaiUngVien.TU_CHOI.getTrangThaiUngVien())) {
+                // Gửi email khi ứng viên bị từ chối
+                System.out.println("Gửi mail rớt phỏng vấn");
+                deleteUngVien(maUngVien);
+            }
         }
 
-        if (Objects.equals(trangThaiUngVien,TrangThaiUngVien.TU_CHOI.getTrangThaiUngVien())) {
-            //gửi mail
-            System.out.println("gửi mail rớt phỏng vấn");
-            //Xoá ứng viên
-            deleteUngVien(maUngVien);
-        }
-
-        if (Objects.equals(trangThaiUngVien,TrangThaiUngVien.PHONG_VAN_LAN_1.getTrangThaiUngVien())) {
-            //gửi mail
-            System.out.println("gửi mail đi phỏng vấn lần 1");
-        }
-
-        if (Objects.equals(trangThaiUngVien,TrangThaiUngVien.PHONG_VAN_LAN_2.getTrangThaiUngVien())) {
-            //gửi mail
-            System.out.println("gửi mail đi phỏng vấn lần 2");
-        }
         return ungVienResponse;
     }
+
 
     @Override
     public UngVienDtoResponse getUngVienByMaUngVien(String maUngVien) {
@@ -122,5 +110,13 @@ public class UngVienServiceImpl implements UngVienService {
     public int deleteUngVien(String maUngVien) {
         if (!ungVienMapper.isExistUngVien(maUngVien)) throw new AppException(ErrorCode.UNG_VIEN_KHONG_TON_TAI);
         return ungVienMapper.deleteUngVien(maUngVien);
+    }
+
+    @Override
+    public List<UngVienDtoResponse> getUngVienByViTriAndTrangThai(String maViTri, int trangThai) throws MessagingException, ParseException {
+        List<UngVienDtoResponse> listResultEntity = ungVienMapstruct.toUngVienDtoResponseList(
+                ungVienMapper.getUngVienByViTriAndTrangThai(maViTri, trangThai)
+        );
+        return listResultEntity;
     }
 }

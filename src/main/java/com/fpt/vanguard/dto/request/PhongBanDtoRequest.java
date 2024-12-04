@@ -11,4 +11,6 @@ public class PhongBanDtoRequest {
     private String maPhongBan;
     private String tenPhongBan;
     private String truongPhong;
+    private String maPhongBanCapTren;
+
 }

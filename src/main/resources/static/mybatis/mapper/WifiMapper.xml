@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.WifiMapper">
+    <resultMap id="resultMapWifiInfo" type="WifiInfo">
+        <id column="id" property="id"/>
+        <result column="wifi_name" property="wifiName"/>
+        <result column="public_ip" property="publicIp"/>
+    </resultMap>
+
+    <insert id="insertWifiInfo">
+        INSERT INTO wifi_info (
+            wifi_name
+          , public_ip
+        )
+        VALUES (
+            #{wifiName}
+          , #{publicIp}
+        )
+    </insert>
+
+    <update id="updateWifiInfo">
+
+    </update>
+
+    <delete id="deleteWifiInfo">
+    </delete>
+
+    <select id="isWifiInfoExist">
+        SELECT EXISTS(
+            SELECT 1
+            FROM wifi_info
+            WHERE public_ip = #{publicIp}
+        )
+    </select>
+
+    <select id="getWifiInfoList" resultMap="resultMapWifiInfo">
+        SELECT id
+             , wifi_name
+             , public_ip
+        FROM wifi_info
+    </select>
+</mapper>

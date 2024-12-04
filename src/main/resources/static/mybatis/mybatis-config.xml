@@ -17,5 +17,7 @@
         <typeAlias type="com.fpt.vanguard.entity.UngVien" alias="UngVien"/>
         <typeAlias type="com.fpt.vanguard.entity.BangChamCong" alias="BangChamCong"/>
         <typeAlias type="com.fpt.vanguard.entity.NgayLe" alias="NgayLe"/>
+        <typeAlias type="com.fpt.vanguard.entity.WifiInfo" alias="WifiInfo"/>
+        <typeAlias type="com.fpt.vanguard.entity.Otp" alias="Otp"/>
     </typeAliases>
 </configuration>

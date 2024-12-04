@@ -9,6 +9,7 @@ import com.fpt.vanguard.mapper.mybatis.ChamCongMapper;
 import com.fpt.vanguard.mapper.mybatis.NhanVienMapper;
 import com.fpt.vanguard.service.ChamCongService;
 import com.fpt.vanguard.service.LoaiCongService;
+import com.fpt.vanguard.service.WifiAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +26,17 @@ public class ChamCongServiceImpl implements ChamCongService {
     private final ChamCongMapstruct chamCongMapstruct;
     private final NhanVienMapper nhanVienMapper;
     private final LoaiCongService loaiCongService;
+    private final WifiAuthService wifiAuthService;
 
     @Override
     public Integer doCheckIn(ChamCongDtoRequest request) {
+        String publicIp = request.getPublicIp();
+        wifiAuthService.isWifiValid(publicIp);
+
         String ngayChamCong = LocalDate.now().toString();
         request.setNgayChamCong(ngayChamCong);
 
-        String gioVao = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        String gioVao = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
         request.setGioVao(gioVao);
 
         Integer maLoaiCong = loaiCongService.getLoaiCong(ngayChamCong);
@@ -44,10 +49,13 @@ public class ChamCongServiceImpl implements ChamCongService {
 
     @Override
     public Integer doCheckOut(ChamCongDtoRequest request) {
+        String publicIp = request.getPublicIp();
+        wifiAuthService.isWifiValid(publicIp);
+
         String ngayChamCong = LocalDate.now().toString();
         request.setNgayChamCong(ngayChamCong);
 
-        String gioRa = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        String gioRa = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
         request.setGioRa(gioRa);
 
         String gioVao = getChamCongDetail(request).getGioVao();
@@ -89,8 +97,8 @@ public class ChamCongServiceImpl implements ChamCongService {
     }
 
     private Double tinhSoGioLam(String gioVaoStr, String gioRaStr) {
-        LocalTime gioVao = LocalTime.parse(gioVaoStr, DateTimeFormatter.ofPattern("HH:mm:ss"));
-        LocalTime gioRa = LocalTime.parse(gioRaStr, DateTimeFormatter.ofPattern("HH:mm:ss"));
+        LocalTime gioVao = LocalTime.parse(gioVaoStr, DateTimeFormatter.ofPattern("HH:mm"));
+        LocalTime gioRa = LocalTime.parse(gioRaStr, DateTimeFormatter.ofPattern("HH:mm"));
 
         long giayLamViec;
         if (gioRa.isAfter(gioVao) || gioRa.equals(gioVao)) {

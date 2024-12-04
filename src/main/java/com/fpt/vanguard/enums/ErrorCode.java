@@ -12,7 +12,12 @@ public enum ErrorCode {
     LIST_NHAN_VIEN_EMPTY(1002, "list nhan vien rong"),
     LIST_BO_PHAN_EMPTY(1002, "list bo phan rong"),
     LIST_PHONG_BAN_EMPTY(1002, "list phong ban rong"),
+    LIST_TUYEN_DUNG_EMPTY(1002,"LIST TUYEN DUNG RONG"),
+    LIST_HOP_DONG_EMPTY(1002,"LIST HOP DONG RONG"),
+    HOP_DONG_NOT_EXIST(1000,"HOP DONG KHONG TON TAI"),
+    TUYEN_DUNG_NOT_EXIST(1000,"TUYEN DUNG KHONG TON TAI"),
     PHONG_BAN_NOT_EXIST(1000, "phong ban khong ton tai"),
+    CHUC_VU_NOT_EXIST(1000,"chuc vu khong ton tai"),
     BO_PHAN_NOT_EXIST(1000, "bo phan khong ton tai"),
     LIST_UNG_LUONG_EMPTY(1002, "list ung luon rong"),
     UNG_LUONG_NOT_EXIST(1000, "ung luon khong ton tai"),
@@ -33,7 +38,14 @@ public enum ErrorCode {
     DON_YEU_CAU_NOT_EXIST(1000, "Don yeu cau not exist"),
     DON_YEU_CAU_EXISTED(1001, "Don yeu cau existed"),
     LIST_UNG_VIEN_EMPTY(1002, "list ung vien rong"),
-    FILE_UPLOAD_FAILED(999, "file upload failed")
+    FILE_UPLOAD_FAILED(999, "file upload failed"),
+    DU_UNG_VIEN_DAT_YEU_CAU(1111, "Ung vien dat yeu cau qua gioi han"),
+    UNG_VIEN_KHONG_TON_TAI(1003, "Ung vien khong ton tai"),
+    WIFI_NOT_VALID(1003, "connection not valid"),
+    QUAN_LY_NOT_EXIST(2000, "quan ly khong ton tai"),
+    PASSWORD_NOT_VALID(1000, "password not valid"),
+    OTP_NOT_VALID(1003, "otp not valid"),
+    OTP_EXPIRED(999, "otp expired")
     ;
 
     private final int status;

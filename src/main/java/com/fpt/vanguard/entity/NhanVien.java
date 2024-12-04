@@ -22,7 +22,8 @@ public class NhanVien {
     private String maTrinhDo;
     private Integer userId;
 
-    private String tenTruongPhong;
+    private String quanLy;
+    private String tenQuanLy;
     private String tenPhongBan;
     private String tenBoPhan;
     private String tenChucVu;

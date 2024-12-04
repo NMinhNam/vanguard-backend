@@ -29,7 +29,7 @@ public interface NhanVienService {
 
     List<NhanVienDtoResponse> getOrgChartNhanVien();
 
-    int updateQuanLy(NhanVienDtoRequest nhanVienDtoRequest);
+    Integer updateQuanLy(NhanVienDtoRequest nhanVienDtoRequest);
 
     NhanVienDtoResponse getNhanVienByCCCD(String cccd);
 }

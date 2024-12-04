@@ -163,7 +163,7 @@ public class NhanVienServiceImpl implements NhanVienService {
     }
 
     @Override
-    public int updateQuanLy(NhanVienDtoRequest nhanVienDtoRequest) {
+    public Integer updateQuanLy(NhanVienDtoRequest nhanVienDtoRequest) {
         String maNhanVien = nhanVienDtoRequest.getMaNhanVien();
         String quanLy = nhanVienDtoRequest.getQuanLy();
         boolean isExistNhanVien = nhanVienMapper.existsById(maNhanVien);

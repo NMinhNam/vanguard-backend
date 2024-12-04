@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/vi-tri-tuyen-dung")
+@RequestMapping("api/v1/recruitment-positions")
 @RequiredArgsConstructor
 @CrossOrigin
 public class TuyenDungController {
@@ -25,7 +25,8 @@ public class TuyenDungController {
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }
-    @GetMapping("/search")
+
+    @GetMapping("/id")
     public ApiResponse<ViTriTuyenDungDtoResponse> getViTriTuyenDungById(@RequestParam("maTuyenDung") String maTuyenDung) {
         ApiResponse<ViTriTuyenDungDtoResponse> apiResponse = new ApiResponse<>();
         apiResponse.setData(tuyenDungService.getTuyenDungById(maTuyenDung));
@@ -33,6 +34,7 @@ public class TuyenDungController {
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }
+
     @PostMapping
     public ApiResponse<Integer> saveTuyenDung(@RequestBody ViTriTuyenDungDtoRequest tuyenDung){
         ApiResponse<Integer> apiResponse = new ApiResponse<>();
@@ -41,5 +43,4 @@ public class TuyenDungController {
         apiResponse.setData(tuyenDungService.saveTuyenDung(tuyenDung));
         return apiResponse;
     }
-
 }

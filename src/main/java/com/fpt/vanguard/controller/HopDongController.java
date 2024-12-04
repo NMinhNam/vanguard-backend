@@ -2,9 +2,7 @@ package com.fpt.vanguard.controller;
 
 import com.fpt.vanguard.common.ApiResponse;
 import com.fpt.vanguard.dto.request.HopDongDtoRequest;
-import com.fpt.vanguard.dto.request.UngLuongDtoRequest;
 import com.fpt.vanguard.dto.response.HopDongDtoResponse;
-import com.fpt.vanguard.dto.response.UngLuongDtoResponse;
 import com.fpt.vanguard.service.HopDongService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/hop-dong")
+@RequestMapping("api/v1/contracts")
 @RequiredArgsConstructor
 @CrossOrigin
 public class HopDongController {
@@ -27,6 +25,7 @@ public class HopDongController {
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }
+
     @PostMapping
     public ApiResponse<Integer> saveHopDong(@RequestBody HopDongDtoRequest hopDongDtoRequest){
         ApiResponse<Integer> apiResponse = new ApiResponse<>();
@@ -36,7 +35,7 @@ public class HopDongController {
         return apiResponse;
     }
 
-    @GetMapping("/search")
+    @GetMapping("/id")
     public ApiResponse<HopDongDtoResponse> getHopDongById(@RequestParam(name = "id") String id) {
         ApiResponse<HopDongDtoResponse> apiResponse = new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());

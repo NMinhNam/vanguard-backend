@@ -266,4 +266,14 @@
         </foreach>
     </insert>
 
+    <select id="getNhanVienByCCCD" resultMap="NhanVienResultMap">
+        SELECT
+        <include refid="NhanVienColumnList"/>
+        FROM nhan_vien nv
+        LEFT JOIN phong_ban pb ON nv.ma_phong_ban = pb.ma_phong_ban
+        LEFT JOIN bo_phan bp ON nv.ma_bo_phan = bp.ma_bo_phan
+        LEFT JOIN chuc_vu cv ON nv.ma_chuc_vu = cv.ma_chuc_vu
+        WHERE nv.cccd = #{cccd}
+    </select>
+
 </mapper>

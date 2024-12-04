@@ -2,6 +2,7 @@ package com.fpt.vanguard.service;
 
 import com.fpt.vanguard.dto.request.NhanVienDtoRequest;
 import com.fpt.vanguard.dto.response.NhanVienDtoResponse;
+import com.fpt.vanguard.entity.NhanVien;
 import jakarta.mail.MessagingException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,4 +30,6 @@ public interface NhanVienService {
     List<NhanVienDtoResponse> getOrgChartNhanVien();
 
     int updateQuanLy(NhanVienDtoRequest nhanVienDtoRequest);
+
+    NhanVienDtoResponse getNhanVienByCCCD(String cccd);
 }

@@ -3,9 +3,6 @@ name: Vanguard Application Workflow
 on:
   pull_request:
     branches: [main]
-    paths:
-      - 'src/**'
-      - '.github/workflows/vanguard-workflow.yaml'
 
 env:
   USER_PROJECT: "vanguard"

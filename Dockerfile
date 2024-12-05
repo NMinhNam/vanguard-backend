@@ -6,3 +6,4 @@ RUN mvn clean package
 FROM openjdk:17-jdk-alpine
 COPY --from=build /app/target/vanguard-0.0.1-SNAPSHOT.jar app.jar
 CMD [ "java", "-jar", "app.jar" ]
+EXPOSE 8888

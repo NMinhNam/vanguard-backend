@@ -52,7 +52,7 @@ jobs:
       - build_and_push
     steps:
       - name: Execute remote SSH commands as vanguard
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.0
         env:
           IMAGE_TAG: ${{ env.short_sha }}
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}

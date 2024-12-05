@@ -23,7 +23,8 @@ public class NhanVienDtoResponse {
     private String maChucVu;
     private Integer userId;
 
-    private String tenTruongPhong;
+    private String quanLy;
+    private String tenQuanLy;
     private String tenPhongBan;
     private String tenBoPhan;
     private String tenChucVu;

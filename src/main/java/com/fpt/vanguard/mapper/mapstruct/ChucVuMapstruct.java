@@ -11,4 +11,5 @@ import java.util.List;
 public interface ChucVuMapstruct {
     List<ChucVuDtoResponse> toDtoResponseList(List<ChucVu> chucVuList);
     ChucVu toChucVu(ChucVuDtoRequest request);
+    ChucVuDtoResponse toChucVuDtoResponse(ChucVu chucVu);
 }

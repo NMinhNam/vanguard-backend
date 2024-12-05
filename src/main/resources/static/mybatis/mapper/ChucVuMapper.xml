@@ -2,15 +2,58 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fpt.vanguard.mapper.mybatis.ChucVuMapper">
 
-    <resultMap id="BoPhanResultMap" type="com.fpt.vanguard.entity.ChucVu">
+    <resultMap id="ChucVuResultMap" type="com.fpt.vanguard.entity.ChucVu">
         <id column="ma_chuc_vu" property="maChucVu"/>
         <result column="ten_chuc_vu" property="tenChucVu"/>
     </resultMap>
 
-    <select id="findAll" resultMap="BoPhanResultMap">
+    <sql id="columnChucVu">
+        ma_chuc_vu,
+        ten_chuc_vu
+    </sql>
+    <delete id="deleteChucVu">
+        DELETE FROM chuc_vu
+        WHERE ma_chuc_vu = #{maChucVu}
+    </delete>
+
+    <select id="findAll" resultMap="ChucVuResultMap">
         select ma_chuc_vu
              , ten_chuc_vu
         from chuc_vu
         ORDER BY ma_chuc_vu
     </select>
+
+    <select id="findById" resultMap="ChucVuResultMap" parameterType="String">
+        SELECT
+        <include refid="columnChucVu" />
+        FROM chuc_vu
+        <if test="id != null and id != ''">
+            WHERE ma_chuc_vu = #{id}
+        </if>
+    </select>
+
+    <select id="isExist" parameterType="String" resultType="Boolean">
+        SELECT COUNT(ma_chuc_vu)
+        FROM chuc_vu
+        WHERE ma_chuc_vu = #{id}
+    </select>
+
+    <insert id="insertChucVu" parameterType="com.fpt.vanguard.dto.request.ChucVuDtoRequest">
+        INSERT INTO chuc_vu (
+            ma_chuc_vu,
+            ten_chuc_vu
+        )
+        VALUES (
+                   generate_ma_chuc_vu(),
+                   #{chucVu.tenChucVu}
+               )
+    </insert>
+
+
+    <update id="updateChucVu" parameterType="com.fpt.vanguard.dto.request.ChucVuDtoRequest">
+        UPDATE chuc_vu
+        SET ten_chuc_vu = #{chucVu.tenChucVu}
+        WHERE ma_chuc_vu = #{chucVu.maChucVu}
+    </update>
+
 </mapper>

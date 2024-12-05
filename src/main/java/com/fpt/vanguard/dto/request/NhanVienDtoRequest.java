@@ -1,12 +1,13 @@
 package com.fpt.vanguard.dto.request;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.Builder;
+import lombok.*;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class NhanVienDtoRequest {
     private String maNhanVien;
@@ -22,4 +23,5 @@ public class NhanVienDtoRequest {
     private String maBoPhan;
     private String maChucVu;
     private Integer userId;
+    private String quanLy;
 }

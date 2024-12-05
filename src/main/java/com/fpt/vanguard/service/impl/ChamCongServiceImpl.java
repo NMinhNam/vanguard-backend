@@ -9,6 +9,7 @@ import com.fpt.vanguard.mapper.mybatis.ChamCongMapper;
 import com.fpt.vanguard.mapper.mybatis.NhanVienMapper;
 import com.fpt.vanguard.service.ChamCongService;
 import com.fpt.vanguard.service.LoaiCongService;
+import com.fpt.vanguard.service.WifiAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +26,13 @@ public class ChamCongServiceImpl implements ChamCongService {
     private final ChamCongMapstruct chamCongMapstruct;
     private final NhanVienMapper nhanVienMapper;
     private final LoaiCongService loaiCongService;
+    private final WifiAuthService wifiAuthService;
 
     @Override
     public Integer doCheckIn(ChamCongDtoRequest request) {
+        String publicIp = request.getPublicIp();
+        wifiAuthService.isWifiValid(publicIp);
+
         String ngayChamCong = LocalDate.now().toString();
         request.setNgayChamCong(ngayChamCong);
 
@@ -44,6 +49,9 @@ public class ChamCongServiceImpl implements ChamCongService {
 
     @Override
     public Integer doCheckOut(ChamCongDtoRequest request) {
+        String publicIp = request.getPublicIp();
+        wifiAuthService.isWifiValid(publicIp);
+
         String ngayChamCong = LocalDate.now().toString();
         request.setNgayChamCong(ngayChamCong);
 

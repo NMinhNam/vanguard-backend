@@ -36,8 +36,8 @@ public class DonYeuCauController {
                 .build();
     }
 
-    @DeleteMapping("/{maDon}")
-    public ApiResponse<Integer> deleteDonYeuCau(@PathVariable("maDon") String maDon) {
+    @DeleteMapping("/{id}")
+    public ApiResponse<Integer> deleteDonYeuCau(@PathVariable("id") String maDon) {
         return ApiResponse.<Integer>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)

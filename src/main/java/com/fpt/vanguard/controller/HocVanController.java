@@ -25,8 +25,8 @@ public class HocVanController {
                 .build();
     }
 
-    @GetMapping("/{maNhanVien}")
-    public ApiResponse<List<HocVanDtoResponse>> getHocVan(@PathVariable("maNhanVien") String maNhanVien) {
+    @GetMapping("/{id}")
+    public ApiResponse<List<HocVanDtoResponse>> getHocVan(@PathVariable("id") String maNhanVien) {
         return ApiResponse.<List<HocVanDtoResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)

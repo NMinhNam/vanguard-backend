@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.OtpMapper">
+    <insert id="insertOtp">
+        INSERT INTO otp (
+            email
+            , otp
+            , expiry_time
+        )
+        VALUES (
+            #{email}
+           , #{otp}
+           , #{expiryTime}
+        )
+    </insert>
+
+    <delete id="deleteOtp">
+        DELETE FROM otp
+        WHERE email = #{email}
+    </delete>
+
+    <resultMap id="resultMapOtp" type="Otp">
+        <id property="id" column="id"/>
+        <result property="email" column="email"/>
+        <result property="otp" column="otp"/>
+        <result property="expiryTime" column="expiry_time"/>
+        <result property="createdTime" column="created_time"/>
+    </resultMap>
+
+    <select id="findLatestOtpByEmail" resultMap="resultMapOtp">
+        SELECT id
+             , email
+             , otp
+             , expiry_time
+             , created_time
+        FROM otp
+        WHERE email = #{email}
+        ORDER BY created_time
+                DESC
+        LIMIT 1
+    </select>
+</mapper>

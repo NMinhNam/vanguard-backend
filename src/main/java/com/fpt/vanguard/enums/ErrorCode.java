@@ -42,10 +42,12 @@ public enum ErrorCode {
     DU_UNG_VIEN_DAT_YEU_CAU(1111, "Ung vien dat yeu cau qua gioi han"),
     UNG_VIEN_KHONG_TON_TAI(1003, "Ung vien khong ton tai"),
     WIFI_NOT_VALID(1003, "connection not valid"),
-    QUAN_LY_NOT_EXIST(2000, "quan ly khong ton tai"),
+    QUAN_LY_NOT_EXIST(1000, "quan ly khong ton tai"),
     PASSWORD_NOT_VALID(1000, "password not valid"),
     OTP_NOT_VALID(1003, "otp not valid"),
-    OTP_EXPIRED(999, "otp expired")
+    OTP_EXPIRED(999, "otp expired"),
+    VI_TRI_TUYEN_DUNG_NOT_EXIST(1000,"VI TRI TUYEN DUNG KHONG TON TAI"),
+    VI_TRI_TUYEN_DUNG_KHONG_HOP_LE(1000,"VI TRI TUYEN DUNG KHONG HOP LE")
     ;
 
     private final int status;

@@ -1,8 +1,13 @@
 name: Vanguard Application Workflow
 
 on:
+  workflow_dispatch:
   pull_request:
-    branches: [main]
+    types: [ closed ]
+    branches: [ main ]
+    paths:
+      - 'src/**'
+      - '.github/workflows/vanguard-workflow.yml'
 
 env:
   USER_PROJECT: "vanguard"
@@ -12,7 +17,8 @@ jobs:
   build_and_push:
     runs-on: ubuntu-latest
     outputs:
-      short_sha: ${{ steps.get_sha.outputs.short_sha }}
+      short_sha: ${{ steps.vars.outputs.short_sha }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,10 +33,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
 
       - name: Set short git commit SHA
-        id: get_sha
+        id: vars
         run: |
-          short_sha=$(git rev-parse --short HEAD)
-          echo "short_sha=$short_sha" >> $GITHUB_ENV
+          calculatedSha=$(git rev-parse --short ${{ github.sha }})
+          echo "::set-output name=short_sha::$calculatedSha"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -38,9 +44,10 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ env.IMAGE_NAME }}:sha-${{ env.short_sha }}
+          tags: ${{ env.IMAGE_NAME }}:sha-${{ steps.vars.outputs.short_sha }}
+          platforms: linux/amd64
           cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-to: type=gha,mode=max`
 
   deploy:
     if: ${{ github.ref == 'refs/heads/main' }}
@@ -51,7 +58,7 @@ jobs:
       - name: Execute remote SSH commands as vanguard
         uses: appleboy/ssh-action@v1.2.0
         env:
-          IMAGE_TAG: ${{ env.short_sha }}
+          IMAGE_TAG: ${{needs.build_and_push.outputs.short_sha}}
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_ACCESS_TOKEN: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
           DOCKER_IMAGE: ${{ env.IMAGE_NAME }}
@@ -62,7 +69,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           envs: DOCKER_IMAGE,IMAGE_TAG,DOCKERHUB_USERNAME,DOCKERHUB_ACCESS_TOKEN
           script: |
-            export VANGUARD_APP_NAME=vanguard
+            export VANGUARD_APP_NAME=vanguard-backend
             
             sudo -u ${{ env.USER_PROJECT }} bash <<EOF
               set -e
@@ -73,7 +80,7 @@ jobs:
                 docker container rm $VANGUARD_APP_NAME
               fi
 
-              docker run -d -p 8080:8888 \
+              docker run -d -p 1688:1688 \
                 --restart unless-stopped \
                 --name $VANGUARD_APP_NAME \
                 --cpus=1 \

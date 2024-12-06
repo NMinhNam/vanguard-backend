@@ -8,11 +8,6 @@ on:
     paths:
       - 'src/**'
       - '.github/workflows/vanguard-workflow.yml'
-  push:
-    branches: [ main ]
-    paths:
-      - 'src/**'
-      - '.github/workflows/vanguard-workflow.yml'
 
 env:
   USER_PROJECT: "vanguard"
@@ -74,7 +69,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           envs: DOCKER_IMAGE,IMAGE_TAG,DOCKERHUB_USERNAME,DOCKERHUB_ACCESS_TOKEN
           script: |
-            export VANGUARD_APP_NAME=vanguard
+            export VANGUARD_APP_NAME=vanguard-backend
             
             sudo -u ${{ env.USER_PROJECT }} bash <<EOF
               set -e
@@ -85,7 +80,7 @@ jobs:
                 docker container rm $VANGUARD_APP_NAME
               fi
 
-              docker run -d -p 8080:8888 \
+              docker run -d -p 1688:1688 \
                 --restart unless-stopped \
                 --name $VANGUARD_APP_NAME \
                 --cpus=1 \

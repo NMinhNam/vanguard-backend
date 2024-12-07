@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.CuocHopMapper">
+    <resultMap id="resultMapCuocHop" type="CuocHop">
+        <id property="maCuocHop" column="ma_cuoc_hop" />
+        <result property="tenCuocHop" column="ten_cuoc_hop" />
+        <result property="thoiGianBatDau" column="thoi_gian_bat_dau" />
+        <result property="thoiGianKetThuc" column="thoi_gian_ket_thuc" />
+        <result property="viTri" column="vi_tri" />
+        <result property="videoCallUrl" column="video_call_url" />
+        <result property="nguoiToChuc" column="ho_ten" />
+        <result property="ghiChu" column="ghi_chu" />
+    </resultMap>
+
+    <insert id="insertCuocHop">
+        INSERT INTO cuoc_hop (
+            ten_cuoc_hop,
+            thoi_gian_bat_dau,
+            thoi_gian_ket_thuc,
+            vi_tri,
+            video_call_url,
+            nguoi_to_chuc,
+            ghi_chu
+        )
+        VALUES (
+            #{tenCuocHop},
+            #{thoiGianBatDau},
+            #{thoiGianKetThuc},
+            #{viTri},
+            #{videoCallUrl},
+            #{nguoiToChuc},
+            #{ghiChu}
+        )
+    </insert>
+
+    <update id="updateCuocHop">
+        UPDATE cuoc_hop
+        SET ten_cuoc_hop = #{tenCuocHop},
+            thoi_gian_bat_dau = #{thoiGianBatDau},
+            thoi_gian_ket_thuc = #{thoiGianKetThuc},
+            vi_tri = #{viTri},
+            video_call_url = #{videoCallUrl},
+            nguoi_to_chuc = #{nguoiToChuc},
+            ghi_chu = #{ghiChu}
+        WHERE ma_cuoc_hop = #{maCuocHop}
+    </update>
+
+    <delete id="deleteCuocHop">
+        DELETE FROM cuoc_hop
+        WHERE ma_cuoc_hop = #{maCuocHop}
+    </delete>
+
+    <sql id="columnCuocHop">
+        ma_cuoc_hop,
+        ten_cuoc_hop,
+        thoi_gian_bat_dau,
+        thoi_gian_ket_thuc,
+        vi_tri,
+        video_call_url,
+        ghi_chu
+    </sql>
+
+    <select id="getAllCuocHops" resultMap="resultMapCuocHop">
+        SELECT
+            <include refid="columnCuocHop"/>,
+            nv.ho_ten
+        FROM cuoc_hop ch
+        LEFT JOIN nhan_vien nv
+        ON ch.nguoi_to_chuc = nv.ma_nhan_vien
+    </select>
+
+    <select id="isCuocHopExist">
+        select exists(
+            select 1
+            from cuoc_hop
+            where ma_cuoc_hop = #{maCuocHop}
+        )
+    </select>
+
+    <select id="getCuocHop" resultMap="resultMapCuocHop">
+        SELECT
+            <include refid="columnCuocHop"/>,
+            nv.ho_ten
+        FROM cuoc_hop ch
+        LEFT JOIN nhan_vien nv
+        ON ch.nguoi_to_chuc = nv.ma_nhan_vien
+        <where>
+            ma_cuoc_hop = #{maCuocHop}
+        </where>
+    </select>
+</mapper>

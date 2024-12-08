@@ -37,6 +37,15 @@ public class UngVienController {
                 .build();
     }
 
+    @GetMapping("/ungVienByTrangThai")
+    public ApiResponse<List<UngVienDtoResponse>> getUngVienByViTriAndTrangThai(@RequestParam("maViTri") String maViTri,@RequestParam("trangThai") int trangThai ) throws MessagingException, ParseException {
+        return ApiResponse.<List<UngVienDtoResponse>>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(ungVienService.getUngVienByViTriAndTrangThai(maViTri,trangThai))
+                .build();
+    }
+
     @PostMapping
     public ApiResponse<Integer> saveUngVien(@RequestBody UngVienDtoRequest ungVienDtoRequest) throws MessagingException, ParseException {
         return ApiResponse.<Integer>builder()

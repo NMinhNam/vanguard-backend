@@ -46,7 +46,9 @@ public enum ErrorCode {
     PASSWORD_NOT_VALID(1000, "password not valid"),
     OTP_NOT_VALID(1003, "otp not valid"),
     OTP_EXPIRED(999, "otp expired"),
-    CUOC_HOP_NOT_EXIST(1000, "cuoc hop not exist")
+    CUOC_HOP_NOT_EXIST(1000, "cuoc hop not exist"),
+    VI_TRI_TUYEN_DUNG_NOT_EXIST(1000,"VI TRI TUYEN DUNG KHONG TON TAI"),
+    VI_TRI_TUYEN_DUNG_KHONG_HOP_LE(1000,"VI TRI TUYEN DUNG KHONG HOP LE")
     ;
 
     private final int status;

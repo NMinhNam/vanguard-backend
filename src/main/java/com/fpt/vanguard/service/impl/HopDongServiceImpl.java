@@ -51,4 +51,16 @@ public class HopDongServiceImpl implements HopDongService {
         if (!hopDongMapper.existsById(id)) throw new AppException(ErrorCode.HOP_DONG_NOT_EXIST);
         return hopDongMapper.deleteHopDong(id);
     }
+
+    @Override
+    public List<HopDongDtoResponse> getHopDongByMaNhanVien(String maNhanVien) {
+        List<HopDongDtoResponse> listResultEntity =
+                hopDongMapstruct.toHopDongDtoResponseList(
+                        hopDongMapper.getHopDongByMaNhanVien(maNhanVien)
+                );
+        if (listResultEntity.isEmpty()) {
+            throw new AppException(ErrorCode.HOP_DONG_NOT_EXIST);
+        }
+        return listResultEntity;
+    }
 }

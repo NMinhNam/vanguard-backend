@@ -40,3 +40,8 @@ cloudinary:
   api-key: "255558816145194"
   api_secret: "gfcwesLzyJVykvcuJIHctzOOuoU"
 
+twilio:
+  account-sid: "ACb77b47ab5a2ddad6c33c4ef70d07ba32"
+  auth-token: "a96415ea92d6949a28e06707ec5e0f68"
+  outgoing-sms-number: "+17855725167"
+

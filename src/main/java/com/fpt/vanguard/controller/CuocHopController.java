@@ -26,12 +26,30 @@ public class CuocHopController {
                 .build();
     }
 
+    @GetMapping("{id}")
+    public ApiResponse<CuocHopDtoResponse> getMeetingDetail(@PathVariable("id") String maCuocHop) {
+        return ApiResponse.<CuocHopDtoResponse>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(cuocHopService.getCuocHop(maCuocHop))
+                .build();
+    }
+
     @PostMapping
-    public ApiResponse<Integer> saveMeeting(@RequestBody CuocHopDtoRequest cuocHopDtoRequest) {
+    public ApiResponse<Integer> addMeeting(@RequestBody CuocHopDtoRequest cuocHopDtoRequest) {
         return ApiResponse.<Integer>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
-                .data(cuocHopService.saveCuocHop(cuocHopDtoRequest))
+                .data(cuocHopService.addCuocHop(cuocHopDtoRequest))
+                .build();
+    }
+
+    @PutMapping
+    public ApiResponse<Integer> updateMeeting(@RequestBody CuocHopDtoRequest cuocHopDtoRequest) {
+        return ApiResponse.<Integer>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(cuocHopService.updateCuocHop(cuocHopDtoRequest))
                 .build();
     }
 

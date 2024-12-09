@@ -7,6 +7,7 @@ import com.fpt.vanguard.exception.AppException;
 import com.fpt.vanguard.mapper.mapstruct.CuocHopMapstruct;
 import com.fpt.vanguard.mapper.mybatis.CuocHopMapper;
 import com.fpt.vanguard.service.CuocHopService;
+import com.fpt.vanguard.service.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.Optional;
 public class CuocHopServiceImpl implements CuocHopService {
     private final CuocHopMapper cuocHopMapper;
     private final CuocHopMapstruct cuocHopMapstruct;
+    private final MailService mailService;
 
     @Override
     public List<CuocHopDtoResponse> getAllCuocHops() {
@@ -25,13 +27,19 @@ public class CuocHopServiceImpl implements CuocHopService {
     }
 
     @Override
-    public Integer saveCuocHop(CuocHopDtoRequest cuocHopDtoRequest) {
+    public Integer addCuocHop(CuocHopDtoRequest cuocHopDtoRequest) {
         String maCuocHop = cuocHopDtoRequest.getMaCuocHop();
         Boolean isCuocHopExist = cuocHopMapper.isCuocHopExist(maCuocHop);
-
-        if (isCuocHopExist) return cuocHopMapper.updateCuocHop(cuocHopMapstruct.toCuocHop(cuocHopDtoRequest));
-
+        if (isCuocHopExist) throw new AppException(ErrorCode.MEETING_EXISTED);
         return cuocHopMapper.insertCuocHop(cuocHopMapstruct.toCuocHop(cuocHopDtoRequest));
+    }
+
+    @Override
+    public Integer updateCuocHop(CuocHopDtoRequest cuocHopDtoRequest) {
+        String maCuocHop = cuocHopDtoRequest.getMaCuocHop();
+        Boolean isCuocHopExist = cuocHopMapper.isCuocHopExist(maCuocHop);
+        if (!isCuocHopExist) throw new AppException(ErrorCode.MEETING_NOT_EXISTED);
+        return cuocHopMapper.updateCuocHop(cuocHopMapstruct.toCuocHop(cuocHopDtoRequest));
     }
 
     @Override
@@ -42,5 +50,10 @@ public class CuocHopServiceImpl implements CuocHopService {
     @Override
     public CuocHopDtoResponse getCuocHop(String maCuocHop) {
         return cuocHopMapstruct.toDtoResponse(Optional.ofNullable(cuocHopMapper.getCuocHop(maCuocHop)).orElseThrow(() -> new AppException(ErrorCode.CUOC_HOP_NOT_EXIST)));
+    }
+
+    @Override
+    public String getMaCuocHop(CuocHopDtoRequest cuocHopDtoRequest) {
+        return cuocHopMapper.getMaCuocHop(cuocHopMapstruct.toCuocHop(cuocHopDtoRequest));
     }
 }

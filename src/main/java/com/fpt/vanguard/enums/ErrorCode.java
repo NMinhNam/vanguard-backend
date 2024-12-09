@@ -48,7 +48,9 @@ public enum ErrorCode {
     OTP_EXPIRED(999, "otp expired"),
     CUOC_HOP_NOT_EXIST(1000, "cuoc hop not exist"),
     VI_TRI_TUYEN_DUNG_NOT_EXIST(1000,"VI TRI TUYEN DUNG KHONG TON TAI"),
-    VI_TRI_TUYEN_DUNG_KHONG_HOP_LE(1000,"VI TRI TUYEN DUNG KHONG HOP LE")
+    VI_TRI_TUYEN_DUNG_KHONG_HOP_LE(1000,"VI TRI TUYEN DUNG KHONG HOP LE"),
+    MEETING_EXISTED(1001, "meeting existed"),
+    MEETING_NOT_EXISTED(1001, "meeting not existed"),
     ;
 
     private final int status;

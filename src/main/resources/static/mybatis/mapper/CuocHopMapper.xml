@@ -88,4 +88,13 @@
             ma_cuoc_hop = #{maCuocHop}
         </where>
     </select>
+
+    <select id="getMaCuocHop">
+        SELECT
+            ma_cuoc_hop
+        FROM cuoc_hop
+        WHERE ten_cuoc_hop = #{tenCuocHop}
+        AND nguoi_to_chuc = #{nguoiToChuc}
+        AND thoi_gian_bat_dau = #{thoiGianBatDau}
+    </select>
 </mapper>

@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class ChiTietCuocHop {
     private String maCuocHop;
-
+    private String maNhanVien;
 }

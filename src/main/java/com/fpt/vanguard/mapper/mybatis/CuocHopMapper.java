@@ -13,6 +13,6 @@ public interface CuocHopMapper {
     List<CuocHop> getAllCuocHops();
     Boolean isCuocHopExist(String maCuocHop);
     CuocHop getCuocHop(String maCuocHop);
-    String getMaCuocHop(CuocHop cuocHop);
+    CuocHop getMaCuocHop(CuocHop cuocHop);
     List<CuocHop> getCuocHopByMaNhanVien(String maNhanVien);
 }

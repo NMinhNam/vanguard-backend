@@ -17,7 +17,7 @@ public class ChiTietCuocHopServiceImpl implements ChiTietCuocHopService {
 
     @Override
     public Integer addNhanVienToCuocHop(CuocHopDtoRequest request) {
-        String maCuocHop = cuocHopService.getMaCuocHop(request);
+        String maCuocHop = cuocHopService.getMaCuocHop(request).getMaCuocHop();
         request.setMaCuocHop(maCuocHop);
         return cuocHopMapper.insertChiTietCuocHop(cuocHopMapstruct.toChiTietCuocHop(request));
     }

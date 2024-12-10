@@ -89,7 +89,7 @@
         </where>
     </select>
 
-    <select id="getMaCuocHop">
+    <select id="getMaCuocHop" resultMap="resultMapCuocHop">
         SELECT
             ma_cuoc_hop
         FROM cuoc_hop

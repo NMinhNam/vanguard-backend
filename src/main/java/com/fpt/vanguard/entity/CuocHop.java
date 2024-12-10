@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -17,4 +16,8 @@ public class CuocHop {
     private String videoCallUrl;
     private String nguoiToChuc;
     private String ghiChu;
+
+    //JOIN
+    private String tenNguoiToChuc;
+    private String danhSachThamGia;
 }

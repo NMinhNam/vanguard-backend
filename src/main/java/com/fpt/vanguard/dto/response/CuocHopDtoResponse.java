@@ -16,4 +16,7 @@ public class CuocHopDtoResponse {
     private String videoCallUrl;
     private String nguoiToChuc;
     private String ghiChu;
+
+    private String tenNguoiToChuc;
+    private String danhSachThamGia;
 }

@@ -51,7 +51,7 @@
     </delete>
 
     <sql id="columnCuocHop">
-        ma_cuoc_hop,
+        ch.ma_cuoc_hop,
         ten_cuoc_hop,
         thoi_gian_bat_dau,
         thoi_gian_ket_thuc,
@@ -96,5 +96,51 @@
         WHERE ten_cuoc_hop = #{tenCuocHop}
         AND nguoi_to_chuc = #{nguoiToChuc}
         AND thoi_gian_bat_dau = #{thoiGianBatDau}
+    </select>
+
+    <resultMap id="resultCuocHopByNhanVien" type="CuocHop">
+        <result column="ma_cuoc_hop" property="maCuocHop"/>
+        <result column="ten_cuoc_hop" property="tenCuocHop"/>
+        <result column="thoi_gian_bat_dau" property="thoiGianBatDau"/>
+        <result column="thoi_gian_ket_thuc" property="thoiGianKetThuc"/>
+        <result column="vi_tri" property="viTri"/>
+        <result column="video_call_url" property="videoCallUrl"/>
+        <result column="ghi_chu" property="ghiChu"/>
+        <result column="ten_nguoi_to_chuc" property="tenNguoiToChuc"/>
+        <result column="danh_sach_tham_gia" property="danhSachThamGia"/>
+    </resultMap>
+
+    <sql id="columnCuocHopDetail">
+        ch.ma_cuoc_hop,
+        ch.ten_cuoc_hop,
+        ch.thoi_gian_bat_dau,
+        ch.thoi_gian_ket_thuc,
+        ch.vi_tri,
+        ch.video_call_url,
+        ch.ghi_chu,
+        nv_to_chuc.ho_ten AS ten_nguoi_to_chuc,
+        STRING_AGG(nv_tham_gia.ho_ten, ', ') AS danh_sach_tham_gia
+    </sql>
+
+    <select id="getCuocHopByMaNhanVien" resultMap="resultCuocHopByNhanVien">
+        SELECT
+            <include refid="columnCuocHopDetail"/>
+        FROM cuoc_hop ch
+                 LEFT JOIN nhan_vien nv_to_chuc ON ch.nguoi_to_chuc = nv_to_chuc.ma_nhan_vien
+                 LEFT JOIN chi_tiet_cuoc_hop cth ON ch.ma_cuoc_hop = cth.ma_cuoc_hop
+                 LEFT JOIN nhan_vien nv_tham_gia ON cth.ma_nhan_vien = nv_tham_gia.ma_nhan_vien
+        WHERE ch.ma_cuoc_hop IN
+              (SELECT cth.ma_cuoc_hop
+               FROM chi_tiet_cuoc_hop cth
+               WHERE cth.ma_nhan_vien = #{maNhanVien})
+        GROUP BY ch.ma_cuoc_hop,
+                 ch.ten_cuoc_hop,
+                 ch.thoi_gian_bat_dau,
+                 ch.thoi_gian_ket_thuc,
+                 ch.vi_tri,
+                 ch.video_call_url,
+                 ch.ghi_chu,
+                 ch.nguoi_to_chuc,
+                 nv_to_chuc.ho_ten
     </select>
 </mapper>

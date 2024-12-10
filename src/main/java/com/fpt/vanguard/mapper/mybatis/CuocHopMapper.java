@@ -14,4 +14,5 @@ public interface CuocHopMapper {
     Boolean isCuocHopExist(String maCuocHop);
     CuocHop getCuocHop(String maCuocHop);
     String getMaCuocHop(CuocHop cuocHop);
+    List<CuocHop> getCuocHopByMaNhanVien(String maNhanVien);
 }

@@ -27,6 +27,11 @@ public class CuocHopServiceImpl implements CuocHopService {
     }
 
     @Override
+    public List<CuocHopDtoResponse> getCuocHopsByMaNhanVien(String maNhanVien) {
+        return cuocHopMapstruct.toDtoList(cuocHopMapper.getCuocHopByMaNhanVien(maNhanVien));
+    }
+
+    @Override
     public Integer addCuocHop(CuocHopDtoRequest cuocHopDtoRequest) {
         String maCuocHop = cuocHopDtoRequest.getMaCuocHop();
         Boolean isCuocHopExist = cuocHopMapper.isCuocHopExist(maCuocHop);

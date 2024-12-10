@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface CuocHopService {
     List<CuocHopDtoResponse> getAllCuocHops();
+    List<CuocHopDtoResponse> getCuocHopsByMaNhanVien(String maNhanVien);
     Integer addCuocHop(CuocHopDtoRequest cuocHopDtoRequest);
     Integer updateCuocHop(CuocHopDtoRequest cuocHopDtoRequest);
     Integer deleteCuocHop(String maCuocHop);

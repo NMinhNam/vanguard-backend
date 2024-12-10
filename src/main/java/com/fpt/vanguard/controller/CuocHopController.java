@@ -35,6 +35,15 @@ public class CuocHopController {
                 .build();
     }
 
+    @GetMapping("/employee/{id}")
+    public ApiResponse<List<CuocHopDtoResponse>> getMeetingsByMaNhanVien(@PathVariable("id") String maNhanVien) {
+        return ApiResponse.<List<CuocHopDtoResponse>>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(cuocHopService.getCuocHopsByMaNhanVien(maNhanVien))
+                .build();
+    }
+
     @PostMapping
     public ApiResponse<Integer> addMeeting(@RequestBody CuocHopDtoRequest cuocHopDtoRequest) {
         return ApiResponse.<Integer>builder()

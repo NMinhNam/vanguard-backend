@@ -105,5 +105,11 @@
         WHERE so_hop_dong = #{soHopDong}
     </delete>
 
+    <select id="getHopDongByMaNhanVien" parameterType="String" resultMap="HopDongResultMap">
+        SELECT
+        <include refid="columnHopDong"/>
+        FROM hop_dong hd
+        WHERE hd.ma_nhan_vien = #{maNhanVien}
+    </select>
 
 </mapper>

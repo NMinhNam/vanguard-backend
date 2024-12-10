@@ -51,6 +51,7 @@ public enum ErrorCode {
     VI_TRI_TUYEN_DUNG_KHONG_HOP_LE(1000,"VI TRI TUYEN DUNG KHONG HOP LE"),
     MEETING_EXISTED(1001, "meeting existed"),
     MEETING_NOT_EXISTED(1001, "meeting not existed"),
+    CCCD_EXISTED(1001, "cccd da ton tai")
     ;
 
     private final int status;

@@ -20,5 +20,7 @@
         <typeAlias type="com.fpt.vanguard.entity.WifiInfo" alias="WifiInfo"/>
         <typeAlias type="com.fpt.vanguard.entity.Otp" alias="Otp"/>
         <typeAlias type="com.fpt.vanguard.entity.CuocHop" alias="CuocHop"/>
+        <typeAlias type="com.fpt.vanguard.entity.PhuCap" alias="PhuCap"/>
+        <typeAlias type="com.fpt.vanguard.entity.ViPham" alias="ViPham"/>
     </typeAliases>
 </configuration>

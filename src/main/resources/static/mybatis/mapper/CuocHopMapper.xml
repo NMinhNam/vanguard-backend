@@ -119,7 +119,7 @@
         ch.video_call_url,
         ch.ghi_chu,
         nv_to_chuc.ho_ten AS ten_nguoi_to_chuc,
-        STRING_AGG(nv_tham_gia.ho_ten, ', ') AS danh_sach_tham_gia
+        STRING_AGG(nv_tham_gia.ma_nhan_vien, ', ') AS danh_sach_tham_gia
     </sql>
 
     <select id="getCuocHopByMaNhanVien" resultMap="resultCuocHopByNhanVien">

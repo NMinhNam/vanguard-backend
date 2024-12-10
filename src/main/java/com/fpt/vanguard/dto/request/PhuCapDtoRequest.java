@@ -1,11 +1,11 @@
-package com.fpt.vanguard.entity;
+package com.fpt.vanguard.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class PhuCap {
+public class PhuCapDtoRequest {
     private String maPhuCap;
     private String tenPhuCap;
     private Double soTienPhuCap;

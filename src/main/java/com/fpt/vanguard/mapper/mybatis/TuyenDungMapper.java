@@ -17,4 +17,6 @@ public interface TuyenDungMapper {
     int updateTuyenDung(@Param("TuyenDung") ViTriTuyenDung tuyenDung);
 
     Boolean isExist(@Param("id") String maTuyenDung);
+
+    String getMaViTriByTenViTri(@Param("tenViTri") String tenViTri);
 }

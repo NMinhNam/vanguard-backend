@@ -22,5 +22,7 @@ public interface HopDongMapper {
 
     int deleteHopDong(String id);
 
+    List<HopDong> getHopDongByMaNhanVien(@Param("maNhanVien") String maNhanVien);
+
 
 }

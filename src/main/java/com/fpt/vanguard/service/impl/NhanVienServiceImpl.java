@@ -163,7 +163,7 @@ public class NhanVienServiceImpl implements NhanVienService {
     }
 
     @Override
-    public int updateQuanLy(NhanVienDtoRequest nhanVienDtoRequest) {
+    public Integer updateQuanLy(NhanVienDtoRequest nhanVienDtoRequest) {
         String maNhanVien = nhanVienDtoRequest.getMaNhanVien();
         String quanLy = nhanVienDtoRequest.getQuanLy();
         boolean isExistNhanVien = nhanVienMapper.existsById(maNhanVien);
@@ -172,6 +172,13 @@ public class NhanVienServiceImpl implements NhanVienService {
         if (!isExistQuanLy) throw new AppException(ErrorCode.QUAN_LY_NOT_EXIST);
         return nhanVienMapper.updateQuanLy(
                 nhanVienMapstruct.toNhanVien(nhanVienDtoRequest)
+        );
+    }
+
+    @Override
+    public NhanVienDtoResponse getNhanVienByCCCD(String cccd) {
+        return nhanVienMapstruct.toNhanVienDtoResponse(
+                nhanVienMapper.getNhanVienByCCCD(cccd)
         );
     }
 }

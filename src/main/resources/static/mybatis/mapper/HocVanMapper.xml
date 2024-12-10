@@ -21,12 +21,42 @@
     </sql>
 
     <insert id="insertHocVan">
+        INSERT INTO hoc_van (
+            ma_nhan_vien,
+            ten_trinh_do,
+            chuyen_nganh,
+            nam_tot_nghiep,
+            co_so_giao_duc
+        )
+        VALUES (
+            #{maNhanVien},
+            #{tenTrinhDo},
+            #{chuyenNganh},
+            #{namTotNghiep},
+            #{coSoGiaoDuc}
+        )
     </insert>
 
     <update id="updateHocVan">
+        UPDATE hoc_van
+        SET
+            ten_trinh_do = #{tenTrinhDo},
+            chuyen_nganh = #{chuyenNganh},
+            nam_tot_nghiep = #{namTotNghiep},
+            co_so_giao_duc = #{coSoGiaoDuc}
+        WHERE ma_nhan_vien = #{maNhanVien}
+        AND nam_tot_nghiep = #{namTotNghiep}
+        AND chuyen_nganh = #{chuyenNganh}
     </update>
 
-    <select id="findAll" resultType="HocVan">
+    <delete id="deleteHocVan">
+        DELETE FROM hoc_van
+        WHERE ma_nhan_vien = #{maNhanVien}
+        AND nam_tot_nghiep = #{namTotNghiep}
+        AND chuyen_nganh = #{chuyenNganh}
+    </delete>
+
+    <select id="findAll" resultMap="resultMapHocVan">
         select
             <include refid="columnHocVan"/>
         from hoc_van
@@ -39,5 +69,15 @@
         <where>
             ma_nhan_vien = #{maNhanVien}
         </where>
+    </select>
+
+    <select id="isHocVanExist">
+        SELECT EXISTS(
+            SELECT 1
+            FROM hoc_van
+            WHERE ma_nhan_vien = #{maNhanVien}
+            AND nam_tot_nghiep = #{namTotNghiep}
+            AND chuyen_nganh = #{chuyenNganh}
+        )
     </select>
 </mapper>

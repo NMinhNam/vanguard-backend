@@ -32,4 +32,13 @@ public class PasswordController {
                 .data(passwordService.forgotPassword(passwordDto))
                 .build();
     }
+
+    @PostMapping("reset-password")
+    public ApiResponse<Integer> resetPassword(@RequestBody PasswordDtoRequest passwordDto) throws MessagingException {
+        return ApiResponse.<Integer>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(passwordService.resetPassword(passwordDto))
+                .build();
+    }
 }

@@ -12,4 +12,6 @@ public interface HocVanMapper {
     List<HocVan> findByMaNhanVien(@Param("maNhanVien") String maNhanVien);
     Integer insertHocVan(HocVan hocVan);
     Integer updateHocVan(HocVan hocVan);
+    Integer deleteHocVan(HocVan hocVan);
+    Boolean isHocVanExist(HocVan hocVan);
 }

@@ -51,7 +51,7 @@
         )
     </select>
 
-    <select id="getUngVienByViTriAndTrangThai">
+    <select id="getUngVienByViTriAndTrangThai" resultMap="resultMapUngVien">
         SELECT
             <include refid="columnUngVien"/>
         FROM ung_vien uv
@@ -95,17 +95,20 @@
     <update id="updateUngVien">
         UPDATE ung_vien
         SET
-            ho_ten = #{hoTen},
-            gioi_tinh = #{gioiTinh},
-            ngay_sinh = #{ngaySinh}::DATE,
-            dien_thoai = #{dienThoai},
-            cccd = #{cccd},
-            dia_chi = #{diaChi},
-            hinh_anh = #{hinhAnh},
-            email = #{email},
-            ma_vi_tri_tuyen_dung = #{maViTriTuyenDung},
-            trang_thai = #{trangThai}
+        ho_ten = #{hoTen},
+        gioi_tinh = #{gioiTinh},
+        ngay_sinh = #{ngaySinh}::DATE,
+        dien_thoai = #{dienThoai},
+        cccd = #{cccd},
+        dia_chi = #{diaChi},
+        hinh_anh = #{hinhAnh},
+        email = #{email},
+        ma_vi_tri_tuyen_dung = #{maViTriTuyenDung}
+        <if test="trangThai != null and trangThai != ''">
+            ,trang_thai = #{trangThai}
+        </if>
         WHERE ma_ung_vien = #{maUngVien}
+
     </update>
     <delete id="deleteUngVien">
         DELETE FROM ung_vien

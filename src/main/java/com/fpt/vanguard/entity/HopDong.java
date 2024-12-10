@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class HopDong {
-    private String maHopDong;
+    private String soHopDong;
     private String maNhanVien;
     private String ngayKy;
     private String ngayBatDau;

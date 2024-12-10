@@ -51,11 +51,11 @@ public class PasswordServiceImpl implements PasswordService {
     }
 
     @Override
-    public Integer resetPassword(PasswordDtoRequest passwordDtoRequest) throws MessagingException {
+    public Integer resetPassword(PasswordDtoRequest passwordDtoRequest) {
         String mail = passwordDtoRequest.getEmail();
         String password = passwordDtoRequest.getNewPassword();
         String hashedPassword = PasswordUtil.hashPassword(password);
-        return passwordMapper.changePassword(mail, hashedPassword);
+        return passwordMapper.changePassword(hashedPassword, mail);
     }
 
     private void sendForgotPasswordEmail(PasswordDtoRequest passwordDtoRequest) throws MessagingException {

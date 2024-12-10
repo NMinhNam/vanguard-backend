@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.ViPhamMapper">
+    <insert id="insertViPham">
+    </insert>
+    <update id="updateViPham">
+    </update>
+    <delete id="deleteViPham">
+    </delete>
+
+    <resultMap id="resultMapViPham" type="ViPham">
+        <id property="maViPham" column="ma_vi_pham"/>
+        <result property="tenViPham" column="ten_vi_pham"/>
+        <result property="soTienViPham" column="so_tien"/>
+    </resultMap>
+
+    <select id="getAllViPham">
+        SELECT
+            ma_vi_pham,
+            ten_vi_pham,
+            so_tien
+        FROM vi_pham
+    </select>
+
+    <select id="isViPhamExist">
+    </select>
+</mapper>

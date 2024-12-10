@@ -58,7 +58,7 @@ public class CuocHopServiceImpl implements CuocHopService {
     }
 
     @Override
-    public String getMaCuocHop(CuocHopDtoRequest cuocHopDtoRequest) {
-        return cuocHopMapper.getMaCuocHop(cuocHopMapstruct.toCuocHop(cuocHopDtoRequest));
+    public CuocHopDtoResponse getMaCuocHop(CuocHopDtoRequest cuocHopDtoRequest) {
+        return cuocHopMapstruct.toDtoResponse(cuocHopMapper.getMaCuocHop(cuocHopMapstruct.toCuocHop(cuocHopDtoRequest)));
     }
 }

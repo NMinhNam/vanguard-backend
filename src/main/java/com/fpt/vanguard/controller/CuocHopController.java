@@ -44,6 +44,15 @@ public class CuocHopController {
                 .build();
     }
 
+    @GetMapping("id-meeting")
+    public ApiResponse<CuocHopDtoResponse> getMeetingId(@RequestBody CuocHopDtoRequest cuocHopDtoRequest) {
+        return ApiResponse.<CuocHopDtoResponse>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(cuocHopService.getMaCuocHop(cuocHopDtoRequest))
+                .build();
+    }
+
     @PostMapping
     public ApiResponse<Integer> addMeeting(@RequestBody CuocHopDtoRequest cuocHopDtoRequest) {
         return ApiResponse.<Integer>builder()

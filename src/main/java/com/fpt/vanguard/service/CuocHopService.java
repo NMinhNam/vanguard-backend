@@ -12,5 +12,5 @@ public interface CuocHopService {
     Integer updateCuocHop(CuocHopDtoRequest cuocHopDtoRequest);
     Integer deleteCuocHop(String maCuocHop);
     CuocHopDtoResponse getCuocHop(String maCuocHop);
-    String getMaCuocHop(CuocHopDtoRequest cuocHopDtoRequest);
+    CuocHopDtoResponse getMaCuocHop(CuocHopDtoRequest cuocHopDtoRequest);
 }

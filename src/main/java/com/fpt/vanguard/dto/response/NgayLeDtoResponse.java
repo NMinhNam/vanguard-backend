@@ -1,12 +1,11 @@
-package com.fpt.vanguard.entity;
+package com.fpt.vanguard.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class NgayLe {
-    private Integer id;
+public class NgayLeDtoResponse {
     private String ngayThangBatDau;
     private String ngayThangKetThuc;
     private String tenNgayLe;

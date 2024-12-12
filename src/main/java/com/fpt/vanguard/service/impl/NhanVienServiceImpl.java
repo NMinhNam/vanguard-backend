@@ -6,12 +6,15 @@ import com.fpt.vanguard.dto.request.UserDtoRequest;
 import com.fpt.vanguard.dto.response.NhanVienDtoResponse;
 import com.fpt.vanguard.dto.response.UserDtoResponse;
 import com.fpt.vanguard.entity.NhanVien;
+import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.enums.Roles;
 import com.fpt.vanguard.exception.AppException;
-import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.mapper.mapstruct.NhanVienMapstruct;
 import com.fpt.vanguard.mapper.mybatis.NhanVienMapper;
-import com.fpt.vanguard.service.*;
+import com.fpt.vanguard.service.ExcelService;
+import com.fpt.vanguard.service.MailService;
+import com.fpt.vanguard.service.NhanVienService;
+import com.fpt.vanguard.service.UserService;
 import com.fpt.vanguard.util.PasswordUtil;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +35,6 @@ public class NhanVienServiceImpl implements NhanVienService {
     private final NhanVienMapstruct nhanVienMapstruct;
     private final MailService mailService;
     private final UserService userService;
-    private final UploadImageFileService uploadImageFileService;
     private final ExcelService excelService;
 
     @Override
@@ -52,13 +57,10 @@ public class NhanVienServiceImpl implements NhanVienService {
     }
 
     @Override
-    public Integer createNhanVien(NhanVienDtoRequest nhanVienDtoRequest)
-            throws MessagingException, ParseException {
+    public Integer createNhanVien(NhanVienDtoRequest nhanVienDtoRequest) throws MessagingException, ParseException {
         String nhanVienId = nhanVienDtoRequest.getMaNhanVien();
         if (nhanVienMapper.existsById(nhanVienId)) {
-            return nhanVienMapper.updateNhanVien(
-                    nhanVienMapstruct.toNhanVien(nhanVienDtoRequest)
-            );
+            return nhanVienMapper.updateNhanVien(nhanVienMapstruct.toNhanVien(nhanVienDtoRequest));
         }
 
         String email = nhanVienDtoRequest.getEmail();
@@ -66,14 +68,9 @@ public class NhanVienServiceImpl implements NhanVienService {
         String password = PasswordUtil.generateRandomPassword();
         Integer roleId = Roles.USER.getRoleId();
 
-        if (nhanVienMapper.existsByEmail(email))
-            throw new AppException(ErrorCode.EMAIL_EXISTED);
+        if (nhanVienMapper.existsByEmail(email)) throw new AppException(ErrorCode.EMAIL_EXISTED);
 
-        UserDtoRequest userDtoRequest = UserDtoRequest.builder()
-                .username(email)
-                .password(password)
-                .roleId(roleId)
-                .build();
+        UserDtoRequest userDtoRequest = UserDtoRequest.builder().username(email).password(password).roleId(roleId).build();
         userService.createUser(userDtoRequest);
 
         sendWelcomeEmail(email, name);
@@ -83,39 +80,25 @@ public class NhanVienServiceImpl implements NhanVienService {
         UserDtoResponse user = userService.getUserByUserName(email);
         nhanVienDtoRequest.setUserId(user.getUserId());
 
-        return nhanVienMapper.insertNhanVien(
-                nhanVienMapstruct.toNhanVien(nhanVienDtoRequest)
-        );
+        return nhanVienMapper.insertNhanVien(nhanVienMapstruct.toNhanVien(nhanVienDtoRequest));
     }
 
-    private void sendWelcomeEmail(String email, String name)
-            throws MessagingException {
+    private void sendWelcomeEmail(String email, String name) throws MessagingException {
         Map<String, Object> welcomeVariables = new HashMap<>();
         welcomeVariables.put("name", name);
 
-        MailDtoRequest welcomeMailDtoRequest = MailDtoRequest.builder()
-                .to(email)
-                .subject("Welcome to the Vanguard Team!")
-                .templateName("welcome-mail.html")
-                .variables(welcomeVariables)
-                .build();
+        MailDtoRequest welcomeMailDtoRequest = MailDtoRequest.builder().to(email).subject("Welcome to the Vanguard Team!").templateName("welcome-mail.html").variables(welcomeVariables).build();
 
         mailService.sendMail(welcomeMailDtoRequest);
     }
 
-    private void sendAccountCreationEmail(String email, String name, String password)
-            throws MessagingException {
+    private void sendAccountCreationEmail(String email, String name, String password) throws MessagingException {
         Map<String, Object> accountCreationVariables = new HashMap<>();
         accountCreationVariables.put("name", name);
         accountCreationVariables.put("username", email);
         accountCreationVariables.put("password", password);
 
-        MailDtoRequest accountCreationMailDtoRequest = MailDtoRequest.builder()
-                .to(email)
-                .subject("Your Account Has Been Created!")
-                .templateName("account-creation-notification.html")
-                .variables(accountCreationVariables)
-                .build();
+        MailDtoRequest accountCreationMailDtoRequest = MailDtoRequest.builder().to(email).subject("Your Account Has Been Created!").templateName("account-creation-notification.html").variables(accountCreationVariables).build();
 
         mailService.sendMail(accountCreationMailDtoRequest);
     }
@@ -126,9 +109,7 @@ public class NhanVienServiceImpl implements NhanVienService {
         boolean isExistNhanVien = nhanVienMapper.existsById(maNhanVien);
         if (!isExistNhanVien) throw new AppException(ErrorCode.NHAN_VIEN_NOT_EXIST);
 
-        return nhanVienMapper.updateNhanVien(
-                nhanVienMapstruct.toNhanVien(nhanVienDtoRequest)
-        );
+        return nhanVienMapper.updateNhanVien(nhanVienMapstruct.toNhanVien(nhanVienDtoRequest));
     }
 
     @Override
@@ -140,9 +121,7 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public NhanVienDtoResponse getNhanVienByUserName(String username) {
-        return nhanVienMapstruct.toNhanVienDtoResponse(
-                nhanVienMapper.findNhanVienByUserName(username)
-        );
+        return nhanVienMapstruct.toNhanVienDtoResponse(nhanVienMapper.findNhanVienByUserName(username));
     }
 
     @Override
@@ -150,16 +129,12 @@ public class NhanVienServiceImpl implements NhanVienService {
         List<NhanVienDtoResponse> responseList = excelService.getNhanVienFromExcel(file);
         List<NhanVienDtoRequest> requestList = nhanVienMapstruct.toNhanVienDtoRequestList(responseList);
 
-        return nhanVienMapper.insertNhanVienList(
-                nhanVienMapstruct.toNhanVienList(requestList)
-        );
+        return nhanVienMapper.insertNhanVienList(nhanVienMapstruct.toNhanVienList(requestList));
     }
 
     @Override
     public List<NhanVienDtoResponse> getOrgChartNhanVien() {
-        return nhanVienMapstruct.toNhanVienDtoResponseList(
-                nhanVienMapper.getOrgChart()
-        );
+        return nhanVienMapstruct.toNhanVienDtoResponseList(nhanVienMapper.getOrgChart());
     }
 
     @Override
@@ -170,15 +145,11 @@ public class NhanVienServiceImpl implements NhanVienService {
         boolean isExistQuanLy = nhanVienMapper.existsById(quanLy);
         if (!isExistNhanVien) throw new AppException(ErrorCode.NHAN_VIEN_NOT_EXIST);
         if (!isExistQuanLy) throw new AppException(ErrorCode.QUAN_LY_NOT_EXIST);
-        return nhanVienMapper.updateQuanLy(
-                nhanVienMapstruct.toNhanVien(nhanVienDtoRequest)
-        );
+        return nhanVienMapper.updateQuanLy(nhanVienMapstruct.toNhanVien(nhanVienDtoRequest));
     }
 
     @Override
     public NhanVienDtoResponse getNhanVienByCCCD(String cccd) {
-        return nhanVienMapstruct.toNhanVienDtoResponse(
-                nhanVienMapper.getNhanVienByCCCD(cccd)
-        );
+        return nhanVienMapstruct.toNhanVienDtoResponse(nhanVienMapper.getNhanVienByCCCD(cccd));
     }
 }

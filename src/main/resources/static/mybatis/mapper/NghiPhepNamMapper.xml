@@ -8,11 +8,11 @@
 
     <select id="getNghiPhepNam" resultMap="resultMapNghiPhepNam">
         SELECT
-        ma_nhan_vien,
-        tong_so_ngay_phep_con
+            ma_nhan_vien,
+            tong_so_ngay_phep_con
         FROM nghi_phep_nam
         WHERE ma_nhan_vien = #{maNhanVien}
-        AND nam <= #{nam}
+        AND nam = #{nam}
     </select>
 
     <insert id="insertNghiPhepNam">
@@ -25,20 +25,20 @@
             ma_nhan_vien
         )
         VALUES (
-                   #{nam},
-                   #{tongSoNgayPhepNam},
-                   #{tongSoNgayDaNghi},
-                   #{tongSoNgayPhepCongDon},
-                   #{tongSoNgayPhepCon},
-                   #{maNhanVien}
+                   #{nghiPhepNam.nam},
+                   #{nghiPhepNam.tongSoNgayPhepNam},
+                   #{nghiPhepNam.tongSoNgayDaNghi},
+                   #{nghiPhepNam.tongSoNgayPhepCongDon},
+                   #{nghiPhepNam.tongSoNgayPhepCon},
+                   #{nghiPhepNam.maNhanVien}
                )
     </insert>
 
     <update id="updateTongSoNgayPhepCon">
         UPDATE nghi_phep_nam
-        SET tong_so_ngay_phep_con = #{tongSoNgayPhepCon}
-        WHERE ma_nhan_vien = #{maNhanVien}
-          AND nam = #{nam}
+        SET tong_so_ngay_phep_con = #{nghiPhepNam.tongSoNgayPhepCon}
+        WHERE ma_nhan_vien = #{nghiPhepNam.maNhanVien}
+          AND nam = #{nghiPhepNam.nam}
     </update>
 
     <update id="updateTongSoNgayPhepNam">

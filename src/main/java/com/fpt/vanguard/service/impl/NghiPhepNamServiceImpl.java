@@ -7,7 +7,6 @@ import com.fpt.vanguard.enums.NgayNghiPhep;
 import com.fpt.vanguard.exception.AppException;
 import com.fpt.vanguard.mapper.mapstruct.NghiPhepNamMapstruct;
 import com.fpt.vanguard.mapper.mybatis.NghiPhepNamMapper;
-import com.fpt.vanguard.service.HopDongService;
 import com.fpt.vanguard.service.NghiPhepNamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ import java.time.temporal.ChronoUnit;
 public class NghiPhepNamServiceImpl implements NghiPhepNamService {
     private final NghiPhepNamMapper nghiPhepNamMapper;
     private final NghiPhepNamMapstruct nghiPhepNamMapstruct;
-    private final HopDongService hopDongService;
 
     @Override
     public NghiPhepNamDtoResponse getNgayNghiPhepNam(String maNhanVien) {
@@ -39,15 +37,13 @@ public class NghiPhepNamServiceImpl implements NghiPhepNamService {
     }
 
     @Override
-    public Integer createNghiPhepNamChoNhanVienMoi(NghiPhepNamDtoRequest nghiPhepNamDtoRequest) {
+    public Integer createNghiPhepNamChoNhanVienMoi(LocalDate ngayBatDau, NghiPhepNamDtoRequest nghiPhepNamDtoRequest) {
         String maNhanVien = nghiPhepNamDtoRequest.getMaNhanVien();
 
-        LocalDate ngayBatDau = hopDongService.getHopDongByMaNhanVien(maNhanVien).getNgayBatDau();
-        LocalDate ngayHienTai = LocalDate.now();
-        long thangLamViecThucTe = ChronoUnit.MONTHS.between(ngayBatDau, ngayHienTai);
-
-        int soNgayNghiPhepThucTe = Math.round(((float) NgayNghiPhep.SO_NGAY_PHEP_KHI_LAM_DU_NAM.getSoNgayNghi() / 12) * thangLamViecThucTe);
         Integer namHienTai = LocalDate.now().getYear();
+        LocalDate cuoiNam = LocalDate.of(namHienTai, 12, 31);
+        long thangLamViecThucTe = ChronoUnit.MONTHS.between(ngayBatDau, cuoiNam);
+        int soNgayNghiPhepThucTe = Math.round(((float) NgayNghiPhep.SO_NGAY_PHEP_KHI_LAM_DU_NAM.getSoNgayNghi() / 12) * thangLamViecThucTe);
         Boolean isExistNghiPhepNam = nghiPhepNamMapper.isExistNghiPhepNam(maNhanVien, namHienTai);
         if (isExistNghiPhepNam) throw new AppException(ErrorCode.NGHI_PHEP_NAM_EXISTED);
 

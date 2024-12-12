@@ -9,9 +9,9 @@ public interface NghiPhepNamMapper {
     NghiPhepNam getNghiPhepNam(@Param("maNhanVien") String maNhanVien,
                                @Param("nam") Integer nam);
 
-    Integer insertNghiPhepNam(NghiPhepNam nghiPhepNam);
+    Integer insertNghiPhepNam(@Param("nghiPhepNam") NghiPhepNam nghiPhepNam);
 
-    Integer updateTongSoNgayPhepCon(NghiPhepNam nghiPhepNam);
+    Integer updateTongSoNgayPhepCon(@Param("nghiPhepNam") NghiPhepNam nghiPhepNam);
 
     Integer updateTongSoNgayPhepNam(@Param("maNhanVien") String maNhanVien,
                                     @Param("nam") Integer nam,

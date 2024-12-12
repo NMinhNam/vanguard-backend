@@ -12,4 +12,5 @@ public class NghiPhepNam {
     private Integer tongSoNgayPhepNam;
     private Integer tongSoNgayDaNghi;
     private Integer tongSoNgayPhepCongDon;
+    private Integer tongSoNgayPhepCon;
 }

@@ -15,5 +15,7 @@ public interface HopDongService {
 
     int deleteHopDong(String id);
 
-    List<HopDongDtoResponse> getHopDongByMaNhanVien( String maNhanVien);
+    List<HopDongDtoResponse> getListHopDongByMaNhanVien(String maNhanVien);
+
+    HopDongDtoResponse getHopDongByMaNhanVien(String maNhanVien);
 }

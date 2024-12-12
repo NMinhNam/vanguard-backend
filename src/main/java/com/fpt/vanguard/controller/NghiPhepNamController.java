@@ -5,24 +5,21 @@ import com.fpt.vanguard.dto.response.NghiPhepNamDtoResponse;
 import com.fpt.vanguard.service.NghiPhepNamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/nghi-phep-nam")
+@RequestMapping("api/v1/annual-leave")
 @RequiredArgsConstructor
 @CrossOrigin
 public class NghiPhepNamController {
     private final NghiPhepNamService nghiPhepNamService;
 
     @GetMapping("/employee/{id}")
-    public ApiResponse<NghiPhepNamDtoResponse> getNgayNghiPhepNam() {
+    public ApiResponse<NghiPhepNamDtoResponse> getNgayNghiPhepNam(@PathVariable("id") String maNhanVien) {
         return ApiResponse.<NghiPhepNamDtoResponse>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
-                .data(nghiPhepNamService.getNgayNghiPhepNam())
+                .data(nghiPhepNamService.getNgayNghiPhepNam(maNhanVien))
                 .build();
     }
 }

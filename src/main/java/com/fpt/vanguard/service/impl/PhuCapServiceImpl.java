@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +44,13 @@ public class PhuCapServiceImpl implements PhuCapService {
         return phuCapMapper.deletePhuCap(maPhuCap);
     }
 
+    @Override
+    public PhuCapDtoResponse getNhanVienPhuCap(PhuCapDtoRequest phuCapDtoRequest) {
+        PhuCapDtoResponse response = phuCapMapstruct.toDtoResponses(phuCapMapper.getNhanVienPhuCap(phuCapDtoRequest));
+        if(!Objects.nonNull(response))
+            throw new AppException(ErrorCode.NHAN_VIEN_PHU_CAP_NOT_EXIST);
+        return response;
+    }
 
     public Integer updatePhuCap(PhuCapDtoRequest phuCapDtoRequest){
         String maPhuCap = phuCapDtoRequest.getMaPhuCap();

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.NhanVienPhuCapMapper">
+
+    <resultMap id="columnNhanVienPhuCap" type="PhuCap">
+        <id column="ma_phu_cap" property="maPhuCap"/>
+        <result column="ma_nhan_vien" property="maNhanVien"/>
+        <result column="ngay" property="ngay"/>
+    </resultMap>
+
+    <insert id="insertNhanVienPhuCap">
+        INSERT INTO nhan_vien_phu_cap( ma_nhan_vien, ma_phu_cap, ngay)
+        VALUES (#{maNhanVien},#{maPhuCap}, #{ngay})
+    </insert>
+
+    <delete id="deleteNhanVienPhuCap">
+        DELETE FROM nhan_vien_phu_cap
+            WHERE ma_nhan_vien = #{maNhanVien}
+            AND ma_phu_cap = #{maPhuCap}
+            AND ngay = #{ngay}
+    </delete>
+
+</mapper>

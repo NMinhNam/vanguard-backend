@@ -1,5 +1,6 @@
 package com.fpt.vanguard.mapper.mybatis;
 
+import com.fpt.vanguard.dto.request.PhuCapDtoRequest;
 import com.fpt.vanguard.entity.PhuCap;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,4 +13,5 @@ public interface PhuCapMapper {
     Integer updatePhuCap(PhuCap phuCap);
     Integer deletePhuCap(String maPhuCap);
     Boolean isPhuCapExist(String maPhuCap);
+    PhuCap getNhanVienPhuCap(PhuCapDtoRequest phuCapDtoRequest);
 }

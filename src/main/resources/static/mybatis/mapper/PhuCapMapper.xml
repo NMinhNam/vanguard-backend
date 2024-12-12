@@ -17,6 +17,17 @@
         so_tien
     </sql>
 
+    <sql id="columnNhanVienPhuCap">
+        nv.ma_nhan_vien,
+        nv.ho_ten as ten_nhan_vien,
+        pc.ma_phu_cap,
+        ten_phu_cap,
+        so_tien,
+        nvpc.ngay
+    </sql>
+
+
+
     <select id="getAllPhuCaps" resultMap="columnPhuCap">
         SELECT
         <include refid="columnPhuCap"></include>
@@ -29,6 +40,17 @@
             from phu_cap
             where ma_phu_cap = #{maPhuCap}
         )
+    </select>
+
+    <select id="getNhanVienPhuCap">
+        SELECT
+           <include refid="columnNhanVienPhuCap"></include>
+        FROM phu_cap pc
+            LEFT JOIN nhan_vien_phu_cap nvpc on pc.ma_phu_cap = nvpc.ma_phu_cap
+            LEFT JOIN nhan_vien nv on nvpc.ma_nhan_vien = nv.ma_nhan_vien
+        WHERE nv.ma_nhan_vien = #{maNhanVien}
+          AND nvpc.ngay = #{ngay}
+          AND pc.ma_phu_cap = #{maPhuCap}
     </select>
 
     <insert id="insertPhuCap">

@@ -9,4 +9,5 @@ public interface PhuCapService {
     List<PhuCapDtoResponse> getAllPhuCaps();
     Integer savePhuCap(PhuCapDtoRequest phuCapDtoRequest);
     Integer deletePhuCap(String maPhuCap);
+    PhuCapDtoResponse getNhanVienPhuCap(PhuCapDtoRequest phuCapDtoRequest);
 }

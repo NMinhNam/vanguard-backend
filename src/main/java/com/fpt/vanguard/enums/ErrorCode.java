@@ -53,7 +53,9 @@ public enum ErrorCode {
     MEETING_NOT_EXISTED(1001, "meeting not existed"),
     CCCD_EXISTED(1001, "cccd da ton tai"),
     PHU_CAP_EXISTED(1001, "Phu cap ton tai"),
-    PHU_CAP_NOT_EXISTED(1000, "Phu cap khong ton tai")
+    PHU_CAP_NOT_EXISTED(1000, "Phu cap khong ton tai"),
+    NHAN_VIEN_PHU_CAP_NOT_EXIST(1000, "Nhan vien phu cap khong ton tai"),
+    NHAN_VIEN_PHU_CAP_EXISTED(1001, "Nhan vien phu cap da ton tai")
     ;
 
     private final int status;

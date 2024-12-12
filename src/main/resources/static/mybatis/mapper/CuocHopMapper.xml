@@ -106,6 +106,7 @@
         <result column="vi_tri" property="viTri"/>
         <result column="video_call_url" property="videoCallUrl"/>
         <result column="ghi_chu" property="ghiChu"/>
+        <result column="ma_nguoi_to_chuc" property="nguoiToChuc"/>
         <result column="ten_nguoi_to_chuc" property="tenNguoiToChuc"/>
         <result column="danh_sach_tham_gia" property="danhSachThamGia"/>
     </resultMap>
@@ -118,6 +119,7 @@
         ch.vi_tri,
         ch.video_call_url,
         ch.ghi_chu,
+        ch.nguoi_to_chuc AS ma_nguoi_to_chuc,
         nv_to_chuc.ho_ten AS ten_nguoi_to_chuc,
         STRING_AGG(nv_tham_gia.ma_nhan_vien, ', ') AS danh_sach_tham_gia
     </sql>

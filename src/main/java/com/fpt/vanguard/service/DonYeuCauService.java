@@ -11,4 +11,5 @@ public interface DonYeuCauService {
     Integer deleteDonYeuCau(String maDon);
     List<DonYeuCauDtoResponse> getAllDonYeuCau();
     Integer updateDonYeuCau(DonYeuCauDtoRequest request);
+    Long getSoNgayNghi(String ngayBatDau, String ngayKetThuc);
 }

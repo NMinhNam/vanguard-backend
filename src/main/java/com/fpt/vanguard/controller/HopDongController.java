@@ -57,7 +57,7 @@ public class HopDongController {
         ApiResponse<List<HopDongDtoResponse>> apiResponse = new ApiResponse<>();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setSuccess(true);
-        apiResponse.setData(hopDongService.getHopDongByMaNhanVien(maNhanVien));
+        apiResponse.setData(hopDongService.getListHopDongByMaNhanVien(maNhanVien));
         return apiResponse;
     }
 }

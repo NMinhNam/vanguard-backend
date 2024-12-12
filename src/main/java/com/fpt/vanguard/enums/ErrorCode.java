@@ -51,6 +51,8 @@ public enum ErrorCode {
     VI_TRI_TUYEN_DUNG_KHONG_HOP_LE(1000,"VI TRI TUYEN DUNG KHONG HOP LE"),
     MEETING_EXISTED(1001, "meeting existed"),
     MEETING_NOT_EXISTED(1001, "meeting not existed"),
+    NGHI_PHEP_NAM_EXISTED(1001, "nghi phep nam existed"),
+    KHONG_DU_SO_NGAY_PHEP_NAM(1000, "Không đủ số ngày phép năm"),
     ;
 
     private final int status;

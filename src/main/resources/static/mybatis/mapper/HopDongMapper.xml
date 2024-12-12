@@ -105,11 +105,19 @@
         WHERE so_hop_dong = #{soHopDong}
     </delete>
 
-    <select id="getHopDongByMaNhanVien" parameterType="String" resultMap="HopDongResultMap">
+    <select id="getListHopDongByMaNhanVien" parameterType="String" resultMap="HopDongResultMap">
         SELECT
         <include refid="columnHopDong"/>
         FROM hop_dong hd
         WHERE hd.ma_nhan_vien = #{maNhanVien}
+    </select>
+
+    <select id="getHopDongByMaNhanVien" resultMap="HopDongResultMap">
+        SELECT
+        <include refid="columnHopDong"/>
+        FROM hop_dong hd
+        WHERE hd.ma_nhan_vien = #{maNhanVien}
+        LIMIT 1
     </select>
 
 </mapper>

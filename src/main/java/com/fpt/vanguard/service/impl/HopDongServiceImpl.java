@@ -53,14 +53,21 @@ public class HopDongServiceImpl implements HopDongService {
     }
 
     @Override
-    public List<HopDongDtoResponse> getHopDongByMaNhanVien(String maNhanVien) {
+    public List<HopDongDtoResponse> getListHopDongByMaNhanVien(String maNhanVien) {
         List<HopDongDtoResponse> listResultEntity =
                 hopDongMapstruct.toHopDongDtoResponseList(
-                        hopDongMapper.getHopDongByMaNhanVien(maNhanVien)
+                        hopDongMapper.getListHopDongByMaNhanVien(maNhanVien)
                 );
         if (listResultEntity.isEmpty()) {
             throw new AppException(ErrorCode.HOP_DONG_NOT_EXIST);
         }
         return listResultEntity;
+    }
+
+    @Override
+    public HopDongDtoResponse getHopDongByMaNhanVien(String maNhanVien) {
+        return hopDongMapstruct.toHopDongDtoResponse(
+                hopDongMapper.getHopDongByMaNhanVien(maNhanVien)
+        );
     }
 }

@@ -1,9 +1,9 @@
 package com.fpt.vanguard.controller;
 
 import com.fpt.vanguard.common.ApiResponse;
-import com.fpt.vanguard.dto.request.CuocHopDtoRequest;
 import com.fpt.vanguard.dto.request.PhuCapDtoRequest;
 import com.fpt.vanguard.dto.response.PhuCapDtoResponse;
+import com.fpt.vanguard.service.NhanVienPhuCapService;
 import com.fpt.vanguard.service.PhuCapService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,23 +12,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/allowance")
+@RequestMapping("api/v1/employee-allowance")
 @RequiredArgsConstructor
 @CrossOrigin
-public class PhuCapController {
+public class NhanVienPhuCapController {
     private final PhuCapService phuCapService;
+    private final NhanVienPhuCapService nhanVienPhuCapService;
 
-    @GetMapping
-    public ApiResponse<List<PhuCapDtoResponse>> getAllPhuCaps() {
-        return ApiResponse.<List<PhuCapDtoResponse>>builder()
+    @PostMapping("/getNhanVienPhuCap")
+    public ApiResponse<PhuCapDtoResponse> getNhanVienPhuCap(@RequestBody PhuCapDtoRequest phuCapDtoRequest) {
+        return ApiResponse.<PhuCapDtoResponse>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
-                .data(phuCapService.getAllPhuCaps())
+                .data(phuCapService.getNhanVienPhuCap(phuCapDtoRequest))
                 .build();
     }
 
     @PostMapping
-    public ApiResponse<Integer> savePhuCap(@RequestBody PhuCapDtoRequest phuCapDtoRequest) {
+    public ApiResponse<Integer> saveNhanVienPhuCap(@RequestBody PhuCapDtoRequest phuCapDtoRequest) {
         return ApiResponse.<Integer>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
@@ -36,14 +37,12 @@ public class PhuCapController {
                 .build();
     }
 
-    @DeleteMapping("/{id}")
-    public ApiResponse<Integer> deletePhuCap(@PathVariable("id") String maPhuCap) {
+    @DeleteMapping
+    public ApiResponse<Integer> deleteNhanVienPhuCap(@RequestBody PhuCapDtoRequest phuCapDtoRequest) {
         return ApiResponse.<Integer>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
-                .data(phuCapService.deletePhuCap(maPhuCap))
+                .data(nhanVienPhuCapService.deteleNhanVienPhuCap(phuCapDtoRequest))
                 .build();
     }
-
-
 }

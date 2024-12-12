@@ -62,7 +62,10 @@ public class NhanVienServiceImpl implements NhanVienService {
         if (nhanVienMapper.existsById(nhanVienId)) {
             return nhanVienMapper.updateNhanVien(nhanVienMapstruct.toNhanVien(nhanVienDtoRequest));
         }
-
+        String cccd = nhanVienDtoRequest.getCccd();
+        if(Objects.nonNull(nhanVienMapper.getNhanVienByCCCD(cccd))){
+            throw new AppException(ErrorCode.CCCD_EXISTED);
+        }
         String email = nhanVienDtoRequest.getEmail();
         String name = nhanVienDtoRequest.getHoTen();
         String password = PasswordUtil.generateRandomPassword();

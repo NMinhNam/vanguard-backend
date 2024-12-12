@@ -11,8 +11,8 @@
         VALUES (
             #{tenLoaiCong},
             #{heSo},
-            #{gioBatDau},
-            #{gioKetThuc}
+            #{gioBatDau}::TIME,
+            #{gioKetThuc}::TIME
         )
     </insert>
 
@@ -20,8 +20,8 @@
         update loai_cong
         set ten_loai_cong = #{tenLoaiCong}
         and he_so = #{heSo}
-        and gio_bat_dau = #{gioBatDau}
-        and gio_ket_thuc = #{gioKetThuc}
+        and gio_bat_dau = #{gioBatDau}::TIME
+        and gio_ket_thuc = #{gioKetThuc}::TIME
         where ten_loai_cong = #{tenLoaiCong}
     </update>
 

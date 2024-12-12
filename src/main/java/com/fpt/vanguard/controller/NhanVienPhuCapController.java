@@ -1,7 +1,6 @@
 package com.fpt.vanguard.controller;
 
 import com.fpt.vanguard.common.ApiResponse;
-import com.fpt.vanguard.dto.request.CuocHopDtoRequest;
 import com.fpt.vanguard.dto.request.PhuCapDtoRequest;
 import com.fpt.vanguard.dto.response.PhuCapDtoResponse;
 import com.fpt.vanguard.service.PhuCapService;
@@ -12,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/allowance")
+@RequestMapping("api/v1/employee-allowance")
 @RequiredArgsConstructor
 @CrossOrigin
-public class PhuCapController {
+public class NhanVienPhuCapController {
     private final PhuCapService phuCapService;
 
     @GetMapping

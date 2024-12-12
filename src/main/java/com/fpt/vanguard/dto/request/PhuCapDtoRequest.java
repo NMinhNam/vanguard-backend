@@ -8,5 +8,7 @@ import lombok.Setter;
 public class PhuCapDtoRequest {
     private String maPhuCap;
     private String tenPhuCap;
-    private Double soTienPhuCap;
+    private Double soTien;
+
+    private String maNhanVien;
 }

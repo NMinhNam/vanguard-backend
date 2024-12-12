@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.LoaiCongMapper">
+    <insert id="insertLoaiCong">
+        insert into loai_cong(
+            ten_loai_cong,
+            he_so,
+            gio_bat_dau,
+            gio_ket_thuc
+        )
+        VALUES (
+            #{tenLoaiCong},
+            #{heSo},
+            #{gioBatDau},
+            #{gioKetThuc}
+        )
+    </insert>
+
+    <update id="updateLoaiCong">
+        update loai_cong
+        set ten_loai_cong = #{tenLoaiCong}
+        and he_so = #{heSo}
+        and gio_bat_dau = #{gioBatDau}
+        and gio_ket_thuc = #{gioKetThuc}
+        where ten_loai_cong = #{tenLoaiCong}
+    </update>
+
+    <delete id="deleteLoaiCong">
+        DELETE FROM loai_cong
+        WHERE ten_loai_cong = #{tenLoaiCong}
+    </delete>
+
+    <resultMap id="resultMapLoaiCong" type="LoaiCong">
+        <result property="tenLoaiCong" column="ten_loai_cong"/>
+        <result property="heSo" column="he_so"/>
+        <result property="gioBatDau" column="gio_bat_dau"/>
+        <result property="gioKetThuc" column="gio_ket_thuc"/>
+    </resultMap>
+
+    <select id="getAllLoaiCongs" resultMap="resultMapLoaiCong">
+        select ten_loai_cong,
+               he_so,
+               gio_bat_dau,
+               gio_ket_thuc
+        from loai_cong
+    </select>
+
+    <select id="isLoaiCongExist">
+        SELECT EXISTS(
+            SELECT 1
+            FROM loai_cong
+            WHERE ten_loai_cong = #{tenLoaiCong}
+        )
+    </select>
+</mapper>

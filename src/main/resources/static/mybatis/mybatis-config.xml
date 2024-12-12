@@ -23,5 +23,6 @@
         <typeAlias type="com.fpt.vanguard.entity.PhuCap" alias="PhuCap"/>
         <typeAlias type="com.fpt.vanguard.entity.ViPham" alias="ViPham"/>
         <typeAlias type="com.fpt.vanguard.entity.NghiPhepNam" alias="NghiPhepNam"/>
+        <typeAlias type="com.fpt.vanguard.entity.LoaiCong" alias="LoaiCong"/>
     </typeAliases>
 </configuration>

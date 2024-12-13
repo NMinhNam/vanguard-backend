@@ -13,4 +13,6 @@ public interface LoaiCongService {
     Integer deleteLoaiCong(String tenLoaiCong);
 
     List<LoaiCongDtoResponse> getAllLoaiCong();
+
+    LoaiCongDtoResponse getLoaiCongByNgay(Integer maLoaiCong);
 }

@@ -10,4 +10,5 @@ public interface PhuCapService {
     Integer savePhuCap(PhuCapDtoRequest phuCapDtoRequest);
     Integer deletePhuCap(String maPhuCap);
     PhuCapDtoResponse getNhanVienPhuCap(PhuCapDtoRequest phuCapDtoRequest);
+    Double getSumNhanVienPhuCapByMonth(String maNhanVien, String ngay);
 }

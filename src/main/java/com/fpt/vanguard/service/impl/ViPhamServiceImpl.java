@@ -8,6 +8,7 @@ import com.fpt.vanguard.service.ViPhamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -33,5 +34,13 @@ public class ViPhamServiceImpl implements ViPhamService {
     @Override
     public Integer deleteViPham(String maViPham) {
         return viPhamMapper.deleteViPham(maViPham);
+    }
+
+    @Override
+    public Double getSumNhanVienViPhamByMonth(String maNhanVien, String ngay) {
+        LocalDate ngayChamCong = LocalDate.parse(ngay);
+        Integer thang = ngayChamCong.getMonthValue();
+        Integer nam = ngayChamCong.getYear();
+        return viPhamMapper.getSumNhanVienViPhamByMonth(maNhanVien, thang, nam);
     }
 }

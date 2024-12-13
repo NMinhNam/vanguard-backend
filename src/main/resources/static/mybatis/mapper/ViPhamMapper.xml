@@ -46,4 +46,13 @@
             WHERE ma_vi_pham = #{maViPham}
         )
     </select>
+
+    <select id="getSumNhanVienViPhamByMonth">
+        SELECT SUM(so_tien)
+        FROM vi_pham
+                 JOIN nhan_vien_vi_pham nvvp on vi_pham.ma_vi_pham = nvvp.ma_vi_pham
+        WHERE ma_nhan_vien = #{maNhanVien}
+          AND EXTRACT(MONTH FROM ngay) = #{thang}
+          AND EXTRACT(YEAR FROM ngay) = #{nam}
+    </select>
 </mapper>

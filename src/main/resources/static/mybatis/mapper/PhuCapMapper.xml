@@ -53,6 +53,15 @@
           AND pc.ma_phu_cap = #{maPhuCap}
     </select>
 
+    <select id="getSumNhanVienPhuCapByMonth">
+        SELECT SUM(so_tien)
+        FROM phu_cap
+             JOIN public.nhan_vien_phu_cap nvpc on phu_cap.ma_phu_cap = nvpc.ma_phu_cap
+        WHERE ma_nhan_vien = #{maNhanVien}
+          AND EXTRACT(MONTH FROM ngay) = #{thang}
+          AND EXTRACT(YEAR FROM ngay) = #{nam}
+    </select>
+
     <insert id="insertPhuCap">
         INSERT INTO phu_cap(ma_phu_cap, ten_phu_cap, so_tien)
         VALUES (generate_ma_phu_cap(), #{tenPhuCap}, #{soTien});

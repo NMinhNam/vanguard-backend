@@ -12,4 +12,5 @@ public interface ViPhamMapper {
     Integer updateViPham(ViPham viPham);
     Integer deleteViPham(String maViPham);
     Boolean isViPhamExist(String maViPham);
+    Double getSumNhanVienViPhamByMonth(String maNhanVien, Integer thang, Integer nam);
 }

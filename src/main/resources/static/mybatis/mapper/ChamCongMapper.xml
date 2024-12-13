@@ -105,4 +105,23 @@
         </where>
     </select>
 
+    <select id="findByMonth" resultMap="resultMapBangChamCong">
+        SELECT
+            ngay,
+            so_gio_lam
+        FROM bang_cham_cong
+        WHERE
+            ma_nhan_vien = #{maNhanVien}
+          AND EXTRACT(MONTH FROM ngay) = #{month}
+          AND EXTRACT(YEAR FROM ngay) = #{year}
+    </select>
+
+    <select id="getSoNgayCong">
+        SELECT SUM(so_gio_lam) AS tong_so_gio
+        FROM bang_cham_cong
+        WHERE ma_nhan_vien = #{maNhanVien}
+          and  EXTRACT(MONTH FROM ngay) = #{month}
+          AND EXTRACT(YEAR FROM ngay) = #{year}
+    </select>
+
 </mapper>

@@ -14,4 +14,5 @@ public interface PhuCapMapper {
     Integer deletePhuCap(String maPhuCap);
     Boolean isPhuCapExist(String maPhuCap);
     PhuCap getNhanVienPhuCap(PhuCapDtoRequest phuCapDtoRequest);
+    Double getSumNhanVienPhuCapByMonth(String maNhanVien, Integer thang, Integer nam);
 }

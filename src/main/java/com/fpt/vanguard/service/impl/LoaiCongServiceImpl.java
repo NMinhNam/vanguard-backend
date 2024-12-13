@@ -2,7 +2,6 @@ package com.fpt.vanguard.service.impl;
 
 import com.fpt.vanguard.dto.request.LoaiCongDtoRequest;
 import com.fpt.vanguard.dto.response.LoaiCongDtoResponse;
-import com.fpt.vanguard.entity.NgayLe;
 import com.fpt.vanguard.enums.LoaiNgayCong;
 import com.fpt.vanguard.mapper.mapstruct.LoaiCongMapstruct;
 import com.fpt.vanguard.mapper.mybatis.LoaiCongMapper;
@@ -28,8 +27,7 @@ public class LoaiCongServiceImpl implements LoaiCongService {
         Boolean isNgayLe = ngayLeMapper.isNgayLe(ngayChamCong);
         LocalDate ngayLe = LocalDate.parse(ngayChamCong, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-        if (ngayLe.getDayOfWeek() == DayOfWeek.SATURDAY ||
-                ngayLe.getDayOfWeek() == DayOfWeek.SUNDAY) {
+        if (ngayLe.getDayOfWeek() == DayOfWeek.SATURDAY || ngayLe.getDayOfWeek() == DayOfWeek.SUNDAY) {
             return LoaiNgayCong.CUOI_TUAN.getMaLoaiNgayCong();
         }
 
@@ -43,12 +41,8 @@ public class LoaiCongServiceImpl implements LoaiCongService {
         String tenLoaiCong = loaiCongDtoRequest.getTenLoaiCong();
         Boolean isExistLoaiCong = loaiCongMapper.isLoaiCongExist(tenLoaiCong);
 
-        if (isExistLoaiCong) return loaiCongMapper.updateLoaiCong(
-                loaiCongMapstruct.toLoaiCong(loaiCongDtoRequest)
-        );
-        return loaiCongMapper.insertLoaiCong(
-                loaiCongMapstruct.toLoaiCong(loaiCongDtoRequest)
-        );
+        if (isExistLoaiCong) return loaiCongMapper.updateLoaiCong(loaiCongMapstruct.toLoaiCong(loaiCongDtoRequest));
+        return loaiCongMapper.insertLoaiCong(loaiCongMapstruct.toLoaiCong(loaiCongDtoRequest));
     }
 
     @Override
@@ -58,8 +52,11 @@ public class LoaiCongServiceImpl implements LoaiCongService {
 
     @Override
     public List<LoaiCongDtoResponse> getAllLoaiCong() {
-        return loaiCongMapstruct.toDtoList(
-                loaiCongMapper.getAllLoaiCongs()
-        );
+        return loaiCongMapstruct.toDtoList(loaiCongMapper.getAllLoaiCongs());
+    }
+
+    @Override
+    public LoaiCongDtoResponse getLoaiCongByNgay(Integer maLoaiCong) {
+        return loaiCongMapstruct.toDtoResponse(loaiCongMapper.getLoaiCongByNgay(maLoaiCong));
     }
 }

@@ -52,4 +52,13 @@
             WHERE ten_loai_cong = #{tenLoaiCong}
         )
     </select>
+
+    <select id="getLoaiCongByNgay">
+        select ten_loai_cong,
+               he_so,
+               gio_bat_dau,
+               gio_ket_thuc
+        from loai_cong
+                 where ma_loai_cong = #{maLoaiCong}
+    </select>
 </mapper>

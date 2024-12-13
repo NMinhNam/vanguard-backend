@@ -12,4 +12,5 @@ public interface LoaiCongMapper {
     Integer updateLoaiCong(LoaiCong loaiCong);
     Integer deleteLoaiCong(String tenLoaiCong);
     Boolean isLoaiCongExist(String tenLoaiCong);
+    LoaiCong getLoaiCongByNgay(Integer maLoaiCong);
 }

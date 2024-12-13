@@ -11,4 +11,5 @@ import java.util.List;
 public interface LoaiCongMapstruct {
     List<LoaiCongDtoResponse> toDtoList(List<LoaiCong> loaiCongList);
     LoaiCong toLoaiCong(LoaiCongDtoRequest loaiCongDtoRequest);
+    LoaiCongDtoResponse toDtoResponse(LoaiCong loaiCong);
 }

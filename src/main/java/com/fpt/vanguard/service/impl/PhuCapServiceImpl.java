@@ -10,6 +10,7 @@ import com.fpt.vanguard.service.PhuCapService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -50,6 +51,14 @@ public class PhuCapServiceImpl implements PhuCapService {
         if(!Objects.nonNull(response))
             throw new AppException(ErrorCode.NHAN_VIEN_PHU_CAP_NOT_EXIST);
         return response;
+    }
+
+    @Override
+    public Double getSumNhanVienPhuCapByMonth(String maNhanVien, String ngay) {
+        LocalDate ngayChamCong = LocalDate.parse(ngay);
+        Integer thang = ngayChamCong.getMonthValue();
+        Integer nam = ngayChamCong.getYear();
+        return phuCapMapper.getSumNhanVienPhuCapByMonth(maNhanVien, thang, nam);
     }
 
     public Integer updatePhuCap(PhuCapDtoRequest phuCapDtoRequest){

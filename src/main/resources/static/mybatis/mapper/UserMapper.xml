@@ -69,10 +69,19 @@
         WHERE user_name = #{username}
     </update>
 
+    <update id="update">
+    </update>
+
     <update id="updateRoleUser">
         UPDATE "user"
         SET role_id = #{user.role.roleId}
-        WHERE user_name = #{user.userName};
+        WHERE user_name = #{user.userName}
+    </update>
+
+    <update id="updateStatusAccound">
+        UPDATE "user"
+        SET enabled = #{user.enabled}
+        WHERE user_name = #{user.userName}
     </update>
 
     <select id="findByUsername" resultMap="UserResultMap">
@@ -128,4 +137,5 @@
             Left Join nhan_vien nv on u.user_id = nv.user_id
         WHERE u.user_name = #{userName}
     </select>
+
 </mapper>

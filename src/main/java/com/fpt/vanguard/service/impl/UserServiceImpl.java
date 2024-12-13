@@ -84,4 +84,13 @@ public class UserServiceImpl implements UserService {
             throw new AppException(ErrorCode.USER_NOT_EXIST);
         return userMapstruct.toUserDtoResponse(userMapper.getInfoUserByUserName(userName));
     }
+
+    @Override
+    public Integer updateStatusUser(UserDtoRequest request) {
+        String userName = request.getUsername();
+        Boolean isExitsUserName = userMapper.isExist(userName);
+        if(!isExitsUserName)
+            throw new AppException(ErrorCode.USER_NOT_EXIST);
+        return userMapper.updateStatusAccound(userMapstruct.toUser(request));
+    }
 }

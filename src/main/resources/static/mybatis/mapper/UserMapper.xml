@@ -8,6 +8,11 @@
         <result property="password" column="password"/>
         <result property="email" column="email"/>
         <result property="enabled" column="enabled"/>
+        <result property="roleName" column="role_name"/>
+        <result property="maNhanVien" column="ma_nhan_vien"/>
+        <result property="tenNhanVien" column="ten_nhan_vien"/>
+        <result property="dienThoai" column="dien_thoai"/>
+
 
         <association property="role" javaType="Role">
             <id property="roleId" column="role_id"/>
@@ -30,6 +35,15 @@
         , u.enabled
     </sql>
 
+    <sql id="ColumnInfoUser">
+        u.user_name
+        ,u.enabled
+        ,nv.ma_nhan_vien
+        ,nv.ho_ten as ten_nhan_vien
+        ,nv.dien_thoai
+    </sql>
+
+
     <sql id="ColumnRole">
         r.role_id
         , r.role_name
@@ -49,13 +63,16 @@
                )
     </insert>
 
-    <update id="update">
-    </update>
-
     <update id="delete">
         UPDATE "user"
         SET enabled = false
         WHERE user_name = #{username}
+    </update>
+
+    <update id="updateRoleUser">
+        UPDATE "user"
+        SET role_id = #{user.role.roleId}
+        WHERE user_name = #{user.userName};
     </update>
 
     <select id="findByUsername" resultMap="UserResultMap">
@@ -92,5 +109,23 @@
         SELECT COUNT(1) > 0
         FROM "user"
         WHERE user_name = #{username}
+    </select>
+    <select id="getInfoUser" resultMap="UserResultMap">
+        select
+            <include refid="ColumnInfoUser"></include>,
+            <include refid="ColumnRole"></include>
+        from "user" u
+            Left Join role r on u.role_id = r.role_id
+            Left Join nhan_vien nv on u.user_id = nv.user_id
+    </select>
+
+    <select id="getInfoUserByUserName" resultMap="UserResultMap">
+        select
+            <include refid="ColumnInfoUser"></include>,
+            <include refid="ColumnRole"></include>
+        from "user" u
+            Left Join role r on u.role_id = r.role_id
+            Left Join nhan_vien nv on u.user_id = nv.user_id
+        WHERE u.user_name = #{userName}
     </select>
 </mapper>

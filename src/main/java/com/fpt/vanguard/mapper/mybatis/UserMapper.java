@@ -16,4 +16,7 @@ public interface UserMapper {
     int update(@Param("user") User user);
     boolean isExist(@Param("username") String username);
     int delete(@Param("username") String username);
+    List<User> getInfoUser();
+    User getInfoUserByUserName(String userName);
+    Integer updateRoleUser(@Param("user") User user);
 }

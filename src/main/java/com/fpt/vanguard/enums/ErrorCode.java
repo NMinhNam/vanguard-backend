@@ -58,6 +58,10 @@ public enum ErrorCode {
     NHAN_VIEN_PHU_CAP_EXISTED(1001, "Nhan vien phu cap da ton tai"),
     NGHI_PHEP_NAM_EXISTED(1001, "nghi phep nam existed"),
     KHONG_DU_SO_NGAY_PHEP_NAM(1000, "Không đủ số ngày phép năm"),
+    NHAN_VIEN_VI_PHAM_NOT_EXIST(1000, "Nhan vien vi pham khong ton tai"),
+    NHAN_VIEN_VI_PHAM_EXISTED(1001, "Nhan vien vi pham da ton tai"),
+    VI_PHAM_NOT_EXIST(1000, "Vi pham khong ton tai"),
+    VI_PHAM_EXISTED(1001, "Vi pham da ton tai"),
     ;
 
     private final int status;

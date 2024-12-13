@@ -11,4 +11,5 @@ public class UserDtoRequest {
     private String username;
     private String password;
     private Integer roleId;
+    private Boolean enabled;
 }

@@ -17,12 +17,12 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping
-    public ApiResponse<List<UserDtoResponse>> getAll() {
+    @GetMapping()
+    public ApiResponse<List<UserDtoResponse>> getListUserInfo() {
         return ApiResponse.<List<UserDtoResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
-                .data(userService.getAllUser())
+                .data(userService.getAllInfoUser())
                 .build();
     }
 
@@ -61,4 +61,14 @@ public class UserController {
                 .data(userService.deleteUser(username))
                 .build();
     }
+
+    @PutMapping("/updateRole")
+    public ApiResponse<Integer> deleteUser(@RequestBody UserDtoRequest request) {
+        return ApiResponse.<Integer>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(userService.updateRoleUser(request))
+                .build();
+    }
+
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.NhanVienViPhamMapper">
+    <resultMap id="resultMapNhanVienViPham" type="com.fpt.vanguard.entity.NhanVienViPham">
+        <result property="maViPham" column="ma_vi_pham"/>
+        <result property="maNhanVien" column="ma_nhan_vien"/>
+        <result property="tenViPham" column="ten_vi_pham"/>
+        <result property="ngayViPham" column="ngay_vi_pham"/>
+        <result property="tenNhanVienViPham" column="ten_nhan_vien_vi_pham"/>
+        <result property="soTien" column="so_tien"/>
+    </resultMap>
+
+
+    <select id="getAll" resultMap="resultMapNhanVienViPham">
+        SELECT
+            nv.ho_ten,
+            vp.ten_vi_pham,
+            nvvp.ma_vi_pham,
+            nvvp.ma_nhan_vien,
+            nvvp.ngay_vi_pham,
+            vp.so_tien
+        FROM nhan_vien_vi_pham nvvp
+            LEFT JOIN vi_pham vp on nvvp.ma_vi_pham = vp.ma_vi_pham
+            LEFT JOIN nhan_vien nv on nv.ma_nhan_vien = nvvp.ma_nhan_vien
+    </select>
+
+    <select id="getNhanVienViPhams" resultMap="resultMapNhanVienViPham">
+        SELECT
+            nv.ho_ten,
+            vp.ten_vi_pham,
+            nvvp.ma_vi_pham,
+            nvvp.ma_nhan_vien,
+            nvvp.ngay_vi_pham,
+            vp.so_tien
+        FROM nhan_vien_vi_pham nvvp
+            LEFT JOIN vi_pham vp on nvvp.ma_vi_pham = vp.ma_vi_pham
+            LEFT JOIN nhan_vien nv on nv.ma_nhan_vien = nvvp.ma_nhan_vien
+        WHERE nv.ma_nhan_vien = #{maNhanVien}
+    </select>
+
+    <insert id="insertNhanVienViPham">
+        INSERT INTO nhan_vien_vi_pham(ma_vi_pham, ma_nhan_vien, ngay_vi_pham)
+        VALUES (#{maViPham},#{maNhanVien},#{ngayViPham});
+    </insert>
+</mapper>

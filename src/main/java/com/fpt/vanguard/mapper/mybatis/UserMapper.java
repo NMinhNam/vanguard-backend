@@ -19,4 +19,5 @@ public interface UserMapper {
     List<User> getInfoUser();
     User getInfoUserByUserName(String userName);
     Integer updateRoleUser(@Param("user") User user);
+    Integer updateStatusAccound(@Param("user") User user);
 }

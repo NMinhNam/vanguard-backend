@@ -63,11 +63,20 @@ public class UserController {
     }
 
     @PutMapping("/updateRole")
-    public ApiResponse<Integer> deleteUser(@RequestBody UserDtoRequest request) {
+    public ApiResponse<Integer> updateRole(@RequestBody UserDtoRequest request) {
         return ApiResponse.<Integer>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
                 .data(userService.updateRoleUser(request))
+                .build();
+    }
+
+    @PutMapping("/updateStatus")
+    public ApiResponse<Integer> updateStatus(@RequestBody UserDtoRequest request) {
+        return ApiResponse.<Integer>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(userService.updateStatusUser(request))
                 .build();
     }
 

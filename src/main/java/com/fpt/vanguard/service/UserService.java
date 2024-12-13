@@ -14,4 +14,5 @@ public interface UserService {
     Integer updateRoleUser(UserDtoRequest request);
     List<UserDtoResponse> getAllInfoUser();
     UserDtoResponse getInfoUserByUserName(String userName);
+    Integer updateStatusUser(UserDtoRequest request);
 }

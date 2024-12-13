@@ -18,18 +18,20 @@ public class ViPhamServiceImpl implements ViPhamService {
 
     @Override
     public List<ViPhamDtoResponse> getAllViPhams() {
-        return viPhamMapstruct.toResponseList(
-                viPhamMapper.getAllViPham()
-        );
+        return viPhamMapstruct.toResponseList(viPhamMapper.getAllViPham());
     }
 
     @Override
     public Integer saveViPham(ViPhamDtoRequest viPhamDtoRequest) {
-        return 0;
+        String maViPham = viPhamDtoRequest.getMaViPham();
+        Boolean isViPhamExist = viPhamMapper.isViPhamExist(maViPham);
+
+        if (isViPhamExist) return viPhamMapper.updateViPham(viPhamMapstruct.toViPham(viPhamDtoRequest));
+        return viPhamMapper.insertViPham(viPhamMapstruct.toViPham(viPhamDtoRequest));
     }
 
     @Override
     public Integer deleteViPham(String maViPham) {
-        return 0;
+        return viPhamMapper.deleteViPham(maViPham);
     }
 }

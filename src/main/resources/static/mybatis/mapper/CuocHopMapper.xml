@@ -8,7 +8,8 @@
         <result property="thoiGianKetThuc" column="thoi_gian_ket_thuc" />
         <result property="viTri" column="vi_tri" />
         <result property="videoCallUrl" column="video_call_url" />
-        <result property="nguoiToChuc" column="ho_ten" />
+        <result property="nguoiToChuc" column="nguoi_to_chuc" />
+        <result property="tenNguoiToChuc" column="ho_ten" />
         <result property="ghiChu" column="ghi_chu" />
     </resultMap>
 
@@ -57,7 +58,8 @@
         thoi_gian_ket_thuc,
         vi_tri,
         video_call_url,
-        ghi_chu
+        ghi_chu,
+        nguoi_to_chuc
     </sql>
 
     <select id="getAllCuocHops" resultMap="resultMapCuocHop">

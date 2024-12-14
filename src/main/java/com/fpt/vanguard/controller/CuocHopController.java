@@ -26,7 +26,7 @@ public class CuocHopController {
                 .build();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ApiResponse<CuocHopDtoResponse> getMeetingDetail(@PathVariable("id") String maCuocHop) {
         return ApiResponse.<CuocHopDtoResponse>builder()
                 .status(HttpStatus.OK.value())

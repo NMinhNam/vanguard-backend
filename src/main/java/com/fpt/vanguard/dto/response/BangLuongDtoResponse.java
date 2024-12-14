@@ -12,4 +12,7 @@ public class BangLuongDtoResponse {
     private Double tongPhuCap;
     private Integer thang;
     private Integer nam;
+
+    private String mucLuong;
+    private Integer soNhanVien;
 }

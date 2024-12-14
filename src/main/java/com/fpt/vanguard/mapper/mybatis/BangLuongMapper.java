@@ -9,4 +9,5 @@ import java.util.List;
 public interface BangLuongMapper {
     List<BangLuong> getAllBangLuong();
     BangLuong getBangLuongNhanVienByMonth();
+    List<BangLuong> getMucLuongTheoSoLuongNhanVien();
 }

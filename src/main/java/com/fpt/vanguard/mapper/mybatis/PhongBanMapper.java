@@ -23,4 +23,8 @@ public interface PhongBanMapper {
     Boolean isExist(@Param("id") String id);
 
     List<PhongBan> orgChartPhongBan();
+
+    List<PhongBan> getSoLuongNhanVienTheoPhongBan();
+
+    List<PhongBan> getTongLuongTheoPhongBan();
 }

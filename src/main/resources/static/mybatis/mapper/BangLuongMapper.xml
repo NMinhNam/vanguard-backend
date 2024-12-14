@@ -8,4 +8,40 @@
     <select id="getBangLuongNhanVienByMonth">
 
     </select>
+
+    <resultMap id="resultMapThongKeMucLuongTheoSoLuongNhanVien" type="BangLuong">
+        <result property="mucLuong" column="muc_luong"/>
+        <result property="soNhanVien" column="so_nhan_vien"/>
+    </resultMap>
+
+    <select id="getMucLuongTheoSoLuongNhanVien">
+        WITH CTE_Luong AS (
+        SELECT
+        CASE
+        WHEN tong_luong
+        <
+        10000000 THEN '<10'
+        WHEN tong_luong BETWEEN 10000000 AND 20000000 THEN '10-20'
+        WHEN tong_luong BETWEEN 20000000 AND 30000000 THEN '20-30'
+        ELSE '>30'
+        END AS muc_luong,
+        ma_nhan_vien
+        FROM
+        bang_luong
+        )
+        SELECT
+        muc_luong,
+        COUNT(ma_nhan_vien) AS so_nhan_vien
+        FROM
+        CTE_Luong
+        GROUP BY
+        muc_luong
+        ORDER BY
+        CASE
+        WHEN muc_luong = '<10' THEN 1
+        WHEN muc_luong = '10-20' THEN 2
+        WHEN muc_luong = '20-30' THEN 3
+        ELSE 4
+        END
+    </select>
 </mapper>

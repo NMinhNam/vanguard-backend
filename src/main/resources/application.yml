@@ -27,6 +27,7 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/mail-templates/
     suffix: .html
+    mode: HTML
 
 mybatis:
   config-location: classpath:/static/mybatis/mybatis-config.xml

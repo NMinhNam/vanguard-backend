@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meeting Notification</title>
+    <title>Updated Meeting Notification</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -67,6 +67,12 @@
             padding-left: 20px;
             list-style: disc;
         }
+        .update-message {
+            font-size: 16px;
+            color: #f44336;
+            font-weight: bold;
+            margin-top: 20px;
+        }
         .footer {
             text-align: center;
             font-size: 12px;
@@ -80,29 +86,34 @@
 <body>
 <div class="email-container">
     <!-- Header -->
-    <div class="header">Meeting Notification</div>
+    <div class="header">Meeting Updated</div>
 
     <!-- Body -->
     <div class="body">
         <p>Hello <strong th:text="${tenNhanVien}"></strong>,</p>
-        <p>You have been invited to a meeting:</p>
+        <p>We would like to inform you that the details for the meeting <strong th:text="${tenCuocHop}"></strong> have been updated.</p>
 
         <!-- Meeting Details -->
         <div class="meeting-details">
+            <div class="meeting-date">
+                <div class="day" th:text="${thoiGianBatDau.dayOfMonth}"></div>
+                <div class="month" th:text="${thoiGianBatDau.month}"></div>
+                <div class="time" th:text="${thoiGianBatDau.toLocalTime()}"></div>
+            </div>
             <div class="details">
+                <p><strong>Details of the updated meeting:</strong></p>
                 <ul>
-                    <li><strong>Meeting Name:</strong> <span th:text="${tenCuocHop}"></span></li>
                     <li><strong>Start Time:</strong> <span th:text="${thoiGianBatDau}"></span></li>
                     <li><strong>End Time:</strong> <span th:text="${thoiGianKetThuc}"></span></li>
                     <li><strong>Location:</strong> <span th:text="${viTri}"></span></li>
-                    <li><strong>Organized By:</strong> <span th:text="${nguoiToChuc}"></span></li>
+                    <li><strong>Meeting Link:</strong> <a th:href="${videoCallUrl}">Join the meeting</a></li>
+                    <li><strong>Organizer:</strong> <span th:text="${nguoiToChuc}"></span></li>
                     <li><strong>Notes:</strong> <span th:text="${ghiChu}"></span></li>
-                    <li><strong>Join Meeting:</strong>
-                        <a th:href="${videoCallUrl}" th:text="'Click here to join'"></a>
-                    </li>
                 </ul>
             </div>
         </div>
+
+        <p class="update-message" th:text="${updateMessage}"></p>
     </div>
 
     <!-- Footer -->

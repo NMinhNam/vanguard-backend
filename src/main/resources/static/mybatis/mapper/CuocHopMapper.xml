@@ -147,4 +147,22 @@
                  ch.nguoi_to_chuc,
                  nv_to_chuc.ho_ten
     </select>
+
+    <resultMap id="resultMapInfoNhanVienFromCuocHop" type="CuocHop">
+        <result property="tenNhanVien" column="ten_nhan_vien"/>
+        <result property="emailNhanVien" column="email_nhan_vien"/>
+        <result property="tenNguoiToChuc" column="ten_nguoi_to_chuc"/>
+    </resultMap>
+
+    <select id="getInfoNhanVienFromCuocHop" resultMap="resultMapInfoNhanVienFromCuocHop">
+        SELECT
+            nv.ho_ten AS ten_nhan_vien,
+            nv.email AS email_nhan_vien,
+            nguoi_to_chuc.ho_ten AS ten_nguoi_to_chuc
+        FROM chi_tiet_cuoc_hop cth
+                 JOIN nhan_vien nv ON cth.ma_nhan_vien = nv.ma_nhan_vien
+                 JOIN cuoc_hop ch ON cth.ma_cuoc_hop = ch.ma_cuoc_hop
+                 JOIN nhan_vien nguoi_to_chuc ON ch.nguoi_to_chuc = nguoi_to_chuc.ma_nhan_vien
+        WHERE cth.ma_cuoc_hop = #{maCuocHop}
+    </select>
 </mapper>

@@ -15,4 +15,5 @@ public interface CuocHopMapper {
     CuocHop getCuocHop(String maCuocHop);
     CuocHop getMaCuocHop(CuocHop cuocHop);
     List<CuocHop> getCuocHopByMaNhanVien(String maNhanVien);
+    List<CuocHop> getInfoNhanVienFromCuocHop(String maCuocHop);
 }

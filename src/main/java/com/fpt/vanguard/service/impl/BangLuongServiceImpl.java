@@ -21,21 +21,16 @@ public class BangLuongServiceImpl implements BangLuongService {
     private final BangLuongMapstruct bangLuongMapstruct;
 
     @Override
-    public List<BangLuongDtoResponse> getBangLuongNhanVien() {
-        return List.of();
+    public List<BangLuongDtoResponse> getBangLuongNhanVien(String maNhanVien) {
+        return bangLuongMapstruct.toResponseList(
+                bangLuongMapper.getBangLuongNhanVien(maNhanVien)
+        );
     }
 
     @Override
     public List<BangLuongDtoResponse> getAllBangLuong() {
         return bangLuongMapstruct.toResponseList(
                 bangLuongMapper.getAllBangLuong()
-        );
-    }
-
-    @Override
-    public BangLuongDtoResponse getBangLuongNhanVienByMonth() {
-        return bangLuongMapstruct.toDtoResponse(
-                bangLuongMapper.getBangLuongNhanVienByMonth()
         );
     }
 

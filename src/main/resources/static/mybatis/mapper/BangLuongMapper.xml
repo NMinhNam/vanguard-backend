@@ -2,10 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fpt.vanguard.mapper.mybatis.BangLuongMapper">
     <select id="getAllBangLuong">
-
+        select ma_bang_luong,
+               bang_luong.ma_nhan_vien,
+               nhan_vien.ho_ten,
+               tong_phu_cap,
+               tong_khau_tru,
+               tong_luong,
+               tong_luong_thuc_nhan,
+               thang,
+               nam
+        from bang_luong
+                 JOIN nhan_vien on bang_luong.ma_nhan_vien = nhan_vien.ma_nhan_vien
     </select>
 
     <select id="getBangLuongNhanVienByMonth">
 
+    </select>
+
+    <select id="getBangLuongNhanVien">
+        select ma_bang_luong,
+               bang_luong.ma_nhan_vien,
+               nhan_vien.ho_ten,
+               tong_phu_cap,
+               tong_khau_tru,
+               tong_luong,
+               tong_luong_thuc_nhan,
+               thang,
+               nam
+        from bang_luong
+                 JOIN nhan_vien on bang_luong.ma_nhan_vien = nhan_vien.ma_nhan_vien
+            where bang_luong.ma_nhan_vien = #{maNhanVien}
     </select>
 </mapper>

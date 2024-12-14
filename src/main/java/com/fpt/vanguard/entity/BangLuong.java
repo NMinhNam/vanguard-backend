@@ -10,6 +10,8 @@ public class BangLuong {
     private String maNhanVien;
     private Double tongLuong;
     private Double tongPhuCap;
+    private Double tongKhauTru;
+    private Double tongLuongThucNhan;
     private Integer thang;
     private Integer nam;
 }

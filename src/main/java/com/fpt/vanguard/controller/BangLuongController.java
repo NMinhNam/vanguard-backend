@@ -25,13 +25,12 @@ public class BangLuongController {
                 .build();
     }
 
-    @GetMapping("/{id}")
-    public ApiResponse<BangLuongDtoResponse> getBangLuong(@PathVariable("id") String maNhanVien) {
-        return ApiResponse.<BangLuongDtoResponse>builder()
+    @GetMapping("employee/{id}")
+    public ApiResponse<List<BangLuongDtoResponse>> getBangLuong(@PathVariable("id") String maNhanVien) {
+        return ApiResponse.<List<BangLuongDtoResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
-                .data(bangLuongService.getBangLuongNhanVienByMonth())
+                .data(bangLuongService.getBangLuongNhanVien(maNhanVien))
                 .build();
     }
-
 }

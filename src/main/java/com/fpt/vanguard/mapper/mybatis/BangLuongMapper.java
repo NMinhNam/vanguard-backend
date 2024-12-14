@@ -8,5 +8,5 @@ import java.util.List;
 @Mapper
 public interface BangLuongMapper {
     List<BangLuong> getAllBangLuong();
-    BangLuong getBangLuongNhanVienByMonth();
+    List<BangLuong> getBangLuongNhanVien(String maNhanVien);
 }

@@ -276,6 +276,7 @@
     </resultMap>
 
     <select id="getNhanSuMoi" resultMap="resultMapNhanSuMoi">
+<![CDATA[
         SELECT
             nv.ho_ten,
             p.ten_phong_ban,
@@ -296,6 +297,7 @@
                 AND hd.lan_ky = 1
         ORDER BY
             hd.ngay_ky DESC
+        ]]>
     </select>
 
     <resultMap id="resultMapGetNhanVienByBirthday" type="NhanVien">
@@ -313,13 +315,13 @@
             cv.ten_chuc_vu
         FROM
             nhan_vien nv
-        JOIN
+                JOIN
             phong_ban p ON p.ma_phong_ban = nv.ma_phong_ban
-        JOIN
+                JOIN
             chuc_vu cv ON nv.ma_chuc_vu = cv.ma_chuc_vu
         WHERE
-            EXTRACT(MONTH FROM nv.ngay_sinh) = EXTRACT(MONTH FROM current_date)  -- Sinh nhật trong tháng này
-        AND EXTRACT(YEAR FROM nv.ngay_sinh) <= EXTRACT(YEAR FROM current_date)  -- Đảm bảo năm sinh hợp lệ
+            EXTRACT(MONTH FROM nv.ngay_sinh) = EXTRACT(MONTH FROM current_date)
+          AND EXTRACT(YEAR FROM nv.ngay_sinh) &lt;= EXTRACT(YEAR FROM current_date)
         ORDER BY
             nv.ngay_sinh
     </select>

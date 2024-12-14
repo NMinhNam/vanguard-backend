@@ -27,4 +27,5 @@ public class NhanVien {
     private String tenPhongBan;
     private String tenBoPhan;
     private String tenChucVu;
+    private String ngayKyHopDong;
 }

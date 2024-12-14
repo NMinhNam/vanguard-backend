@@ -2,6 +2,7 @@ package com.fpt.vanguard.service;
 
 import com.fpt.vanguard.dto.response.BangLuongDtoResponse;
 import com.fpt.vanguard.dto.response.DonYeuCauDtoResponse;
+import com.fpt.vanguard.dto.response.NhanVienDtoResponse;
 import com.fpt.vanguard.dto.response.PhongBanDtoResponse;
 
 import java.util.List;
@@ -11,4 +12,7 @@ public interface ThongKeService {
     List<DonYeuCauDtoResponse> getDonYeuCau();
     List<BangLuongDtoResponse> getSoLuongNhanVienTheoMucLuong();
     List<PhongBanDtoResponse> getTongLuongTheoPhongBan();
+    List<PhongBanDtoResponse> getBienDongNhanVienTheoPhongBan();
+    List<NhanVienDtoResponse> getNhanSuMoi();
+    List<NhanVienDtoResponse> getNhanVienSinhNhat();
 }

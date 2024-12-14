@@ -81,6 +81,29 @@
             tong_luong DESC
     </select>
 
+    <resultMap id="resultMapBienDongNhanVienTheoPhongBan" type="PhongBan">
+        <result property="tenPhongBan" column="ten_phong_ban"/>
+        <result property="ngayKy" column="ngay_ky"/>
+        <result property="soLuongNhanVien" column="tong_so_nhan_vien"/>
+    </resultMap>
+
+    <select id="getBienDongNhanVienTheoPhongBan" resultMap="resultMapBienDongNhanVienTheoPhongBan">
+        SELECT
+            pb.ten_phong_ban,
+            hd.ngay_ky,
+            COUNT(nv.ma_nhan_vien) AS tong_so_nhan_vien
+        FROM
+            phong_ban pb
+                LEFT JOIN
+            nhan_vien nv ON pb.ma_phong_ban = nv.ma_phong_ban
+                RIGHT JOIN
+            hop_dong hd ON nv.ma_nhan_vien = hd.ma_nhan_vien
+        WHERE hd.lan_ky = 1
+        GROUP BY
+            pb.ten_phong_ban,
+            hd.ngay_ky
+    </select>
+
     <insert id="insertPhongBan" parameterType="com.fpt.vanguard.dto.request.PhongBanDtoRequest">
         INSERT INTO phong_ban (ma_phong_ban, ten_phong_ban, truong_phong, ma_phong_ban_cap_tren)
         VALUES (

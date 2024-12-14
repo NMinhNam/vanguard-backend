@@ -15,4 +15,5 @@ public class PhongBan {
     private Integer soLuongNhanVien;
     private String anhTruongPhong;
     private Double tongLuong;
+    private String ngayKy;
 }

@@ -27,4 +27,6 @@ public interface PhongBanMapper {
     List<PhongBan> getSoLuongNhanVienTheoPhongBan();
 
     List<PhongBan> getTongLuongTheoPhongBan();
+
+    List<PhongBan> getBienDongNhanVienTheoPhongBan();
 }

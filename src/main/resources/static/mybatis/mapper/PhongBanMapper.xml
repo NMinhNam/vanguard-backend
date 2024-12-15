@@ -104,6 +104,11 @@
             hd.ngay_ky
     </select>
 
+    <select id="getTongSoPhongBan">
+        SELECT COUNT(ma_phong_ban)
+        FROM phong_ban
+    </select>
+
     <insert id="insertPhongBan" parameterType="com.fpt.vanguard.dto.request.PhongBanDtoRequest">
         INSERT INTO phong_ban (ma_phong_ban, ten_phong_ban, truong_phong, ma_phong_ban_cap_tren)
         VALUES (

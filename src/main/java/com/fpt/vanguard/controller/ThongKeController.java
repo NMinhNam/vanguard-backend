@@ -16,7 +16,7 @@ import java.util.List;
 public class ThongKeController {
     private final ThongKeService thongKeService;
 
-    @GetMapping("/departments")
+    @GetMapping("/employees-by-departments")
     public ApiResponse<List<PhongBanDtoResponse>> getSoLuongNhanVienTheoPhongBan() {
         return ApiResponse.<List<PhongBanDtoResponse>>builder()
                 .status(HttpStatus.OK.value())
@@ -94,6 +94,24 @@ public class ThongKeController {
                 .status(HttpStatus.OK.value())
                 .success(true)
                 .data(thongKeService.getTongLuongNhanVienTheoThang(maNhanVien))
+                .build();
+    }
+
+    @GetMapping("/employees")
+    public ApiResponse<Integer> getTongSoLuongNhanVien() {
+        return ApiResponse.<Integer>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(thongKeService.getTongSoLuongNhanVien())
+                .build();
+    }
+
+    @GetMapping("/departments")
+    public ApiResponse<Integer> getTongSoPhongBan() {
+        return ApiResponse.<Integer>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(thongKeService.getTongSoPhongBan())
                 .build();
     }
 }

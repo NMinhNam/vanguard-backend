@@ -85,4 +85,14 @@ public class ThongKeServiceImpl implements ThongKeService {
                 bangLuongMapper.getTongLuongNhanVienTheoThang(maNhanVien)
         );
     }
+
+    @Override
+    public Integer getTongSoLuongNhanVien() {
+        return nhanVienMapper.getTongSoLuongNhanVien();
+    }
+
+    @Override
+    public Integer getTongSoPhongBan() {
+        return phongBanMapper.getTongSoPhongBan();
+    }
 }

@@ -80,4 +80,27 @@
             AND chuyen_nganh = #{chuyenNganh}
         )
     </select>
+
+    <resultMap id="resultMapSoLuongNhanVienTheoHocVan" type="HocVan">
+        <result property="tenTrinhDo" column="trinh_do"/>
+        <result property="soLuongNhanVien" column="so_luong_nhan_vien"/>
+    </resultMap>
+
+    <select id="getSoLuongNhanVienTheoHocVan">
+        SELECT
+            CASE
+                WHEN ten_trinh_do = 'Cao đẳng' THEN 'Cao đẳng'
+                WHEN ten_trinh_do = 'Đại học' THEN 'Đại học'
+                WHEN ten_trinh_do = 'Thạc sĩ' THEN 'Thạc sĩ'
+                WHEN ten_trinh_do = 'Tiến sĩ' THEN 'Tiến sĩ'
+                ELSE 'Khác'
+                END AS trinh_do,
+            COUNT(*) AS so_luong_nhan_vien
+        FROM
+            hoc_van
+        GROUP BY
+            trinh_do
+        ORDER BY
+            so_luong_nhan_vien DESC
+    </select>
 </mapper>

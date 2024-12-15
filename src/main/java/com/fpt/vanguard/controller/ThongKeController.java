@@ -1,17 +1,11 @@
 package com.fpt.vanguard.controller;
 
 import com.fpt.vanguard.common.ApiResponse;
-import com.fpt.vanguard.dto.response.BangLuongDtoResponse;
-import com.fpt.vanguard.dto.response.DonYeuCauDtoResponse;
-import com.fpt.vanguard.dto.response.NhanVienDtoResponse;
-import com.fpt.vanguard.dto.response.PhongBanDtoResponse;
+import com.fpt.vanguard.dto.response.*;
 import com.fpt.vanguard.service.ThongKeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -82,6 +76,24 @@ public class ThongKeController {
                 .status(HttpStatus.OK.value())
                 .success(true)
                 .data(thongKeService.getNhanVienSinhNhat())
+                .build();
+    }
+
+    @GetMapping("/education-by-employee")
+    public ApiResponse<List<HocVanDtoResponse>> getSoLuongNhanVienTheoHocVan() {
+        return ApiResponse.<List<HocVanDtoResponse>>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(thongKeService.getSoLuongNhanVienTheoHocVan())
+                .build();
+    }
+
+    @GetMapping("/salary/employee/{id}")
+    public ApiResponse<List<BangLuongDtoResponse>> getTongLuongNhanVienTheoThang(@PathVariable("id") String maNhanVien) {
+        return ApiResponse.<List<BangLuongDtoResponse>>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(thongKeService.getTongLuongNhanVienTheoThang(maNhanVien))
                 .build();
     }
 }

@@ -12,4 +12,6 @@ public class HocVan {
     private String chuyenNganh;
     private Integer namTotNghiep;
     private String coSoGiaoDuc;
+
+    private int soLuongNhanVien;
 }

@@ -42,4 +42,22 @@
                 ELSE 4
                 END
     </select>
+
+    <resultMap id="resultMapTongLuongNhanVienTheoThang" type="BangLuong">
+        <result column="thang_nam" property="thangNam"/>
+        <result column="tong_luong_thuc_nhan" property="tongLuongThucNhan"/>
+    </resultMap>
+
+    <select id="getTongLuongNhanVienTheoThang" resultMap="resultMapTongLuongNhanVienTheoThang">
+        SELECT
+            to_char(make_date(nam, thang, 1), 'YYYY-MM') AS thang_nam,
+            SUM(tong_luong_thuc_nhan) AS tong_luong_thuc_nhan
+        FROM
+            bang_luong
+        WHERE ma_nhan_vien = #{maNhanVien}
+        GROUP BY
+            nam, thang
+        ORDER BY
+            nam, thang
+    </select>
 </mapper>

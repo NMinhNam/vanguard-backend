@@ -71,9 +71,9 @@
             SUM(bl.tong_luong) AS tong_luong
         FROM
             phong_ban p
-                JOIN
+                LEFT JOIN
             nhan_vien nv ON nv.ma_phong_ban = p.ma_phong_ban
-                JOIN
+                LEFT JOIN
             bang_luong bl ON nv.ma_nhan_vien = bl.ma_nhan_vien
         GROUP BY
             p.ten_phong_ban

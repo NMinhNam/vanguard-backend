@@ -17,4 +17,5 @@ public class PhongBanDtoResponse {
     private Integer soLuongNhanVien;
     private String anhTruongPhong;
     private Double tongLuong;
+    private String ngayKy;
 }

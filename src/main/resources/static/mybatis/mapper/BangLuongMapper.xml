@@ -26,19 +26,32 @@
                 ma_nhan_vien
             FROM
                 bang_luong
-        )
+        ),
+             MucLuong AS (
+                 SELECT '&lt;10' AS muc_luong
+                 UNION ALL
+                 SELECT '10-20'
+                 UNION ALL
+                 SELECT '20-30'
+                 UNION ALL
+                 SELECT '&gt;30'
+             )
         SELECT
-            muc_luong,
-            COUNT(ma_nhan_vien) AS so_nhan_vien
+            ML.muc_luong,
+            COALESCE(COUNT(CL.ma_nhan_vien), 0) AS so_nhan_vien
         FROM
-            CTE_Luong
+            MucLuong ML
+                LEFT JOIN
+            CTE_Luong CL
+            ON
+                ML.muc_luong = CL.muc_luong
         GROUP BY
-            muc_luong
+            ML.muc_luong
         ORDER BY
             CASE
-                WHEN muc_luong = '&lt;10' THEN 1
-                WHEN muc_luong = '10-20' THEN 2
-                WHEN muc_luong = '20-30' THEN 3
+                WHEN ML.muc_luong = '&lt;10' THEN 1
+                WHEN ML.muc_luong = '10-20' THEN 2
+                WHEN ML.muc_luong = '20-30' THEN 3
                 ELSE 4
                 END
     </select>

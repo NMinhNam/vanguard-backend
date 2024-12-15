@@ -14,4 +14,6 @@ public interface ThongKeService {
     List<NhanVienDtoResponse> getNhanVienSinhNhat();
     List<HocVanDtoResponse> getSoLuongNhanVienTheoHocVan();
     List<BangLuongDtoResponse> getTongLuongNhanVienTheoThang(String maNhanVien);
+    Integer getTongSoLuongNhanVien();
+    Integer getTongSoPhongBan();
 }

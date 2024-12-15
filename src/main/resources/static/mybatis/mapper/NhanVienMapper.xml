@@ -326,6 +326,11 @@
             nv.ngay_sinh
     </select>
 
+    <select id="getTongSoLuongNhanVien">
+        SELECT COUNT(ma_nhan_vien)
+        FROM nhan_vien
+    </select>
+
 </mapper>
 
 

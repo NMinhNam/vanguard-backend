@@ -86,7 +86,7 @@
         <result property="soLuongNhanVien" column="so_luong_nhan_vien"/>
     </resultMap>
 
-    <select id="getSoLuongNhanVienTheoHocVan">
+    <select id="getSoLuongNhanVienTheoHocVan" resultMap="resultMapSoLuongNhanVienTheoHocVan">
         SELECT
             CASE
                 WHEN ten_trinh_do = 'Cao đẳng' THEN 'Cao đẳng'

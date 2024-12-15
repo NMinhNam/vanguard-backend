@@ -1,17 +1,8 @@
 package com.fpt.vanguard.service.impl;
 
-import com.fpt.vanguard.dto.response.BangLuongDtoResponse;
-import com.fpt.vanguard.dto.response.DonYeuCauDtoResponse;
-import com.fpt.vanguard.dto.response.NhanVienDtoResponse;
-import com.fpt.vanguard.dto.response.PhongBanDtoResponse;
-import com.fpt.vanguard.mapper.mapstruct.BangLuongMapstruct;
-import com.fpt.vanguard.mapper.mapstruct.DonYeuCauMapstruct;
-import com.fpt.vanguard.mapper.mapstruct.NhanVienMapstruct;
-import com.fpt.vanguard.mapper.mapstruct.PhongBanMapstruct;
-import com.fpt.vanguard.mapper.mybatis.BangLuongMapper;
-import com.fpt.vanguard.mapper.mybatis.DonYeuCauMapper;
-import com.fpt.vanguard.mapper.mybatis.NhanVienMapper;
-import com.fpt.vanguard.mapper.mybatis.PhongBanMapper;
+import com.fpt.vanguard.dto.response.*;
+import com.fpt.vanguard.mapper.mapstruct.*;
+import com.fpt.vanguard.mapper.mybatis.*;
 import com.fpt.vanguard.service.ThongKeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +20,8 @@ public class ThongKeServiceImpl implements ThongKeService {
     private final BangLuongMapstruct bangLuongMapstruct;
     private final NhanVienMapper nhanVienMapper;
     private final NhanVienMapstruct nhanVienMapstruct;
+    private final HocVanMapper hocVanMapper;
+    private final HocVanMapstruct hocVanMapstruct;
 
     @Override
     public List<PhongBanDtoResponse> getSoLuongNhanVienTheoPhongBan() {
@@ -76,6 +69,20 @@ public class ThongKeServiceImpl implements ThongKeService {
     public List<NhanVienDtoResponse> getNhanVienSinhNhat() {
         return nhanVienMapstruct.toNhanVienDtoResponseList(
                 nhanVienMapper.getNhanVienByBirthday()
+        );
+    }
+
+    @Override
+    public List<HocVanDtoResponse> getSoLuongNhanVienTheoHocVan() {
+        return hocVanMapstruct.toHocVanDtoResponseList(
+                hocVanMapper.getSoLuongNhanVienTheoHocVan()
+        );
+    }
+
+    @Override
+    public List<BangLuongDtoResponse> getTongLuongNhanVienTheoThang(String maNhanVien) {
+        return bangLuongMapstruct.toResponseList(
+                bangLuongMapper.getTongLuongNhanVienTheoThang(maNhanVien)
         );
     }
 }

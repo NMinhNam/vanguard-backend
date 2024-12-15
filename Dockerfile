@@ -14,7 +14,7 @@ RUN adduser -D vanguard
 WORKDIR /run
 COPY --from=build /app/target/vanguard-0.0.1-SNAPSHOT.jar /run/vanguard-0.0.1-SNAPSHOT.jar
 
-RUN chown -r vanguard:vanguard /run
+RUN chown -R vanguard:vanguard /run
 
 USER vanguard
 

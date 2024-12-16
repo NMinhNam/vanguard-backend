@@ -8,6 +8,7 @@ import lombok.Setter;
 public class BangLuongDtoResponse {
     private String maBangLuong;
     private String maNhanVien;
+    private String tenNhanVien;
     private Double tongLuong;
     private Double tongLuongThucNhan;
     private Double tongPhuCap;

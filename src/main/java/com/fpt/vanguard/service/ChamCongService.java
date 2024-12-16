@@ -20,5 +20,5 @@ public interface ChamCongService {
 
     List<ChamCongDtoResponse> getChamCongByThang(ChamCongDtoRequest request);
 
-    Double tinhSoNgayCong(String maNhanVien, String ngay);
+    Double tinhSoNgayCong(String maNhanVien, Integer thang, Integer nam);
 }

@@ -9,5 +9,5 @@ public interface ViPhamService {
     List<ViPhamDtoResponse> getAllViPhams();
     Integer saveViPham(ViPhamDtoRequest viPhamDtoRequest);
     Integer deleteViPham(String maViPham);
-    Double getSumNhanVienViPhamByMonth(String maNhanVien, String ngay);
+    Double getSumNhanVienViPhamByMonth(String maNhanVien, Integer thang, Integer nam);
 }

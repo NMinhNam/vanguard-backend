@@ -23,4 +23,6 @@ public interface HopDongMapper {
     List<HopDong> getListHopDongByMaNhanVien(@Param("maNhanVien") String maNhanVien);
 
     HopDong getHopDongByMaNhanVien(@Param("maNhanVien") String maNhanVien);
+
+    Double getLuongCoBanByMaNhanVien(@Param("maNhanVien") String maNhanVien);
 }

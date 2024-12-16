@@ -81,14 +81,21 @@
 
     <select id="getCuocHop" resultMap="resultMapCuocHop">
         SELECT
-            <include refid="columnCuocHop"/>,
-            nv.ho_ten
+            <include refid="columnCuocHopDetail"/>
         FROM cuoc_hop ch
-        LEFT JOIN nhan_vien nv
-        ON ch.nguoi_to_chuc = nv.ma_nhan_vien
-        <where>
-            ma_cuoc_hop = #{maCuocHop}
-        </where>
+            LEFT JOIN nhan_vien nv_to_chuc ON ch.nguoi_to_chuc = nv_to_chuc.ma_nhan_vien
+            LEFT JOIN chi_tiet_cuoc_hop cth ON ch.ma_cuoc_hop = cth.ma_cuoc_hop
+            LEFT JOIN nhan_vien nv_tham_gia ON cth.ma_nhan_vien = nv_tham_gia.ma_nhan_vien
+        WHERE ch.ma_cuoc_hop = #{maCuocHop}
+        GROUP BY ch.ma_cuoc_hop,
+                ch.ten_cuoc_hop,
+                ch.thoi_gian_bat_dau,
+                ch.thoi_gian_ket_thuc,
+                ch.vi_tri,
+                ch.video_call_url,
+                ch.ghi_chu,
+                ch.nguoi_to_chuc,
+                nv_to_chuc.ho_ten
     </select>
 
     <select id="getMaCuocHop" resultMap="resultMapCuocHop">

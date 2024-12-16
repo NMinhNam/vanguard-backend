@@ -2,7 +2,6 @@ package com.fpt.vanguard.service.impl;
 
 import com.fpt.vanguard.dto.request.ChamCongDtoRequest;
 import com.fpt.vanguard.dto.request.NhanVienViPhamDtoRequest;
-import com.fpt.vanguard.dto.request.ViPhamDtoRequest;
 import com.fpt.vanguard.dto.response.ChamCongDtoResponse;
 import com.fpt.vanguard.dto.response.LoaiCongDtoResponse;
 import com.fpt.vanguard.enums.ErrorCode;
@@ -83,24 +82,14 @@ public class ChamCongServiceImpl implements ChamCongService {
         if (gioVao != null) {
             LocalTime gioVaoThucTe = LocalTime.parse(gioVao, DateTimeFormatter.ofPattern("HH:mm"));
             if (gioVaoThucTe.isAfter(gioBatDauCa)) {
-                viPhamService.insertNhanVienViPham(
-                        NhanVienViPhamDtoRequest.builder()
-                                .maViPham(ViPham.DI_TRE.getMaViPham())
-                                .maNhanVien(maNhanVien)
-                                .build()
-                );
+                viPhamService.insertNhanVienViPham(NhanVienViPhamDtoRequest.builder().maViPham(ViPham.DI_TRE.getMaViPham()).maNhanVien(maNhanVien).build());
             }
         }
 
         if (gioRa != null) {
             LocalTime gioRaThucTe = LocalTime.parse(gioRa, DateTimeFormatter.ofPattern("HH:mm"));
             if (gioRaThucTe.isBefore(gioKetThucCa)) {
-                viPhamService.insertNhanVienViPham(
-                        NhanVienViPhamDtoRequest.builder()
-                                .maViPham(ViPham.VE_SOM.getMaViPham())
-                                .maNhanVien(maNhanVien)
-                                .build()
-                );
+                viPhamService.insertNhanVienViPham(NhanVienViPhamDtoRequest.builder().maViPham(ViPham.VE_SOM.getMaViPham()).maNhanVien(maNhanVien).build());
             }
         }
     }
@@ -139,11 +128,12 @@ public class ChamCongServiceImpl implements ChamCongService {
     }
 
     @Override
-    public Double tinhSoNgayCong(String maNhanVien, String ngay) {
-        LocalDate ngayChamCong = LocalDate.parse(ngay);
-        Integer thang = ngayChamCong.getMonthValue();
-        Integer nam = ngayChamCong.getYear();
-        return chamCongMapper.getSoNgayCong(maNhanVien, thang, nam) / TinhLuong.SO_GIO_LAM_CHUAN.getHeSo();
+    public Double tinhSoNgayCong(String maNhanVien, Integer thang, Integer nam) {
+        Double soNgayCong = chamCongMapper.getSoNgayCong(maNhanVien, thang, nam);
+        if (soNgayCong != null) {
+            return soNgayCong / TinhLuong.SO_GIO_LAM_CHUAN.getHeSo();
+        }
+        return null;
     }
 
     private Double tinhSoGioLam(String gioVaoStr, String gioRaStr) {

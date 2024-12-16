@@ -37,10 +37,7 @@ public class ViPhamServiceImpl implements ViPhamService {
     }
 
     @Override
-    public Double getSumNhanVienViPhamByMonth(String maNhanVien, String ngay) {
-        LocalDate ngayChamCong = LocalDate.parse(ngay);
-        Integer thang = ngayChamCong.getMonthValue();
-        Integer nam = ngayChamCong.getYear();
+    public Double getSumNhanVienViPhamByMonth(String maNhanVien, Integer thang, Integer nam) {
         return viPhamMapper.getSumNhanVienViPhamByMonth(maNhanVien, thang, nam);
     }
 }

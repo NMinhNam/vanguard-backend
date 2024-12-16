@@ -331,6 +331,11 @@
         FROM nhan_vien
     </select>
 
+    <select id="getAllMaNhanVien">
+        SELECT ma_nhan_vien
+        FROM nhan_vien
+    </select>
+
 </mapper>
 
 

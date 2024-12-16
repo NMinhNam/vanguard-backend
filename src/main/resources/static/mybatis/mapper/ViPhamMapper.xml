@@ -52,7 +52,7 @@
         FROM vi_pham
                  JOIN nhan_vien_vi_pham nvvp on vi_pham.ma_vi_pham = nvvp.ma_vi_pham
         WHERE ma_nhan_vien = #{maNhanVien}
-          AND EXTRACT(MONTH FROM ngay) = #{thang}
-          AND EXTRACT(YEAR FROM ngay) = #{nam}
+          AND EXTRACT(MONTH FROM ngay_vi_pham) = #{thang}
+          AND EXTRACT(YEAR FROM ngay_vi_pham) = #{nam}
     </select>
 </mapper>

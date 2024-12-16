@@ -54,10 +54,7 @@ public class PhuCapServiceImpl implements PhuCapService {
     }
 
     @Override
-    public Double getSumNhanVienPhuCapByMonth(String maNhanVien, String ngay) {
-        LocalDate ngayChamCong = LocalDate.parse(ngay);
-        Integer thang = ngayChamCong.getMonthValue();
-        Integer nam = ngayChamCong.getYear();
+    public Double getSumNhanVienPhuCapByMonth(String maNhanVien, Integer thang, Integer nam) {
         return phuCapMapper.getSumNhanVienPhuCapByMonth(maNhanVien, thang, nam);
     }
 

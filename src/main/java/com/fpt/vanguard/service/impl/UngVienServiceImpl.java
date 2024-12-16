@@ -1,5 +1,6 @@
 package com.fpt.vanguard.service.impl;
 
+import com.fpt.vanguard.dto.request.MailDtoRequest;
 import com.fpt.vanguard.dto.request.NhanVienDtoRequest;
 import com.fpt.vanguard.dto.request.UngVienDtoRequest;
 import com.fpt.vanguard.dto.response.PhongBanDtoResponse;
@@ -10,6 +11,8 @@ import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.enums.TrangThaiUngVien;
 import com.fpt.vanguard.exception.AppException;
 import com.fpt.vanguard.mapper.mapstruct.UngVienMapstruct;
+import com.fpt.vanguard.mapper.mapstruct.ViTriTuyenDungMapstruct;
+import com.fpt.vanguard.mapper.mybatis.TuyenDungMapper;
 import com.fpt.vanguard.mapper.mybatis.UngVienMapper;
 import com.fpt.vanguard.service.MailService;
 import com.fpt.vanguard.service.NhanVienService;
@@ -20,7 +23,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -31,6 +36,8 @@ public class UngVienServiceImpl implements UngVienService {
     private final MailService mailService;
     private final NhanVienService nhanVienService;
     private final TuyenDungService tuyenDungService;
+    private final TuyenDungMapper tuyenDungMapper;
+    private final ViTriTuyenDungMapstruct viTriTuyenDungMapstruct;
 
     @Override
     public List<UngVienDtoResponse> getUngVien(String tenViTri) {
@@ -70,25 +77,25 @@ public class UngVienServiceImpl implements UngVienService {
             }
         }
         Integer ungVienResponse = ungVienMapper.updateUngVien(ungVienMapstruct.toUngVien(ungVienDtoRequest));
+
+        String tenChucVu = tuyenDungMapper.getTuyenDungById(ungVienDtoRequest.getMaViTriTuyenDung()).getTenViTri();
+        ungVienDtoRequest.setTenViTri(tenChucVu);
+
         if (ungVienResponse != null) {
             if (Objects.equals(trangThaiUngVien, TrangThaiUngVien.PHONG_VAN_LAN_1.getTrangThaiUngVien())) {
-                // Gửi email khi ứng viên phỏng vấn lần 1
-                System.out.println("Gửi mail đi phỏng vấn lần 1");
+                sendFirstInterview(ungVienDtoRequest);
             }
 
             if (Objects.equals(trangThaiUngVien, TrangThaiUngVien.PHONG_VAN_LAN_2.getTrangThaiUngVien())) {
-                // Gửi email khi ứng viên phỏng vấn lần 2
-                System.out.println("Gửi mail đi phỏng vấn lần 2");
+                sendSecondInterview(ungVienDtoRequest);
             }
 
             if (Objects.equals(trangThaiUngVien, TrangThaiUngVien.NHAN_VIEC.getTrangThaiUngVien())) {
-                // Gửi email khi ứng viên đậu phỏng vấn
-                System.out.println("Gửi mail đậu phỏng vấn");
+                sendJobOffer(ungVienDtoRequest);
             }
 
             if (Objects.equals(trangThaiUngVien, TrangThaiUngVien.TU_CHOI.getTrangThaiUngVien())) {
-                // Gửi email khi ứng viên bị từ chối
-                System.out.println("Gửi mail rớt phỏng vấn");
+                sendRejection(ungVienDtoRequest);
                 deleteUngVien(maUngVien);
             }
         }
@@ -96,6 +103,70 @@ public class UngVienServiceImpl implements UngVienService {
         return ungVienResponse;
     }
 
+    private void sendFirstInterview(UngVienDtoRequest ungVienDtoRequest) throws MessagingException {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("applicantName", ungVienDtoRequest.getHoTen());
+        variables.put("position", ungVienDtoRequest.getMaViTriTuyenDung());
+        variables.put("interviewDate", ungVienDtoRequest.getNgayPhongVan());
+        variables.put("location", ungVienDtoRequest.getDiaDiemPhongVan());
+
+        MailDtoRequest mailDtoRequest = MailDtoRequest.builder()
+                .to(ungVienDtoRequest.getEmail())
+                .subject("First Interview Invitation: " + ungVienDtoRequest.getTenViTri())
+                .templateName("first-interview-invitation.html")
+                .variables(variables)
+                .build();
+
+        mailService.sendMail(mailDtoRequest);
+    }
+
+    private void sendSecondInterview(UngVienDtoRequest ungVienDtoRequest) throws MessagingException {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("applicantName", ungVienDtoRequest.getHoTen());
+        variables.put("position", ungVienDtoRequest.getMaViTriTuyenDung());
+        variables.put("interviewDate", ungVienDtoRequest.getNgayPhongVan());
+        variables.put("location", ungVienDtoRequest.getDiaDiemPhongVan());
+
+        MailDtoRequest mailDtoRequest = MailDtoRequest.builder()
+                .to(ungVienDtoRequest.getEmail())
+                .subject("Second Interview Invitation: " + ungVienDtoRequest.getTenViTri())
+                .templateName("second-interview-invitation.html")
+                .variables(variables)
+                .build();
+
+        mailService.sendMail(mailDtoRequest);
+    }
+
+    private void sendJobOffer(UngVienDtoRequest ungVienDtoRequest) throws MessagingException {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("applicantName", ungVienDtoRequest.getHoTen());
+        variables.put("position", ungVienDtoRequest.getTenViTri());
+        variables.put("startDate", ungVienDtoRequest.getNgayBatDatLam());
+
+        MailDtoRequest mailDtoRequest = MailDtoRequest.builder()
+                .to(ungVienDtoRequest.getEmail())
+                .subject("Job Offer: " + ungVienDtoRequest.getTenViTri())
+                .templateName("job-offer.html")
+                .variables(variables)
+                .build();
+
+        mailService.sendMail(mailDtoRequest);
+    }
+
+    private void sendRejection(UngVienDtoRequest ungVienDtoRequest) throws MessagingException {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("applicantName", ungVienDtoRequest.getHoTen());
+        variables.put("position", ungVienDtoRequest.getTenViTri());
+
+        MailDtoRequest mailDtoRequest = MailDtoRequest.builder()
+                .to(ungVienDtoRequest.getEmail())
+                .subject("Application Update: Rejection for " + ungVienDtoRequest.getTenViTri())
+                .templateName("rejection-notification.html")
+                .variables(variables)
+                .build();
+
+        mailService.sendMail(mailDtoRequest);
+    }
 
     @Override
     public UngVienDtoResponse getUngVienByMaUngVien(String maUngVien) {

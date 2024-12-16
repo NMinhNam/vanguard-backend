@@ -89,7 +89,7 @@
               , #{hinhAnh}
               , #{email}
               , #{maViTriTuyenDung}
-              ,#{trangThai});
+              ,#{trangThai})
     </insert>
 
     <update id="updateUngVien">
@@ -103,7 +103,10 @@
         dia_chi = #{diaChi},
         hinh_anh = #{hinhAnh},
         email = #{email},
-        ma_vi_tri_tuyen_dung = #{maViTriTuyenDung}
+        ma_vi_tri_tuyen_dung = #{maViTriTuyenDung},
+        ngay_phong_van = #{ngayPhongVan},
+        dia_diem_phong_van = #{diaDiemPhongVan},
+        ngay_bat_dau_lam_viec = #{ngayBatDatLam},
         <if test="trangThai != null and trangThai != ''">
             ,trang_thai = #{trangThai}
         </if>

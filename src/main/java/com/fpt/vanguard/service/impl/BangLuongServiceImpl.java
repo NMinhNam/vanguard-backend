@@ -6,7 +6,12 @@ import com.fpt.vanguard.entity.BangLuong;
 import com.fpt.vanguard.enums.TinhLuong;
 import com.fpt.vanguard.mapper.mapstruct.BangLuongMapstruct;
 import com.fpt.vanguard.mapper.mybatis.BangLuongMapper;
-import com.fpt.vanguard.service.*;
+import com.fpt.vanguard.mapper.mybatis.HopDongMapper;
+import com.fpt.vanguard.mapper.mybatis.NhanVienMapper;
+import com.fpt.vanguard.service.BangLuongService;
+import com.fpt.vanguard.service.ChamCongService;
+import com.fpt.vanguard.service.PhuCapService;
+import com.fpt.vanguard.service.ViPhamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,26 +22,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BangLuongServiceImpl implements BangLuongService {
     private final ChamCongService chamCongService;
-    private final HopDongService hopDongService;
+    private final HopDongMapper hopDongMapper;
     private final PhuCapService phuCapService;
     private final ViPhamService viPhamService;
     private final BangLuongMapper bangLuongMapper;
     private final BangLuongMapstruct bangLuongMapstruct;
+    private final NhanVienMapper nhanVienMapper;
 
     @Override
     public List<BangLuongDtoResponse> getBangLuongNhanVien(String maNhanVien) {
-        Boolean isExistBangLuong = bangLuongMapper.isBangLuongExist(maNhanVien);
-        Integer thang = LocalDate.now().getMonthValue();
-        Integer nam = LocalDate.now().getYear();
-        BangLuong bangLuong = BangLuong.builder()
-                .maNhanVien(maNhanVien)
-                .thang(thang)
-                .nam(nam)
-                .build();
-        if (!isExistBangLuong) {
-            bangLuongMapper.insertBangLuongNhanVien(bangLuong);
-        }
-
         return bangLuongMapstruct.toResponseList(
                 bangLuongMapper.getBangLuongNhanVien(maNhanVien)
         );
@@ -58,29 +52,51 @@ public class BangLuongServiceImpl implements BangLuongService {
 
     @Override
     public BangLuongDtoResponse getBangLuongNhanVienByMonth(String maNhanVien) {
-        Boolean isExistBangLuong = bangLuongMapper.isBangLuongExist(maNhanVien);
         Integer thang = LocalDate.now().getMonthValue();
         Integer nam = LocalDate.now().getYear();
-
-        if (!isExistBangLuong) {
-            BangLuong bangLuong = BangLuong.builder()
-                    .maNhanVien(maNhanVien)
-                    .thang(thang)
-                    .nam(nam)
-                    .build();
-            bangLuongMapper.insertBangLuongNhanVien(bangLuong);
-        }
-
-        Boolean isTinhLuong = bangLuongMapper.isTinhLuong()
-        if ()
-
         return bangLuongMapstruct.toDtoResponse(
-                bangLuongMapper.getBangLuongNhanVienByMonth(bangLuong)
+                bangLuongMapper.getBangLuongNhanVienByMonth(maNhanVien, thang, nam)
         );
     }
 
-    private BangLuongDtoRequest tinhLuongThang(String maNhanVien, Integer thang, Integer nam) {
-        Double luongCoBan = hopDongService.getHopDongByMaNhanVien(maNhanVien).getLuongCoBan();
+    @Override
+    public Integer updateBangLuongTinhLuong() {
+        Integer thang = LocalDate.now().getMonthValue();
+        Integer nam = LocalDate.now().getYear();
+
+        List<String> danhSachNhanVien = nhanVienMapper.getAllMaNhanVien();
+        int soLuongNhanVienDuocTinhLuong = 0;
+
+        for (String maNhanVien : danhSachNhanVien) {
+            Boolean isExistBangLuong = bangLuongMapper.isBangLuongExist(maNhanVien, thang, nam);
+            if (!isExistBangLuong) {
+                BangLuong bangLuong = BangLuong.builder()
+                        .maNhanVien(maNhanVien)
+                        .thangBangLuong(thang)
+                        .namBangLuong(nam)
+                        .build();
+                bangLuongMapper.insertBangLuongNhanVien(bangLuong);
+            }
+
+            Boolean isTinhLuong = bangLuongMapper.isTinhLuong(maNhanVien, thang, nam);
+            if (!isTinhLuong) {
+                BangLuongDtoResponse response = tinhLuongThang(maNhanVien, thang, nam);
+                response.setMaNhanVien(maNhanVien);
+                bangLuongMapper.updateBangLuongNhanVien(
+                        bangLuongMapstruct.toBangLuong(response)
+                );
+                soLuongNhanVienDuocTinhLuong++;
+            }
+        }
+
+        return soLuongNhanVienDuocTinhLuong;
+    }
+
+    private BangLuongDtoResponse tinhLuongThang(String maNhanVien, Integer thang, Integer nam) {
+        Double luongCoBan = hopDongMapper.getLuongCoBanByMaNhanVien(maNhanVien);
+        if (luongCoBan == null) {
+            luongCoBan = 0.0;
+        }
         Double tongPhuCap = phuCapService.getSumNhanVienPhuCapByMonth(maNhanVien, thang, nam);
         if (tongPhuCap == null) {
             tongPhuCap = 0.0;
@@ -90,10 +106,13 @@ public class BangLuongServiceImpl implements BangLuongService {
             tongKhauTru = 0.0;
         }
         Double soNgayCongThucTe = chamCongService.tinhSoNgayCong(maNhanVien, thang, nam);
+        if (soNgayCongThucTe == null) {
+            soNgayCongThucTe = 0.0;
+        }
         Double soTienLuong = (luongCoBan / TinhLuong.SO_NGAY_CONG_CHUAN.getHeSo()) * soNgayCongThucTe;
         Double soTienLuongThucTe = soTienLuong + tongPhuCap - tongKhauTru;
 
-        return BangLuongDtoRequest.builder()
+        return BangLuongDtoResponse.builder()
                 .tongPhuCap(tongPhuCap)
                 .tongKhauTru(tongKhauTru)
                 .tongLuong(soTienLuong)

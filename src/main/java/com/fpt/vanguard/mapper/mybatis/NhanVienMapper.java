@@ -39,4 +39,6 @@ public interface NhanVienMapper {
     List<NhanVien> getNhanVienByBirthday();
 
     Integer getTongSoLuongNhanVien();
+
+    List<String> getAllMaNhanVien();
 }

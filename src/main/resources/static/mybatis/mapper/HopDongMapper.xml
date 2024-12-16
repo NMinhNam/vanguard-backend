@@ -115,7 +115,18 @@
         <include refid="columnHopDong"/>
         FROM hop_dong hd
         WHERE hd.ma_nhan_vien = #{maNhanVien}
+        ORDER BY lan_ky DESC
         LIMIT 1
     </select>
+
+    <select id="getLuongCoBanByMaNhanVien">
+        SELECT
+            luong_co_ban
+        FROM hop_dong
+        WHERE ma_nhan_vien = #{maNhanVien}
+        ORDER BY lan_ky DESC
+        LIMIT 1
+    </select>
+
 
 </mapper>

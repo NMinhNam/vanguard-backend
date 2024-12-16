@@ -10,4 +10,5 @@ public interface BangLuongService {
     List<BangLuongDtoResponse> getAllBangLuong();
     Integer saveBangLuong(BangLuongDtoRequest request);
     BangLuongDtoResponse getBangLuongNhanVienByMonth(String maNhanVien);
+    Integer updateBangLuongTinhLuong();
 }

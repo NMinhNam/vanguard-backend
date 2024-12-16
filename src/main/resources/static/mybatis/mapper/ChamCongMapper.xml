@@ -116,7 +116,7 @@
           AND EXTRACT(YEAR FROM ngay) = #{year}
     </select>
 
-    <select id="getSoNgayCong">
+    <select id="getSoNgayCong" resultType="Double">
         SELECT SUM(so_gio_lam) AS tong_so_gio
         FROM bang_cham_cong
         WHERE ma_nhan_vien = #{maNhanVien}

@@ -14,6 +14,6 @@ public class BangLuongDtoRequest {
     private Double tongPhuCap;
     private Double tongKhauTru;
     private Double tongLuongThucNhan;
-    private Integer thang;
-    private Integer nam;
+    private Integer thangBangLuong;
+    private Integer namBangLuong;
 }

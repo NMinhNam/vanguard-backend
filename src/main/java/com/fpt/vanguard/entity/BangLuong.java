@@ -15,8 +15,8 @@ public class BangLuong {
     private Double tongLuongThucNhan;
     private Double tongPhuCap;
     private Double tongKhauTru;
-    private Integer thang;
-    private Integer nam;
+    private Integer thangBangLuong;
+    private Integer namBangLuong;
 
     private String mucLuong;
     private Integer soNhanVien;

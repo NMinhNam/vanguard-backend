@@ -129,7 +129,11 @@ public class ChamCongServiceImpl implements ChamCongService {
 
     @Override
     public Double tinhSoNgayCong(String maNhanVien, Integer thang, Integer nam) {
-        return chamCongMapper.getSoNgayCong(maNhanVien, thang, nam) / TinhLuong.SO_GIO_LAM_CHUAN.getHeSo();
+        Double soNgayCong = chamCongMapper.getSoNgayCong(maNhanVien, thang, nam);
+        if (soNgayCong != null) {
+            return soNgayCong / TinhLuong.SO_GIO_LAM_CHUAN.getHeSo();
+        }
+        return null;
     }
 
     private Double tinhSoGioLam(String gioVaoStr, String gioRaStr) {

@@ -10,4 +10,5 @@ import java.util.List;
 public interface BangLuongMapstruct {
     List<BangLuongDtoResponse> toResponseList(List<BangLuong> bangLuongs);
     BangLuongDtoResponse toDtoResponse(BangLuong bangLuong);
+    BangLuong toBangLuong(BangLuongDtoResponse dtoResponse);
 }

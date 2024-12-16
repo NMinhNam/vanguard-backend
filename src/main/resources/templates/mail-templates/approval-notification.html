@@ -42,16 +42,16 @@
 <body>
 <div class="container">
     <h2>New Request for Approval</h2>
-    <p>Dear <span th:text="${approverName}">Approver</span>,</p>
+    <p>Dear <span th:text="${approverName}"></span>,</p>
     <p>You have a new request that requires your approval:</p>
 
     <div class="details">
         <h3>Request Details:</h3>
         <ul>
-            <li><strong>Employee Name:</strong> <span th:text="${employeeName}">John Doe</span></li>
-            <li><strong>Request Type:</strong> <span th:text="${requestType}">Leave Request</span></li>
-            <li><strong>Request Date:</strong> <span th:text="${requestDate}">2024-10-25</span></li>
-            <li><strong>Details:</strong> <span th:text="${details}">Personal Leave Request</span></li>
+            <li><strong>Employee Name:</strong> <span th:text="${employeeName}"></span></li>
+            <li><strong>Request Type:</strong> <span th:text="${requestType}"></span></li>
+            <li><strong>Request Date:</strong> <span th:text="${requestDate}"></span></li>
+            <li><strong>Details:</strong> <span th:text="${details}"></span></li>
         </ul>
     </div>
 

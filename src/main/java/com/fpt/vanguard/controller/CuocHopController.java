@@ -4,6 +4,7 @@ import com.fpt.vanguard.common.ApiResponse;
 import com.fpt.vanguard.dto.request.CuocHopDtoRequest;
 import com.fpt.vanguard.dto.response.CuocHopDtoResponse;
 import com.fpt.vanguard.service.CuocHopService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class CuocHopController {
                 .build();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ApiResponse<CuocHopDtoResponse> getMeetingDetail(@PathVariable("id") String maCuocHop) {
         return ApiResponse.<CuocHopDtoResponse>builder()
                 .status(HttpStatus.OK.value())
@@ -63,7 +64,7 @@ public class CuocHopController {
     }
 
     @PutMapping
-    public ApiResponse<Integer> updateMeeting(@RequestBody CuocHopDtoRequest cuocHopDtoRequest) {
+    public ApiResponse<Integer> updateMeeting(@RequestBody CuocHopDtoRequest cuocHopDtoRequest) throws MessagingException {
         return ApiResponse.<Integer>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
@@ -72,7 +73,7 @@ public class CuocHopController {
     }
 
     @DeleteMapping("/{id}")
-    public ApiResponse<Integer> deleteMeeting(@PathVariable("id") String maCuocHop) {
+    public ApiResponse<Integer> deleteMeeting(@PathVariable("id") String maCuocHop) throws MessagingException {
         return ApiResponse.<Integer>builder()
                 .status(HttpStatus.OK.value())
                 .success(true)

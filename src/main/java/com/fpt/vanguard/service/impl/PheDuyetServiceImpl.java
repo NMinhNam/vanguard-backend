@@ -66,7 +66,12 @@ public class PheDuyetServiceImpl implements PheDuyetService {
         variables.put("requestDate", response.getNgayTao());
         variables.put("details", response.getLyDo());
 
-        MailDtoRequest mailDtoRequest = MailDtoRequest.builder().to(response.getEmailNguoiPheDuyet()).subject("New Request for Your Approval").templateName("approval-notification.html").variables(variables).build();
+        MailDtoRequest mailDtoRequest = MailDtoRequest.builder()
+                .to(response.getEmailNguoiPheDuyet())
+                .subject("New Request for Your Approval")
+                .templateName("approval-notification.html")
+                .variables(variables)
+                .build();
 
         mailService.sendMail(mailDtoRequest);
     }

@@ -33,4 +33,10 @@ public interface NhanVienMapper {
     int updateQuanLy(@Param("nhanVien") NhanVien nhanVien);
 
     NhanVien getNhanVienByCCCD(@Param("cccd") String cccd);
+
+    List<NhanVien> getNhanSuMoi();
+
+    List<NhanVien> getNhanVienByBirthday();
+
+    Integer getTongSoLuongNhanVien();
 }

@@ -31,7 +31,7 @@
         <result property="soTienViPham" column="so_tien"/>
     </resultMap>
 
-    <select id="getAllViPham">
+    <select id="getAllViPham" resultMap="resultMapViPham">
         SELECT
             ma_vi_pham,
             ten_vi_pham,

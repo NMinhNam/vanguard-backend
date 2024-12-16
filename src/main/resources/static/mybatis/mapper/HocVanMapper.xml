@@ -80,4 +80,60 @@
             AND chuyen_nganh = #{chuyenNganh}
         )
     </select>
+
+    <resultMap id="resultMapSoLuongNhanVienTheoHocVan" type="HocVan">
+        <result property="tenTrinhDo" column="trinh_do"/>
+        <result property="soLuongNhanVien" column="so_luong_nhan_vien"/>
+    </resultMap>
+
+    <select id="getSoLuongNhanVienTheoHocVan" resultMap="resultMapSoLuongNhanVienTheoHocVan">
+        WITH danh_sach_trinh_do AS (
+            SELECT
+                'Cao đẳng' AS trinh_do
+            UNION ALL
+            SELECT
+                'Đại học'
+            UNION ALL
+            SELECT
+                'Thạc sĩ'
+            UNION ALL
+            SELECT
+                'Tiến sĩ'
+            UNION ALL
+            SELECT
+                'Khác'
+        ),
+             so_luong_theo_trinh_do AS (
+                 SELECT
+                     CASE
+                         WHEN ten_trinh_do = 'Cao đẳng' THEN 'Cao đẳng'
+                         WHEN ten_trinh_do = 'Đại học' THEN 'Đại học'
+                         WHEN ten_trinh_do = 'Thạc sĩ' THEN 'Thạc sĩ'
+                         WHEN ten_trinh_do = 'Tiến sĩ' THEN 'Tiến sĩ'
+                         ELSE 'Khác'
+                         END AS trinh_do,
+                     COUNT(*) AS so_luong_nhan_vien
+                 FROM
+                     hoc_van
+                 GROUP BY
+                     CASE
+                         WHEN ten_trinh_do = 'Cao đẳng' THEN 'Cao đẳng'
+                         WHEN ten_trinh_do = 'Đại học' THEN 'Đại học'
+                         WHEN ten_trinh_do = 'Thạc sĩ' THEN 'Thạc sĩ'
+                         WHEN ten_trinh_do = 'Tiến sĩ' THEN 'Tiến sĩ'
+                         ELSE 'Khác'
+                         END
+             )
+        SELECT
+            d.trinh_do,
+            COALESCE(s.so_luong_nhan_vien, 0) AS so_luong_nhan_vien
+        FROM
+            danh_sach_trinh_do d
+                LEFT JOIN
+            so_luong_theo_trinh_do s
+            ON
+                d.trinh_do = s.trinh_do
+        ORDER BY
+            so_luong_nhan_vien DESC
+    </select>
 </mapper>

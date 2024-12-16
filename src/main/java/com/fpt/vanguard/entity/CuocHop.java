@@ -20,4 +20,6 @@ public class CuocHop {
     //JOIN
     private String tenNguoiToChuc;
     private String danhSachThamGia;
+    private String tenNhanVien;
+    private String emailNhanVien;
 }

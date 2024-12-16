@@ -41,6 +41,74 @@
         WHERE ma_phong_ban = #{id}
     </select>
 
+    <resultMap id="resultMapThongKeSoLuongNhanVienTheoPhongBan" type="PhongBan">
+        <result column="ten_phong_ban" property="tenPhongBan"/>
+        <result column="so_luong_nhan_vien" property="soLuongNhanVien"/>
+    </resultMap>
+
+    <select id="getSoLuongNhanVienTheoPhongBan" resultMap="resultMapThongKeSoLuongNhanVienTheoPhongBan">
+        SELECT
+            pb.ten_phong_ban AS ten_phong_ban,
+            COUNT(nv.ma_nhan_vien) AS so_luong_nhan_vien
+        FROM
+            phong_ban pb
+                LEFT JOIN
+            nhan_vien nv ON pb.ma_phong_ban = nv.ma_phong_ban
+        GROUP BY
+            pb.ma_phong_ban, pb.ten_phong_ban
+        ORDER BY
+            so_luong_nhan_vien DESC
+    </select>
+
+    <resultMap id="resultMapTongLuongPhongBan" type="PhongBan">
+        <result property="tenPhongBan" column="ten_phong_ban"/>
+        <result property="tongLuong" column="tong_luong"/>
+    </resultMap>
+
+    <select id="getTongLuongTheoPhongBan" resultMap="resultMapTongLuongPhongBan">
+        SELECT
+            p.ten_phong_ban,
+            SUM(bl.tong_luong) AS tong_luong
+        FROM
+            phong_ban p
+                JOIN
+            nhan_vien nv ON nv.ma_phong_ban = p.ma_phong_ban
+                JOIN
+            bang_luong bl ON nv.ma_nhan_vien = bl.ma_nhan_vien
+        GROUP BY
+            p.ten_phong_ban
+        ORDER BY
+            tong_luong DESC
+    </select>
+
+    <resultMap id="resultMapBienDongNhanVienTheoPhongBan" type="PhongBan">
+        <result property="tenPhongBan" column="ten_phong_ban"/>
+        <result property="ngayKy" column="ngay_ky"/>
+        <result property="soLuongNhanVien" column="tong_so_nhan_vien"/>
+    </resultMap>
+
+    <select id="getBienDongNhanVienTheoPhongBan" resultMap="resultMapBienDongNhanVienTheoPhongBan">
+        SELECT
+            pb.ten_phong_ban,
+            hd.ngay_ky,
+            COUNT(nv.ma_nhan_vien) AS tong_so_nhan_vien
+        FROM
+            phong_ban pb
+                LEFT JOIN
+            nhan_vien nv ON pb.ma_phong_ban = nv.ma_phong_ban
+                RIGHT JOIN
+            hop_dong hd ON nv.ma_nhan_vien = hd.ma_nhan_vien
+        WHERE hd.lan_ky = 1
+        GROUP BY
+            pb.ten_phong_ban,
+            hd.ngay_ky
+    </select>
+
+    <select id="getTongSoPhongBan">
+        SELECT COUNT(ma_phong_ban)
+        FROM phong_ban
+    </select>
+
     <insert id="insertPhongBan" parameterType="com.fpt.vanguard.dto.request.PhongBanDtoRequest">
         INSERT INTO phong_ban (ma_phong_ban, ten_phong_ban, truong_phong, ma_phong_ban_cap_tren)
         VALUES (

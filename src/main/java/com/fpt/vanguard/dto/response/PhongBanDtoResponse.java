@@ -16,4 +16,5 @@ public class PhongBanDtoResponse {
     // Join column SQL
     private Integer soLuongNhanVien;
     private String anhTruongPhong;
+    private Double tongLuong;
 }

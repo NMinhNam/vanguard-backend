@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Offer</title>
+</head>
+<body>
+<h2>Dear <span th:text="${applicantName}"></span>,</h2>
+<p>Congratulations! We are delighted to offer you the position of <strong th:text="${position}"></strong> at our company.</p>
+<p>Your start date will be <strong th:text="${startDate}"></strong>.</p>
+<p>Please reply to this email to confirm your acceptance of the offer, and feel free to reach out if you have any questions.</p>
+<p>We look forward to welcoming you to our team!</p>
+<p>Best regards,</p>
+<p><strong>Recruitment Team</strong></p>
+</body>
+</html>

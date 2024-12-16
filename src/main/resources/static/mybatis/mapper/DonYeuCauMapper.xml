@@ -107,4 +107,17 @@
             ma_don = #{maDonYeuCau}
         </where>
     </select>
+
+    <select id="getDonYeuCau" resultMap="resultMapDonYeuCau">
+        SELECT
+            ma_don,
+            ma_nhan_vien,
+            loai_don,
+            mo_ta,
+            trang_thai,
+            ngay_tao,
+            ngay_bat_dau,
+            ngay_ket_thuc
+        FROM don_yeu_cau
+    </select>
 </mapper>

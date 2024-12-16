@@ -64,13 +64,13 @@
 
     <insert id="insertPhuCap">
         INSERT INTO phu_cap(ma_phu_cap, ten_phu_cap, so_tien)
-        VALUES (generate_ma_phu_cap(), #{tenPhuCap}, #{soTien});
+        VALUES (generate_ma_phu_cap(), #{tenPhuCap}, #{soTien})
     </insert>
 
     <update id="updatePhuCap">
         UPDATE phu_cap
         SET so_tien = #{soTien}
-        WHERE ten_phu_cap = #{tenPhuCap};
+        WHERE ten_phu_cap = #{tenPhuCap}
     </update>
 
     <delete id="deletePhuCap">

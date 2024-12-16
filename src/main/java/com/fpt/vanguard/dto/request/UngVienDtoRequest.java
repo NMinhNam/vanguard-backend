@@ -23,5 +23,5 @@ public class UngVienDtoRequest {
     private String tenViTri;
     private LocalDate ngayPhongVan;
     private String diaDiemPhongVan;
-    private LocalDate ngayBatDatLam;
+    private LocalDate ngayBatDauLam;
 }

@@ -141,7 +141,7 @@ public class UngVienServiceImpl implements UngVienService {
         Map<String, Object> variables = new HashMap<>();
         variables.put("applicantName", ungVienDtoRequest.getHoTen());
         variables.put("position", ungVienDtoRequest.getTenViTri());
-        variables.put("startDate", ungVienDtoRequest.getNgayBatDatLam());
+        variables.put("startDate", ungVienDtoRequest.getNgayBatDauLam());
 
         MailDtoRequest mailDtoRequest = MailDtoRequest.builder()
                 .to(ungVienDtoRequest.getEmail())

@@ -104,11 +104,11 @@
         hinh_anh = #{hinhAnh},
         email = #{email},
         ma_vi_tri_tuyen_dung = #{maViTriTuyenDung},
-        ngay_phong_van = #{ngayPhongVan},
+        ngay_phong_van = #{ngayPhongVan}::DATE,
         dia_diem_phong_van = #{diaDiemPhongVan},
-        ngay_bat_dau_lam_viec = #{ngayBatDatLam},
+        ngay_bat_dau_lam = #{ngayBatDauLam}::DATE,
         <if test="trangThai != null and trangThai != ''">
-            ,trang_thai = #{trangThai}
+            trang_thai = #{trangThai}
         </if>
         WHERE ma_ung_vien = #{maUngVien}
 

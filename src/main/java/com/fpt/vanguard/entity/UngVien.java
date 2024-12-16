@@ -22,5 +22,5 @@ public class UngVien {
 
     private LocalDate ngayPhongVan;
     private String diaDiemPhongVan;
-    private LocalDate ngayBatDatLam;
+    private LocalDate ngayBatDauLam;
 }

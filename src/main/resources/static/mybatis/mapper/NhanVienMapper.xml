@@ -37,7 +37,8 @@
         , ten_chuc_vu
         , nv.quan_ly
         , nv.user_id
-        , ql.ho_ten as ten_quan_ly
+        , ql.ho_ten as ten_quan_ly,
+        hd.ngay_ky
     </sql>
 
     <sql id="subQueryTruongPhong">
@@ -111,6 +112,7 @@
         LEFT JOIN phong_ban pb ON nv.ma_phong_ban = pb.ma_phong_ban
         LEFT JOIN chuc_vu cv ON nv.ma_chuc_vu = cv.ma_chuc_vu
         LEFT JOIN nhan_vien ql ON nv.quan_ly = ql.ma_nhan_vien
+        LEFT JOIN hop_dong hd ON nv.ma_nhan_vien = hd.ma_nhan_vien
     </select>
 
     <select id="findById" parameterType="String" resultMap="NhanVienResultMap">

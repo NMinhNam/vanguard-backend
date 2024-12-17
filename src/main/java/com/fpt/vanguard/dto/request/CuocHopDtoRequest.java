@@ -1,8 +1,6 @@
 package com.fpt.vanguard.dto.request;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,6 +8,8 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CuocHopDtoRequest {
     private String maCuocHop;
     private String tenCuocHop;
@@ -28,6 +28,6 @@ public class CuocHopDtoRequest {
 
     public CuocHopDtoRequest(String maCuocHop, String maNhanVien) {
         this.maCuocHop = maCuocHop;
-        this.maCuocHop = maNhanVien;
+        this.maNhanVien = maNhanVien;
     }
 }

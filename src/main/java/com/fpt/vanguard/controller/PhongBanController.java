@@ -26,8 +26,8 @@ public class PhongBanController {
         return apiResponse;
     }
 
-    @GetMapping("/search")
-    public ApiResponse<PhongBanDtoResponse> getPhongBanByMaPhongBan(@RequestParam("maPhongBan") String maPhongBan) {
+    @GetMapping("/{id}")
+    public ApiResponse<PhongBanDtoResponse> getPhongBanById(@PathVariable("id") String maPhongBan) {
         ApiResponse<PhongBanDtoResponse> apiResponse = new ApiResponse<>();
         apiResponse.setData(phongBanService.findPhongBanByMaPhongBan(maPhongBan));
         apiResponse.setSuccess(true);

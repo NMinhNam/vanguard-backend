@@ -14,7 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,20 +31,38 @@ public class ChiTietCuocHopServiceImpl implements ChiTietCuocHopService {
     public Integer addNhanVienToCuocHop(CuocHopDtoRequest request) throws MessagingException {
         String maCuocHop = cuocHopService.getMaCuocHop(request).getMaCuocHop();
         request.setMaCuocHop(maCuocHop);
-        Integer addResponse = cuocHopMapper.insertChiTietCuocHop(cuocHopMapstruct.toChiTietCuocHop(request));
+        List<String> danhSachNhanVienReq = request.getDanhSachMaNhanVien();
 
+        List<String> danhSachNhanVienHienTai = cuocHopMapper.getDanhSachMaNhanVienByCuocHop(maCuocHop);
+
+
+        List<String> toAdd = danhSachNhanVienReq.stream()
+                .filter(id -> !danhSachNhanVienHienTai.contains(id))
+                .toList();
+
+        List<String> toRemove = danhSachNhanVienHienTai.stream()
+                .filter(id -> !danhSachNhanVienReq.contains(id))
+                .toList();
+
+        for (String maNhanVien : toRemove) {
+            cuocHopMapper.deleteChiTietCuocHop(maCuocHop, maNhanVien);
+        }
+
+        for (String maNhanVien : toAdd) {
+            NhanVienDtoResponse nhanVien = nhanVienService.getNhanVienById(maNhanVien);
+            CuocHopDtoRequest newRecord = new CuocHopDtoRequest(maCuocHop, maNhanVien);
+            cuocHopMapper.insertChiTietCuocHop(cuocHopMapstruct.toChiTietCuocHop(newRecord));
+        }
+        Integer addResponse = cuocHopMapper.insertChiTietCuocHop(cuocHopMapstruct.toChiTietCuocHop(request));
         String maNhanVien = request.getMaNhanVien();
         NhanVienDtoResponse nhanVienDtoResponse = nhanVienService.getNhanVienById(maNhanVien);
         String tenNhanVien = nhanVienDtoResponse.getHoTen();
         String emailNhanVien = nhanVienDtoResponse.getEmail();
-
         String maNguoiToChuc = request.getNguoiToChuc();
         String tenNguoiToChuc = nhanVienService.getNhanVienById(maNguoiToChuc).getHoTen();
-
         request.setTenNhanVien(tenNhanVien);
         request.setEmailNhanVien(emailNhanVien);
         request.setTenNguoiToChuc(tenNguoiToChuc);
-
         sendMeetingNotification(request);
         return addResponse;
     }

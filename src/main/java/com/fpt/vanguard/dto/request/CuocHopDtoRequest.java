@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,4 +24,10 @@ public class CuocHopDtoRequest {
     private String tenNhanVien;
     private String tenNguoiToChuc;
     private String emailNhanVien;
+    private List<String> danhSachMaNhanVien;
+
+    public CuocHopDtoRequest(String maCuocHop, String maNhanVien) {
+        this.maCuocHop = maCuocHop;
+        this.maCuocHop = maNhanVien;
+    }
 }

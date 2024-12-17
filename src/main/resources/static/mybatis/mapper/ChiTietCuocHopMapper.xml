@@ -11,4 +11,16 @@
             #{maNhanVien}
         )
     </insert>
+
+    <delete id="deleteChiTietCuocHop">
+        DELETE FROM chi_tiet_cuoc_hop
+        WHERE ma_cuoc_hop = #{maCuocHop}
+        AND ma_nhan_vien = #{maNhanVien}
+    </delete>
+
+    <select id="getDanhSachMaNhanVienByCuocHop">
+        SELECT ma_nhan_vien
+        FROM chi_tiet_cuoc_hop
+        WHERE ma_cuoc_hop = #{maCuocHop}
+    </select>
 </mapper>

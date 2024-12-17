@@ -14,6 +14,5 @@ public class HopDong {
     private String noiDung;
     private Integer lanKy;
     private Double thoiHan;
-    private Double heSoLuong;
     private Double luongCoBan;
 }

@@ -10,7 +10,6 @@
         <result column="noi_dung" property="noiDung"/>
         <result column="lan_ky" property="lanKy"/>
         <result column="thoi_han" property="thoiHan"/>
-        <result column="he_so_luong" property="heSoLuong"/>
         <result column="luong_co_ban" property="luongCoBan"/>
         <result column="ma_nhan_vien" property="maNhanVien"/>
     </resultMap>
@@ -23,7 +22,6 @@
         hd.noi_dung,
         hd.lan_ky,
         hd.thoi_han,
-        hd.he_so_luong,
         hd.luong_co_ban,
         hd.ma_nhan_vien
     </sql>
@@ -45,7 +43,6 @@
             noi_dung,
             lan_ky,
             thoi_han,
-            he_so_luong,
             luong_co_ban,
             ma_nhan_vien
         )
@@ -56,7 +53,6 @@
                    #{hopDong.noiDung},
                    #{hopDong.lanKy},
                    #{hopDong.thoiHan},
-                   #{hopDong.heSoLuong},
                    #{hopDong.luongCoBan},
                    #{hopDong.maNhanVien}
                )
@@ -71,7 +67,6 @@
             <if test="hopDong.noiDung != null">noi_dung = #{hopDong.noiDung},</if>
             <if test="hopDong.lanKy != null">lan_ky = #{hopDong.lanKy},</if>
             <if test="hopDong.thoiHan != null">thoi_han = #{hopDong.thoiHan},</if>
-            <if test="hopDong.heSoLuong != null">he_so_luong = #{hopDong.heSoLuong},</if>
             <if test="hopDong.luongCoBan != null">luong_co_ban = #{hopDong.luongCoBan},</if>
             <if test="hopDong.maNhanVien != null">ma_nhan_vien = #{hopDong.maNhanVien},</if>
         </set>

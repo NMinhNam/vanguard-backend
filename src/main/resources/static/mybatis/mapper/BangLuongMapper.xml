@@ -8,10 +8,10 @@
             thang,
             nam
         ) VALUES (
-            generate_ma_bang_luong(#{thang}, #{nam}),
+            generate_ma_bang_luong(#{thangBangLuong}, #{namBangLuong}),
             #{maNhanVien},
-            #{thang},
-            #{nam}
+            #{thangBangLuong},
+            #{namBangLuong}
         )
     </insert>
 

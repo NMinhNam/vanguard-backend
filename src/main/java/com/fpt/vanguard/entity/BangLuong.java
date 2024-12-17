@@ -1,11 +1,11 @@
 package com.fpt.vanguard.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class BangLuong {
     private String maBangLuong;

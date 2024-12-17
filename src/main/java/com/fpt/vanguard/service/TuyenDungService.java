@@ -9,4 +9,5 @@ public interface TuyenDungService {
     List<ViTriTuyenDungDtoResponse> getAllTuyenDung();
     ViTriTuyenDungDtoResponse getTuyenDungById(String maTuyenDung);
     int saveTuyenDung(ViTriTuyenDungDtoRequest tuyenDung);
+    String getMaViTriByTenViTri(String tenViTri);
 }

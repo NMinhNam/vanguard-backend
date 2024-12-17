@@ -13,39 +13,37 @@
         <result property="hinhAnh" column="hinh_anh"/>
         <result property="email" column="email"/>
         <result property="maPhongBan" column="ma_phong_ban"/>
-        <result property="maBoPhan" column="ma_bo_phan"/>
         <result property="maChucVu" column="ma_chuc_vu"/>
         <result property="userId" column="user_id"/>
         <result property="tenQuanLy" column="ten_quan_ly"/>
         <result property="quanLy" column="quan_ly"/>
         <result property="tenPhongBan" column="ten_phong_ban"/>
-        <result property="tenBoPhan" column="ten_bo_phan"/>
         <result property="tenChucVu" column="ten_chuc_vu"/>
     </resultMap>
 
     <sql id="NhanVienColumnList">
-        ma_nhan_vien
-        , ho_ten
-        , gioi_tinh
-        , ngay_sinh
-        , dien_thoai
-        , cccd
-        , dia_chi
-        , hinh_anh
-        , email
+        nv.ma_nhan_vien
+        , nv.ho_ten
+        , nv.gioi_tinh
+        , nv.ngay_sinh
+        , nv.dien_thoai
+        , nv.cccd
+        , nv.dia_chi
+        , nv.hinh_anh
+        , nv.email
         , nv.ma_phong_ban
         , ten_phong_ban
-        , nv.ma_bo_phan
-        , ten_bo_phan
         , nv.ma_chuc_vu
         , ten_chuc_vu
-        , user_id
+        , nv.quan_ly
+        , nv.user_id
+        , ql.ho_ten as ten_quan_ly
     </sql>
 
     <sql id="subQueryTruongPhong">
         (select ho_ten
          from nhan_vien
-         where ma_nhan_vien = truong_phong) as ten_truong_phong
+         where ma_nhan_vien = truong_phong) as ten_quan_ly
     </sql>
 
     <insert id="insertNhanVien" parameterType="NhanVien">
@@ -59,9 +57,9 @@
                                hinh_anh,
                                email,
                                ma_phong_ban,
-                               ma_bo_phan,
                                ma_chuc_vu,
-                               user_id)
+                               user_id,
+                               quan_ly)
         VALUES (generate_ma_nhan_vien(),
                 #{nhanVien.hoTen},
                 #{nhanVien.gioiTinh},
@@ -72,9 +70,9 @@
                 #{nhanVien.hinhAnh},
                 #{nhanVien.email},
                 #{nhanVien.maPhongBan},
-                #{nhanVien.maBoPhan},
                 #{nhanVien.maChucVu},
-                #{nhanVien.userId}
+                #{nhanVien.userId},
+                #{nhanVien.quanLy}
                )
     </insert>
 
@@ -89,9 +87,9 @@
             dia_chi = #{nhanVien.diaChi},
             hinh_anh = #{nhanVien.hinhAnh},
             ma_phong_ban = #{nhanVien.maPhongBan},
-            ma_bo_phan = #{nhanVien.maBoPhan},
             ma_chuc_vu = #{nhanVien.maChucVu},
-            email = #{nhanVien.email}
+            email = #{nhanVien.email},
+            quan_ly = #{nhanVien.quanLy}
         WHERE ma_nhan_vien = #{nhanVien.maNhanVien}
     </update>
 
@@ -108,27 +106,24 @@
 
     <select id="findAll" resultMap="NhanVienResultMap">
         SELECT
-            <include refid="NhanVienColumnList"/>,
-            <include refid="subQueryTruongPhong"/>
+        <include refid="NhanVienColumnList"/>
         FROM nhan_vien nv
-        LEFT JOIN phong_ban pb
-        ON nv.ma_phong_ban = pb.ma_phong_ban
-        left join bo_phan bp on nv.ma_bo_phan = bp.ma_bo_phan
-        left join chuc_vu cv on nv.ma_chuc_vu = cv.ma_chuc_vu
+        LEFT JOIN phong_ban pb ON nv.ma_phong_ban = pb.ma_phong_ban
+        LEFT JOIN chuc_vu cv ON nv.ma_chuc_vu = cv.ma_chuc_vu
+        LEFT JOIN nhan_vien ql ON nv.quan_ly = ql.ma_nhan_vien
     </select>
 
     <select id="findById" parameterType="String" resultMap="NhanVienResultMap">
         SELECT
-        <include refid="NhanVienColumnList"/>,
-        <include refid="subQueryTruongPhong"/>
+        <include refid="NhanVienColumnList"/>
         FROM nhan_vien nv
         LEFT JOIN phong_ban pb
         ON nv.ma_phong_ban = pb.ma_phong_ban
-        left join bo_phan bp on nv.ma_bo_phan = bp.ma_bo_phan
         left join chuc_vu cv on nv.ma_chuc_vu = cv.ma_chuc_vu
+        left join nhan_vien ql on nv.quan_ly = ql.ma_nhan_vien
         <where>
             <if test="id != null">
-                ma_nhan_vien = #{id}
+                nv.ma_nhan_vien = #{id}
             </if>
         </where>
     </select>
@@ -170,9 +165,6 @@
             </if>
             <if test="nhanVien.maPhongBan != null and nhanVien.maPhongBan != ''">
                 AND ma_phong_ban = #{nhanVien.maPhongBan}
-            </if>
-            <if test="nhanVien.maBoPhan != null and nhanVien.maBoPhan != ''">
-                AND ma_bo_phan = #{nhanVien.maBoPhan}
             </if>
             <if test="nhanVien.maChucVu != null and nhanVien.maChucVu != ''">
                 AND ma_chuc_vu = #{nhanVien.maChucVu}
@@ -224,7 +216,7 @@
 
     <select id="getOrgChart" resultMap="resultMapOrgChart">
         SELECT
-            <include refid="columnOrgChart"/>
+        <include refid="columnOrgChart"/>
         FROM nhan_vien nv
         left join nhan_vien ql on nv.quan_ly = ql.ma_nhan_vien
         left join phong_ban pb on nv.ma_phong_ban = pb.ma_phong_ban
@@ -242,7 +234,6 @@
         dia_chi,
         email,
         ma_phong_ban,
-        ma_bo_phan,
         ma_chuc_vu
         )
         VALUES
@@ -261,7 +252,6 @@
             #{element.diaChi},
             #{element.email},
             #{element.maPhongBan},
-            #{element.maBoPhan},
             #{element.maChucVu}
         </foreach>
     </insert>
@@ -271,9 +261,82 @@
         <include refid="NhanVienColumnList"/>
         FROM nhan_vien nv
         LEFT JOIN phong_ban pb ON nv.ma_phong_ban = pb.ma_phong_ban
-        LEFT JOIN bo_phan bp ON nv.ma_bo_phan = bp.ma_bo_phan
         LEFT JOIN chuc_vu cv ON nv.ma_chuc_vu = cv.ma_chuc_vu
+        LEFT JOIN nhan_vien ql on nv.quan_ly = ql.ma_nhan_vien
         WHERE nv.cccd = #{cccd}
     </select>
 
+    <resultMap id="resultMapNhanSuMoi" type="NhanVien">
+        <result column="ho_ten" property="hoTen"/>
+        <result column="ten_phong_ban" property="tenPhongBan"/>
+        <result column="ten_chuc_vu" property="tenChucVu"/>
+        <result column="dien_thoai" property="dienThoai"/>
+        <result column="email" property="email"/>
+        <result column="ngay_ky_hop_dong" property="ngayKyHopDong"/>
+    </resultMap>
+
+    <select id="getNhanSuMoi" resultMap="resultMapNhanSuMoi">
+<![CDATA[
+        SELECT
+            nv.ho_ten,
+            p.ten_phong_ban,
+            cv.ten_chuc_vu,
+            nv.dien_thoai,
+            nv.email,
+            hd.ngay_ky AS ngay_ky_hop_dong
+        FROM
+            nhan_vien nv
+                JOIN
+            hop_dong hd ON hd.ma_nhan_vien = nv.ma_nhan_vien
+                JOIN
+            phong_ban p ON p.ma_phong_ban = nv.ma_phong_ban
+                JOIN
+            chuc_vu cv ON nv.ma_chuc_vu = cv.ma_chuc_vu
+        WHERE
+            hd.ngay_ky >= current_date - INTERVAL '3 months'
+                AND hd.lan_ky = 1
+        ORDER BY
+            hd.ngay_ky DESC
+        ]]>
+    </select>
+
+    <resultMap id="resultMapGetNhanVienByBirthday" type="NhanVien">
+        <result property="hoTen" column="ho_ten"/>
+        <result property="ngaySinh" column="ngay_sinh"/>
+        <result property="tenPhongBan" column="ten_phong_ban"/>
+        <result property="tenChucVu" column="ten_chuc_vu"/>
+    </resultMap>
+
+    <select id="getNhanVienByBirthday" resultMap="resultMapGetNhanVienByBirthday">
+        SELECT
+            nv.ho_ten,
+            nv.ngay_sinh,
+            p.ten_phong_ban,
+            cv.ten_chuc_vu
+        FROM
+            nhan_vien nv
+                JOIN
+            phong_ban p ON p.ma_phong_ban = nv.ma_phong_ban
+                JOIN
+            chuc_vu cv ON nv.ma_chuc_vu = cv.ma_chuc_vu
+        WHERE
+            EXTRACT(MONTH FROM nv.ngay_sinh) = EXTRACT(MONTH FROM current_date)
+          AND EXTRACT(YEAR FROM nv.ngay_sinh) &lt;= EXTRACT(YEAR FROM current_date)
+        ORDER BY
+            nv.ngay_sinh
+    </select>
+
+    <select id="getTongSoLuongNhanVien">
+        SELECT COUNT(ma_nhan_vien)
+        FROM nhan_vien
+    </select>
+
+    <select id="getAllMaNhanVien">
+        SELECT ma_nhan_vien
+        FROM nhan_vien
+    </select>
+
 </mapper>
+
+
+

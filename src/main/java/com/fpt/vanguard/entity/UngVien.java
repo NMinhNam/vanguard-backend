@@ -3,6 +3,8 @@ package com.fpt.vanguard.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 public class UngVien {
@@ -17,4 +19,8 @@ public class UngVien {
     private String email;
     private String maViTriTuyenDung;
     private Integer trangThai;
+
+    private LocalDate ngayPhongVan;
+    private String diaDiemPhongVan;
+    private LocalDate ngayBatDauLam;
 }

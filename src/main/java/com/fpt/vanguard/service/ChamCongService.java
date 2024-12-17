@@ -17,4 +17,8 @@ public interface ChamCongService {
     ChamCongDtoResponse getChamCongDetail(ChamCongDtoRequest request);
 
     ChamCongDtoResponse getChamCongToDay(String maNhanVien);
+
+    List<ChamCongDtoResponse> getChamCongByThang(ChamCongDtoRequest request);
+
+    Double tinhSoNgayCong(String maNhanVien, Integer thang, Integer nam);
 }

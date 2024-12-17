@@ -3,12 +3,11 @@ package com.fpt.vanguard.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 public class NgayLe {
     private Integer id;
-    private LocalDate ngayThang;
+    private String ngayThangBatDau;
+    private String ngayThangKetThuc;
     private String tenNgayLe;
 }

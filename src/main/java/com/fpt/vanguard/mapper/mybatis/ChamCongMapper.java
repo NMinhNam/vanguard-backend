@@ -21,4 +21,8 @@ public interface ChamCongMapper {
     Boolean isChamCong(BangChamCong bangChamCong);
 
     BangChamCong findDetail(String maNhanVien, String ngayChamCong);
+
+    List<BangChamCong> findByMonth(String maNhanVien, Integer month, Integer year);
+
+    Double getSoNgayCong(String maNhanVien, Integer month, Integer year);
 }

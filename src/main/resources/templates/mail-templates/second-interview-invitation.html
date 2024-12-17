@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Second Interview Invitation</title>
+</head>
+<body>
+<h2>Dear <span th:text="${applicantName}"></span>,</h2>
+<p>We are excited to invite you to the second interview for the position of <strong th:text="${position}"></strong>.</p>
+<p>Here are the details:</p>
+<ul>
+    <li><strong>Date:</strong> <span th:text="${interviewDate}"></span></li>
+    <li><strong>Location:</strong> <span th:text="${location}"></span></li>
+    <li><strong>Contact Person:</strong> <span th:text="${contactPerson}"></span></li>
+</ul>
+<p>Kindly confirm your availability for the interview by replying to this email.</p>
+<p>Thank you and good luck!</p>
+<p>Best regards,</p>
+<p><strong>Recruitment Team</strong></p>
+</body>
+</html>

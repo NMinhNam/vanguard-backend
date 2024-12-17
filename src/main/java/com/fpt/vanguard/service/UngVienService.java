@@ -20,4 +20,6 @@ public interface UngVienService {
 
     int deleteUngVien(String maUngVien);
 
+    List<UngVienDtoResponse> getUngVienByViTriAndTrangThai(String maViTri, int trangThai) throws MessagingException, ParseException;
+
 }

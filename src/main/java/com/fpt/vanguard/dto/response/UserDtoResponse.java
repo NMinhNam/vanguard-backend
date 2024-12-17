@@ -11,4 +11,10 @@ public class UserDtoResponse {
     private String userName;
     private Boolean enabled;
     private Role role;
+
+
+    private String roleName;
+    private String maNhanVien;
+    private String tenNhanVien;
+    private String dienThoai;
 }

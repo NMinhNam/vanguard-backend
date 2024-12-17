@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updated Meeting Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .body {
+            padding: 20px;
+        }
+        .meeting-details {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .meeting-date {
+            background-color: #f4f4f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            padding: 10px 15px;
+            width: 100px;
+        }
+        .meeting-date .day {
+            font-size: 30px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .meeting-date .month {
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #333;
+        }
+        .details {
+            flex-grow: 1;
+            font-size: 14px;
+            color: #555;
+        }
+        .details a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        .details ul {
+            padding-left: 20px;
+            list-style: disc;
+        }
+        .update-message {
+            font-size: 16px;
+            color: #f44336;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <!-- Header -->
+    <div class="header">Meeting Updated</div>
+
+    <!-- Body -->
+    <div class="body">
+        <p>Hello <strong th:text="${tenNhanVien}"></strong>,</p>
+        <p>We would like to inform you that the details for the meeting <strong th:text="${tenCuocHop}"></strong> have been updated.</p>
+
+        <!-- Meeting Details -->
+        <div class="meeting-details">
+            <div class="meeting-date">
+                <div class="day" th:text="${thoiGianBatDau.dayOfMonth}"></div>
+                <div class="month" th:text="${thoiGianBatDau.month}"></div>
+                <div class="time" th:text="${thoiGianBatDau.toLocalTime()}"></div>
+            </div>
+            <div class="details">
+                <p><strong>Details of the updated meeting:</strong></p>
+                <ul>
+                    <li><strong>Start Time:</strong> <span th:text="${thoiGianBatDau}"></span></li>
+                    <li><strong>End Time:</strong> <span th:text="${thoiGianKetThuc}"></span></li>
+                    <li><strong>Location:</strong> <span th:text="${viTri}"></span></li>
+                    <li><strong>Meeting Link:</strong> <a th:href="${videoCallUrl}">Join the meeting</a></li>
+                    <li><strong>Organizer:</strong> <span th:text="${nguoiToChuc}"></span></li>
+                    <li><strong>Notes:</strong> <span th:text="${ghiChu}"></span></li>
+                </ul>
+            </div>
+        </div>
+
+        <p class="update-message" th:text="${updateMessage}"></p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        Thank you,<br>
+        <strong>The Meeting Organizing Team</strong><br>
+        Vanguard Team
+    </div>
+</div>
+</body>
+</html>

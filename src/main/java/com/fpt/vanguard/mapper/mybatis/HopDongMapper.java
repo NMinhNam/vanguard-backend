@@ -1,9 +1,7 @@
 package com.fpt.vanguard.mapper.mybatis;
 
 import com.fpt.vanguard.dto.request.HopDongDtoRequest;
-import com.fpt.vanguard.dto.request.UngLuongDtoRequest;
 import com.fpt.vanguard.entity.HopDong;
-import com.fpt.vanguard.entity.UngLuong;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,5 +20,9 @@ public interface HopDongMapper {
 
     int deleteHopDong(String id);
 
+    List<HopDong> getListHopDongByMaNhanVien(@Param("maNhanVien") String maNhanVien);
 
+    HopDong getHopDongByMaNhanVien(@Param("maNhanVien") String maNhanVien);
+
+    Double getLuongCoBanByMaNhanVien(@Param("maNhanVien") String maNhanVien);
 }

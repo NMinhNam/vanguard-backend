@@ -6,6 +6,7 @@ import com.fpt.vanguard.entity.User;
 import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.exception.AppException;
 import com.fpt.vanguard.mapper.mapstruct.UserMapstruct;
+import com.fpt.vanguard.mapper.mybatis.RoleMapper;
 import com.fpt.vanguard.mapper.mybatis.UserMapper;
 import com.fpt.vanguard.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -60,5 +61,36 @@ public class UserServiceImpl implements UserService {
         if (!userMapper.isExist(username)) throw new AppException(ErrorCode.USER_NOT_EXIST);
 
         return userMapper.delete(username);
+    }
+
+    @Override
+    public Integer updateRoleUser(UserDtoRequest request) {
+        String userName = request.getUsername();
+        Boolean isExitsUserName = userMapper.isExist(userName);
+        if(!isExitsUserName)
+            throw new AppException(ErrorCode.USER_NOT_EXIST);
+        return userMapper.updateRoleUser(userMapstruct.toUser(request));
+    }
+
+    @Override
+    public List<UserDtoResponse> getAllInfoUser() {
+        return userMapstruct.toUserDtoResponseList(userMapper.getInfoUser());
+    }
+
+    @Override
+    public UserDtoResponse getInfoUserByUserName(String userName) {
+        Boolean isExitsUserName = userMapper.isExist(userName);
+        if(!isExitsUserName)
+            throw new AppException(ErrorCode.USER_NOT_EXIST);
+        return userMapstruct.toUserDtoResponse(userMapper.getInfoUserByUserName(userName));
+    }
+
+    @Override
+    public Integer updateStatusUser(UserDtoRequest request) {
+        String userName = request.getUsername();
+        Boolean isExitsUserName = userMapper.isExist(userName);
+        if(!isExitsUserName)
+            throw new AppException(ErrorCode.USER_NOT_EXIST);
+        return userMapper.updateStatusAccound(userMapstruct.toUser(request));
     }
 }

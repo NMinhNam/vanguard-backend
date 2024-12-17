@@ -3,11 +3,16 @@ package com.fpt.vanguard.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 public class PhuCap {
-    private Integer maPhuCap;
-    private String maNhanVien;
+    private String maPhuCap;
     private String tenPhuCap;
-    private Double soTienPhuCap;
+    private Double soTien;
+
+    private String maNhanVien;
+    private String tenNhanVien;
+    private Date ngay;
 }

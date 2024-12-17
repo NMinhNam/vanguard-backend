@@ -9,6 +9,6 @@ public class LoaiCong {
     private String maLoaiCong;
     private String tenLoaiCong;
     private Float heSo;
-    private String ngayBatDau;
-    private String ngaKetThuc;
+    private String gioBatDau;
+    private String gioKetThuc;
 }

@@ -16,4 +16,8 @@ public class ChamCongDtoResponse {
 
     private String tenNhanVien;
     private String tenLoaiCong;
+
+    private Integer thang;
+    private Integer nam;
+    private Double soNgayCong;
 }

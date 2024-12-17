@@ -28,4 +28,5 @@ public class NhanVienDtoResponse {
     private String tenPhongBan;
     private String tenBoPhan;
     private String tenChucVu;
+    private String ngayKyHopDong;
 }

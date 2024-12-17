@@ -52,4 +52,12 @@ public class HopDongController {
         apiResponse.setData(hopDongService.deleteHopDong(id));
         return apiResponse;
     }
+    @GetMapping("/employee/{maNhanVien}")
+    public ApiResponse<List<HopDongDtoResponse>> getHopDongByMaNhanVien(@PathVariable("maNhanVien") String maNhanVien) {
+        ApiResponse<List<HopDongDtoResponse>> apiResponse = new ApiResponse<>();
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setSuccess(true);
+        apiResponse.setData(hopDongService.getListHopDongByMaNhanVien(maNhanVien));
+        return apiResponse;
+    }
 }

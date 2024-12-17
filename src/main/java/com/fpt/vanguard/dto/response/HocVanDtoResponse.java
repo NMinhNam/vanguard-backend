@@ -10,4 +10,6 @@ public class HocVanDtoResponse {
     private String chuyenNganh;
     private Integer namTotNghiep;
     private String coSoGiaoDuc;
+
+    private int soLuongNhanVien;
 }

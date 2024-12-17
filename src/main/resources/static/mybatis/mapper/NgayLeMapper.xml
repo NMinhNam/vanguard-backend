@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fpt.vanguard.mapper.mybatis.NgayLeMapper">
+    <insert id="insertNgayLe">
+        INSERT INTO ngay_le
+        (
+            ngay_bat_dau,
+            ngay_ket_thuc,
+            ten_ngay_le
+        )
+        VALUES (
+            #{ngayThangBatDau},
+            #{ngayThangKetThuc},
+            #{tenNgayLe}
+        )
+    </insert>
+
+    <update id="updateNgayLe">
+        update ngay_le
+        set ngay_bat_dau = #{ngayThangBatDau}
+            and ngay_ket_thuc = #{ngayThangBatDau}
+            and ten_ngay_le = #{tenNgayLe}
+        where ten_ngay_le = #{tenNgayLe}
+    </update>
+
+    <delete id="deleteNgayLe">
+        delete from ngay_le
+        where ten_ngay_le = #{tenNgayLe}
+    </delete>
+
     <select id="isNgayLe">
         SELECT EXISTS(
             SELECT
@@ -9,6 +36,28 @@
             <where>
                 ngay_thang = #{ngayChamCong}
             </where>
+        )
+    </select>
+
+    <resultMap id="resultMapNgayLe" type="NgayLe">
+        <result column="ngay_bat_dau" property="ngayThangBatDau"/>
+        <result column="ngay_ket_thuc" property="ngayThangKetThuc"/>
+        <result column="ten_ngay_le" property="tenNgayLe"/>
+    </resultMap>
+
+    <select id="getAllNgayLes" resultMap="resultMapNgayLe">
+        select
+            ngay_bat_dau,
+            ngay_ket_thuc,
+            ten_ngay_le
+        from ngay_le
+    </select>
+
+    <select id="isNgayLeExist">
+        SELECT exists(
+            SELECT 1
+            FROM ngay_le
+            WHERE ten_ngay_le = #{tenNgayLe}
         )
     </select>
 </mapper>

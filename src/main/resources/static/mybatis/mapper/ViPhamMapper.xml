@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpt.vanguard.mapper.mybatis.ViPhamMapper">
+    <insert id="insertViPham">
+        insert into vi_pham(
+            ma_vi_pham,
+            ten_vi_pham,
+            so_tien
+    ) VALUES (
+        generate_ma_vi_pham(),
+        #{tenViPham},
+        #{soTienViPham}
+    )
+    </insert>
+
+    <update id="updateViPham">
+        update vi_pham
+        set ten_vi_pham = #{tenViPham},
+                so_tien = #{soTienViPham}
+        where ma_vi_pham = #{maViPham}
+    </update>
+
+    <delete id="deleteViPham">
+        DELETE FROM vi_pham
+        WHERE ma_vi_pham = #{maViPham}
+    </delete>
+
+    <resultMap id="resultMapViPham" type="ViPham">
+        <id property="maViPham" column="ma_vi_pham"/>
+        <result property="tenViPham" column="ten_vi_pham"/>
+        <result property="soTienViPham" column="so_tien"/>
+    </resultMap>
+
+    <select id="getAllViPham" resultMap="resultMapViPham">
+        SELECT
+            ma_vi_pham,
+            ten_vi_pham,
+            so_tien
+        FROM vi_pham
+    </select>
+
+    <select id="isViPhamExist">
+        SELECT EXISTS(
+            SELECT 1
+            FROM vi_pham
+            WHERE ma_vi_pham = #{maViPham}
+        )
+    </select>
+
+    <select id="getSumNhanVienViPhamByMonth">
+        SELECT SUM(so_tien)
+        FROM vi_pham
+                 JOIN nhan_vien_vi_pham nvvp on vi_pham.ma_vi_pham = nvvp.ma_vi_pham
+        WHERE ma_nhan_vien = #{maNhanVien}
+          AND EXTRACT(MONTH FROM ngay_vi_pham) = #{thang}
+          AND EXTRACT(YEAR FROM ngay_vi_pham) = #{nam}
+    </select>
+</mapper>

@@ -11,4 +11,10 @@ public class User {
     private String password;
     private Boolean enabled;
     private Role role;
+
+    private String email;
+    private String roleName;
+    private String maNhanVien;
+    private String tenNhanVien;
+    private String dienThoai;
 }

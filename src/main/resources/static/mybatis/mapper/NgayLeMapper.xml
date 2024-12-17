@@ -29,13 +29,10 @@
     </delete>
 
     <select id="isNgayLe">
-        SELECT EXISTS(
-            SELECT
-                1
-             FROM ngay_le
-            <where>
-                ngay_thang = #{ngayChamCong}
-            </where>
+        SELECT EXISTS (
+            SELECT 1
+            FROM ngay_le
+            WHERE #{ngayChamCong} BETWEEN ngay_bat_dau AND ngay_ket_thuc
         )
     </select>
 

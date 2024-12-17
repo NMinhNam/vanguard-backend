@@ -85,7 +85,6 @@ jobs:
                 --name $VANGUARD_APP_NAME \
                 --cpus=1 \
                 --memory="512m" \
-                -v /etc/vanguard/prod.application.yml:/etc/vanguard/application.yml \
                 $DOCKER_IMAGE:sha-$IMAGE_TAG
 
               docker logout

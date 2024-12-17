@@ -19,6 +19,7 @@
         <result property="quanLy" column="quan_ly"/>
         <result property="tenPhongBan" column="ten_phong_ban"/>
         <result property="tenChucVu" column="ten_chuc_vu"/>
+        <result property="ngayKyHopDong" column="ngay_ky"/>
     </resultMap>
 
     <sql id="NhanVienColumnList">
@@ -117,7 +118,22 @@
 
     <select id="findById" parameterType="String" resultMap="NhanVienResultMap">
         SELECT
-        <include refid="NhanVienColumnList"/>
+        nv.ma_nhan_vien
+        , nv.ho_ten
+        , nv.gioi_tinh
+        , nv.ngay_sinh
+        , nv.dien_thoai
+        , nv.cccd
+        , nv.dia_chi
+        , nv.hinh_anh
+        , nv.email
+        , nv.ma_phong_ban
+        , ten_phong_ban
+        , nv.ma_chuc_vu
+        , ten_chuc_vu
+        , nv.quan_ly
+        , nv.user_id
+        , ql.ho_ten as ten_quan_ly
         FROM nhan_vien nv
         LEFT JOIN phong_ban pb
         ON nv.ma_phong_ban = pb.ma_phong_ban

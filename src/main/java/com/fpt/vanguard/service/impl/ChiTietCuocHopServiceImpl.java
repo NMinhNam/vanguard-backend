@@ -31,40 +31,72 @@ public class ChiTietCuocHopServiceImpl implements ChiTietCuocHopService {
     public Integer addNhanVienToCuocHop(CuocHopDtoRequest request) throws MessagingException {
         String maCuocHop = cuocHopService.getMaCuocHop(request).getMaCuocHop();
         request.setMaCuocHop(maCuocHop);
-        List<String> danhSachNhanVienReq = request.getDanhSachMaNhanVien();
 
+        List<String> danhSachNhanVienReq = request.getDanhSachMaNhanVien();
         List<String> danhSachNhanVienHienTai = cuocHopMapper.getDanhSachMaNhanVienByCuocHop(maCuocHop);
 
+        if (danhSachNhanVienHienTai.size() == danhSachNhanVienReq.size() &&
+                danhSachNhanVienHienTai.containsAll(danhSachNhanVienReq)) {
+            return 0;
+        }
 
-        List<String> toAdd = danhSachNhanVienReq.stream()
-                .filter(id -> !danhSachNhanVienHienTai.contains(id))
-                .toList();
+        List<String> toAdd = getItemsToAdd(danhSachNhanVienHienTai, danhSachNhanVienReq);
+        List<String> toRemove = getItemsToRemove(danhSachNhanVienHienTai, danhSachNhanVienReq);
 
-        List<String> toRemove = danhSachNhanVienHienTai.stream()
-                .filter(id -> !danhSachNhanVienReq.contains(id))
-                .toList();
+        removeEmployeesFromMeeting(toRemove, maCuocHop);
 
+        addEmployeesToMeeting(toAdd, maCuocHop);
+
+        Integer addResponse = cuocHopMapper.insertChiTietCuocHop(cuocHopMapstruct.toChiTietCuocHop(request));
+
+        sendMeetingNotifications(request, toAdd);
+
+        return addResponse;
+    }
+
+    private void sendMeetingNotifications(CuocHopDtoRequest request, List<String> toAdd) throws MessagingException {
+        for (String maNhanVien : toAdd) {
+            if (!request.getDanhSachMaNhanVien().contains(maNhanVien)) {
+                continue;
+            }
+
+            NhanVienDtoResponse nhanVienDtoResponse = nhanVienService.getNhanVienById(maNhanVien);
+            String tenNhanVien = nhanVienDtoResponse.getHoTen();
+            String emailNhanVien = nhanVienDtoResponse.getEmail();
+            String maNguoiToChuc = request.getNguoiToChuc();
+            String tenNguoiToChuc = nhanVienService.getNhanVienById(maNguoiToChuc).getHoTen();
+
+            request.setTenNhanVien(tenNhanVien);
+            request.setEmailNhanVien(emailNhanVien);
+            request.setTenNguoiToChuc(tenNguoiToChuc);
+
+            sendMeetingNotification(request);
+        }
+    }
+
+    private List<String> getItemsToAdd(List<String> currentList, List<String> requestList) {
+        return requestList.stream()
+                .filter(id -> !currentList.contains(id))
+                .collect(Collectors.toList());
+    }
+
+    private List<String> getItemsToRemove(List<String> currentList, List<String> requestList) {
+        return currentList.stream()
+                .filter(id -> !requestList.contains(id))
+                .collect(Collectors.toList());
+    }
+
+    private void removeEmployeesFromMeeting(List<String> toRemove, String maCuocHop) {
         for (String maNhanVien : toRemove) {
             cuocHopMapper.deleteChiTietCuocHop(maCuocHop, maNhanVien);
         }
+    }
 
+    private void addEmployeesToMeeting(List<String> toAdd, String maCuocHop) {
         for (String maNhanVien : toAdd) {
-            NhanVienDtoResponse nhanVien = nhanVienService.getNhanVienById(maNhanVien);
-            CuocHopDtoRequest newRecord = new CuocHopDtoRequest(maCuocHop, maNhanVien);
-            cuocHopMapper.insertChiTietCuocHop(cuocHopMapstruct.toChiTietCuocHop(newRecord));
+            CuocHopDtoRequest newRecord = new CuocHopDtoRequest(maCuocHop, maNhanVien); // Tạo đối tượng mới với mã cuộc họp và mã nhân viên
+            cuocHopMapper.insertChiTietCuocHop(cuocHopMapstruct.toChiTietCuocHop(newRecord)); // Thêm nhân viên vào cuộc họp
         }
-        Integer addResponse = cuocHopMapper.insertChiTietCuocHop(cuocHopMapstruct.toChiTietCuocHop(request));
-        String maNhanVien = request.getMaNhanVien();
-        NhanVienDtoResponse nhanVienDtoResponse = nhanVienService.getNhanVienById(maNhanVien);
-        String tenNhanVien = nhanVienDtoResponse.getHoTen();
-        String emailNhanVien = nhanVienDtoResponse.getEmail();
-        String maNguoiToChuc = request.getNguoiToChuc();
-        String tenNguoiToChuc = nhanVienService.getNhanVienById(maNguoiToChuc).getHoTen();
-        request.setTenNhanVien(tenNhanVien);
-        request.setEmailNhanVien(emailNhanVien);
-        request.setTenNguoiToChuc(tenNguoiToChuc);
-        sendMeetingNotification(request);
-        return addResponse;
     }
 
     public void sendMeetingNotification(CuocHopDtoRequest cuocHopDtoRequest) throws MessagingException {

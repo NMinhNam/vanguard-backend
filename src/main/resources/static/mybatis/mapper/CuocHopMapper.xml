@@ -79,7 +79,7 @@
         )
     </select>
 
-    <select id="getCuocHop" resultMap="resultMapCuocHop">
+    <select id="getCuocHop" resultMap="resultCuocHopByNhanVien">
         SELECT
             <include refid="columnCuocHopDetail"/>
         FROM cuoc_hop ch

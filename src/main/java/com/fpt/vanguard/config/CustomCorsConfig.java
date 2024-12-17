@@ -14,6 +14,7 @@ public class CustomCorsConfig {
         corsConfiguration.addAllowedOrigin("http://157.66.26.146:1668");
         corsConfiguration.addAllowedOrigin("http://localhost:1668");
         corsConfiguration.addAllowedOrigin("https://vanguardhrm.io.vn");
+        corsConfiguration.addAllowedOrigin("http://vanguardhrm.io.vn");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.setAllowCredentials(true);

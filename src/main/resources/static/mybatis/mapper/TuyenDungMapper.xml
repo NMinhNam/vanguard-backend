@@ -34,7 +34,13 @@
         LEFT JOIN ung_vien uv ON td.ma_vi_tri_tuyen_dung = uv.ma_vi_tri_tuyen_dung
         GROUP BY
             td.ma_vi_tri_tuyen_dung,
-            pb.ten_phong_ban
+            pb.ten_phong_ban,
+            td.ten_vi_tri,
+            td.ma_phong_ban,
+            td.so_luong_tuyen,
+            td.trang_thai,
+            td.mo_ta,
+            td.yeu_cau
     </select>
 
     <select id="getTuyenDungById" resultMap="TuyenDungResultMap" parameterType="String">

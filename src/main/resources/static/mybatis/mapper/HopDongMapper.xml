@@ -37,6 +37,7 @@
 
     <insert id="insertHopDong" parameterType="com.fpt.vanguard.dto.request.HopDongDtoRequest">
         INSERT INTO hop_dong (
+            so_hop_dong,
             ngay_bat_dau,
             ngay_ket_thuc,
             ngay_ky,
@@ -47,6 +48,7 @@
             ma_nhan_vien
         )
         VALUES (
+                   generate_so_hop_dong(),
                    #{hopDong.ngayBatDau},
                    #{hopDong.ngayKetThuc},
                    #{hopDong.ngayKy},

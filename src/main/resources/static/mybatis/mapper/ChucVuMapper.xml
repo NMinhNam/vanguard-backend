@@ -38,6 +38,13 @@
         WHERE ma_chuc_vu = #{id}
     </select>
 
+    <select id="getTenChucVuByMaNhanVien">
+        select cv.ten_chuc_vu
+        from chuc_vu cv
+                 JOIN nhan_vien nv on cv.ma_chuc_vu = nv.ma_chuc_vu
+        where ma_nhan_vien = #{maNhanVien}
+    </select>
+
     <insert id="insertChucVu" parameterType="com.fpt.vanguard.dto.request.ChucVuDtoRequest">
         INSERT INTO chuc_vu (
             ma_chuc_vu,
@@ -55,5 +62,7 @@
         SET ten_chuc_vu = #{chucVu.tenChucVu}
         WHERE ma_chuc_vu = #{chucVu.maChucVu}
     </update>
+
+
 
 </mapper>

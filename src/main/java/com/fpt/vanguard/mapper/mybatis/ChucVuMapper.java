@@ -21,4 +21,5 @@ public interface ChucVuMapper {
 
     int deleteChucVu(String id);
 
+    String getTenChucVuByMaNhanVien(String maNhanVien);
 }

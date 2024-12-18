@@ -5,7 +5,6 @@
         <typeAlias type="com.fpt.vanguard.entity.NhanVien" alias="NhanVien"/>
         <typeAlias type="com.fpt.vanguard.entity.User" alias="User"/>
         <typeAlias type="com.fpt.vanguard.entity.Role" alias="Role"/>
-        <typeAlias type="com.fpt.vanguard.entity.UngLuong" alias="UngLuong"/>
         <typeAlias type="com.fpt.vanguard.entity.PhongBan" alias="PhongBan"/>
         <typeAlias type="com.fpt.vanguard.entity.HocVan" alias="HocVan"/>
         <typeAlias type="com.fpt.vanguard.entity.LichSuCongViec" alias="LichSuCongViec"/>

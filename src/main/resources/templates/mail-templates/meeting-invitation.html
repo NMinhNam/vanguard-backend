@@ -89,6 +89,11 @@
 
         <!-- Meeting Details -->
         <div class="meeting-details">
+            <div class="meeting-date">
+                <div class="day" th:text="${thoiGianBatDau.dayOfMonth}"></div>
+                <div class="month" th:text="${thoiGianBatDau.month}"></div>
+                <div class="time" th:text="${thoiGianBatDau.toLocalTime()}"></div>
+            </div>
             <div class="details">
                 <ul>
                     <li><strong>Meeting Name:</strong> <span th:text="${tenCuocHop}"></span></li>

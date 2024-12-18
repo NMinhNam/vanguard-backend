@@ -41,8 +41,11 @@ public class HopDongServiceImpl implements HopDongService {
             return hopDongMapper.updateHopDong(hopdong);
         } else {
             NghiPhepNamDtoRequest request = NghiPhepNamDtoRequest.builder().maNhanVien(maNhanVien).build();
-            nghiPhepNamService.createNghiPhepNamChoNhanVienMoi(ngayBatDau, request);
-            return hopDongMapper.insertHopDong(hopdong);
+            int req = hopDongMapper.insertHopDong(hopdong);
+            if (req > 0) {
+                nghiPhepNamService.createNghiPhepNamChoNhanVienMoi(ngayBatDau, request);
+            }
+            return req;
         }
     }
 

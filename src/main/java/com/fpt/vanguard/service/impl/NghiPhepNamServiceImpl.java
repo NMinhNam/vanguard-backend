@@ -39,7 +39,6 @@ public class NghiPhepNamServiceImpl implements NghiPhepNamService {
     @Override
     public Integer createNghiPhepNamChoNhanVienMoi(LocalDate ngayBatDau, NghiPhepNamDtoRequest nghiPhepNamDtoRequest) {
         String maNhanVien = nghiPhepNamDtoRequest.getMaNhanVien();
-
         Integer namHienTai = LocalDate.now().getYear();
         LocalDate cuoiNam = LocalDate.of(namHienTai, 12, 31);
         long thangLamViecThucTe = ChronoUnit.MONTHS.between(ngayBatDau, cuoiNam);

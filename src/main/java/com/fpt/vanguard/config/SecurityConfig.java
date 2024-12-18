@@ -28,7 +28,8 @@ public class SecurityConfig {
             "/api/v1/auth/reset-password",
             "/v3/api-docs/**",
             "/swagger-ui/**",
-            "/api/v1/attendances/checkin"
+            "/api/v1/attendances/checkin",
+            "/api/v1/attendances/checkout"
     };
 
     @Bean

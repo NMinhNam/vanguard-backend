@@ -5,6 +5,7 @@ import com.fpt.vanguard.service.ExcelService;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.util.List;
 public class ExcelServiceImpl implements ExcelService {
 
     @Override
+    @Transactional
     public List<NhanVienDtoResponse> getNhanVienFromExcel(MultipartFile file) throws IOException {
         List<NhanVienDtoResponse> employees = new ArrayList<>();
         Workbook workbook = WorkbookFactory.create(file.getInputStream());
@@ -23,6 +25,10 @@ public class ExcelServiceImpl implements ExcelService {
 
         for (Row row : sheet) {
             if (row.getRowNum() == 0) continue;
+
+            if (row.getCell(0) == null || row.getCell(0).getCellType() == CellType.BLANK) {
+                continue;
+            }
 
             NhanVienDtoResponse employee = new NhanVienDtoResponse();
 
@@ -43,8 +49,8 @@ public class ExcelServiceImpl implements ExcelService {
 
 
             Cell ngaySinhCell = row.getCell(2);
-            if (ngaySinhCell != null && ngaySinhCell.getCellType() == CellType.NUMERIC) {
-                employee.setNgaySinh(String.valueOf(ngaySinhCell.getLocalDateTimeCellValue().toLocalDate()));
+            if (ngaySinhCell != null && ngaySinhCell.getCellType() == CellType.STRING) {
+                employee.setNgaySinh(ngaySinhCell.getStringCellValue());
             }
 
             Cell dienThoaiCell = row.getCell(3);
@@ -74,12 +80,7 @@ public class ExcelServiceImpl implements ExcelService {
                 employee.setMaPhongBan(maPhongBanCell.getStringCellValue());
             }
 
-            Cell maBoPhanCell = row.getCell(8);
-            if (maBoPhanCell != null && maBoPhanCell.getCellType() == CellType.STRING) {
-                employee.setMaBoPhan(maBoPhanCell.getStringCellValue());
-            }
-
-            Cell maChucVuCell = row.getCell(9);
+            Cell maChucVuCell = row.getCell(8);
             if (maChucVuCell != null && maChucVuCell.getCellType() == CellType.STRING) {
                 employee.setMaChucVu(maChucVuCell.getStringCellValue());
             }

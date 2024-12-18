@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("api/v1/employees")
 @RequiredArgsConstructor
 @CrossOrigin
-public class    NhanVienController {
+public class NhanVienController {
     private final NhanVienService nhanVienService;
 
     @GetMapping

@@ -53,7 +53,7 @@
         )
     </select>
 
-    <select id="getLoaiCongByNgay">
+    <select id="getLoaiCongByNgay" resultMap="resultMapLoaiCong">
         select ten_loai_cong,
                he_so,
                gio_bat_dau,

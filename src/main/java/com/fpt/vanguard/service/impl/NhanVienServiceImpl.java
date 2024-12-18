@@ -10,9 +10,11 @@ import com.fpt.vanguard.enums.ErrorCode;
 import com.fpt.vanguard.enums.Roles;
 import com.fpt.vanguard.exception.AppException;
 import com.fpt.vanguard.mapper.mapstruct.NhanVienMapstruct;
-import com.fpt.vanguard.mapper.mybatis.ChucVuMapper;
 import com.fpt.vanguard.mapper.mybatis.NhanVienMapper;
-import com.fpt.vanguard.service.*;
+import com.fpt.vanguard.service.ExcelService;
+import com.fpt.vanguard.service.MailService;
+import com.fpt.vanguard.service.NhanVienService;
+import com.fpt.vanguard.service.UserService;
 import com.fpt.vanguard.util.PasswordUtil;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +33,6 @@ public class NhanVienServiceImpl implements NhanVienService {
     private final MailService mailService;
     private final UserService userService;
     private final ExcelService excelService;
-    private final ChucVuMapper chucVuMapper;
-    private final QRCodeService qrCodeService;
 
     @Override
     public List<NhanVienDtoResponse> getAllNhanVien() {
@@ -60,6 +60,7 @@ public class NhanVienServiceImpl implements NhanVienService {
             return nhanVienMapper.updateNhanVien(nhanVienMapstruct.toNhanVien(nhanVienDtoRequest));
         }
         String cccd = nhanVienDtoRequest.getCccd();
+
         if (Objects.nonNull(nhanVienMapper.getNhanVienByCCCD(cccd))) {
             throw new AppException(ErrorCode.CCCD_EXISTED);
         }

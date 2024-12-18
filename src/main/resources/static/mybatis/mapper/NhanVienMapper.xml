@@ -38,6 +38,25 @@
         , ten_chuc_vu
         , nv.quan_ly
         , nv.user_id
+        , ql.ho_ten as ten_quan_ly
+    </sql>
+
+    <sql id="NhanVienColumnListFindAll">
+        nv.ma_nhan_vien
+        , nv.ho_ten
+        , nv.gioi_tinh
+        , nv.ngay_sinh
+        , nv.dien_thoai
+        , nv.cccd
+        , nv.dia_chi
+        , nv.hinh_anh
+        , nv.email
+        , nv.ma_phong_ban
+        , ten_phong_ban
+        , nv.ma_chuc_vu
+        , ten_chuc_vu
+        , nv.quan_ly
+        , nv.user_id
         , ql.ho_ten as ten_quan_ly,
         hd.ngay_ky
     </sql>
@@ -108,7 +127,7 @@
 
     <select id="findAll" resultMap="NhanVienResultMap">
         SELECT
-        <include refid="NhanVienColumnList"/>
+        <include refid="NhanVienColumnListFindAll"/>
         FROM nhan_vien nv
         LEFT JOIN phong_ban pb ON nv.ma_phong_ban = pb.ma_phong_ban
         LEFT JOIN chuc_vu cv ON nv.ma_chuc_vu = cv.ma_chuc_vu

@@ -62,6 +62,8 @@ public enum ErrorCode {
     NHAN_VIEN_VI_PHAM_EXISTED(1001, "Nhan vien vi pham da ton tai"),
     VI_PHAM_NOT_EXIST(1000, "Vi pham khong ton tai"),
     VI_PHAM_EXISTED(1001, "Vi pham da ton tai"),
+    CHAM_CONG_EXISTED(1001, "Nhân viên đã checkin"),
+    CHAM_CONG_NOT_EXIST(1001, "Nhân viên chưa checkin"),
     ;
 
     private final int status;

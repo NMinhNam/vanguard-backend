@@ -88,8 +88,8 @@
         select exists(
             select 1
             from bang_cham_cong
-            where ma_nhan_vien = #{bangChamCong.maNhanVien}
-              and ngay = #{bangChamCong.ngayChamCong}
+            where ma_nhan_vien = #{maNhanVien}
+              and ngay = #{ngayChamCong}::DATE
         )
     </select>
 

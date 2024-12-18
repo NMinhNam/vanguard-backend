@@ -11,7 +11,10 @@ import com.fpt.vanguard.exception.AppException;
 import com.fpt.vanguard.mapper.mapstruct.ChamCongMapstruct;
 import com.fpt.vanguard.mapper.mybatis.ChamCongMapper;
 import com.fpt.vanguard.mapper.mybatis.NhanVienMapper;
-import com.fpt.vanguard.service.*;
+import com.fpt.vanguard.service.ChamCongService;
+import com.fpt.vanguard.service.LoaiCongService;
+import com.fpt.vanguard.service.NhanVienViPhamService;
+import com.fpt.vanguard.service.WifiAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,16 +33,19 @@ public class ChamCongServiceImpl implements ChamCongService {
     private final NhanVienMapper nhanVienMapper;
     private final LoaiCongService loaiCongService;
     private final WifiAuthService wifiAuthService;
-    private final NhanVienPhuCapService phuCapService;
     private final NhanVienViPhamService viPhamService;
 
     @Override
     public Integer doCheckIn(ChamCongDtoRequest request) {
         String publicIp = request.getPublicIp();
-        wifiAuthService.isWifiValid(publicIp);
+        Boolean isWifiValid = wifiAuthService.isWifiValid(publicIp);
+        if (!isWifiValid) throw new AppException(ErrorCode.WIFI_NOT_VALID);
 
         String ngayChamCong = LocalDate.now().toString();
         request.setNgayChamCong(ngayChamCong);
+
+        Boolean isChamCong = chamCongMapper.isChamCong(chamCongMapstruct.toChamCong(request));
+        if (isChamCong) throw new AppException(ErrorCode.CHAM_CONG_EXISTED);
 
         String gioVao = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
         request.setGioVao(gioVao);
@@ -55,10 +61,14 @@ public class ChamCongServiceImpl implements ChamCongService {
     @Override
     public Integer doCheckOut(ChamCongDtoRequest request) {
         String publicIp = request.getPublicIp();
-        wifiAuthService.isWifiValid(publicIp);
+        Boolean isWifiValid = wifiAuthService.isWifiValid(publicIp);
+        if (!isWifiValid) throw new AppException(ErrorCode.WIFI_NOT_VALID);
 
         String ngayChamCong = LocalDate.now().toString();
         request.setNgayChamCong(ngayChamCong);
+
+        Boolean isChamCong = chamCongMapper.isChamCong(chamCongMapstruct.toChamCong(request));
+        if (!isChamCong) throw new AppException(ErrorCode.CHAM_CONG_NOT_EXIST);
 
         String gioRa = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
         request.setGioRa(gioRa);
